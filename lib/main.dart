@@ -1,23 +1,67 @@
 import 'dart:math';
+import 'package:ByteBuddy/themes/Pallete.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_paystack_plus/flutter_paystack_plus.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ByteBuddy/features/onboarding/presentation/view/onboarding_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
+final _router = GoRouter(
+  initialLocation: '/',
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const OnboardingScreen(),
+    ),
+  ],
+);
+
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: _router,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.black12,
+        ),
+        elevatedButtonTheme: const ElevatedButtonThemeData(
+          style: ButtonStyle(
+            shape: MaterialStatePropertyAll(
+              RoundedRectangleBorder(
+                side: BorderSide(color: Pallete.greenColor),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
+            ),
+            padding: MaterialStatePropertyAll(
+              EdgeInsets.all(18),
+            ),
+            backgroundColor: MaterialStatePropertyAll(Pallete.greenColor),
+          ),
+        ),
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(
+              fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.black),
+          displaySmall: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+          bodyMedium: TextStyle(fontSize: 18.0, color: Colors.black45),
+          bodySmall: TextStyle(fontSize: 13.0, color: Colors.black45),
+        ),
+        scaffoldBackgroundColor: Pallete.backgroundColor,
       ),
-      home: const MyHomePage(title: 'Flutter Paystack Payment'),
     );
   }
 }

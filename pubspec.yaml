@@ -38,6 +38,11 @@ dependencies:
   flutter_paystack_plus: ^1.1.0
   flutter_native_splash: ^2.3.5
   shared_preferences: ^2.2.2
+  flutter_riverpod: ^2.4.6
+  go_router: ^6.5.9
+  http: ^1.1.0
+  smooth_page_indicator: ^1.1.0
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -92,6 +97,6 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_native_splash:
-  color: "##00BD70"
+  color: "#00BD70"
   image: assets/images/bytebuddy.png
 
