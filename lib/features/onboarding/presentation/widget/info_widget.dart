@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bytebuddy/constants/constant.dart';
+import 'package:bytebuddy/themes/pallete.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class OnboardingInfoWidget extends ConsumerWidget {
@@ -23,7 +24,8 @@ class OnboardingInfoWidget extends ConsumerWidget {
             padding: const EdgeInsets.all(10.0),
             child: AutoSizeText(
               title,
-              style: Theme.of(context).textTheme.displayLarge,
+              overflow: TextOverflow.ellipsis,
+              style: context.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
               maxLines: 1,
             ),
           ),
@@ -35,7 +37,7 @@ class OnboardingInfoWidget extends ConsumerWidget {
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
                 briefExplanation,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: context.bodySmall,
                 maxLines: 3,
               )),
         ),

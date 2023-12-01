@@ -3,4 +3,5 @@ class ImageAssetConstant {
   static const data = "$path/data.png";
   static const alert = "$path/alert.png";
   static const support = "$path/support.png";
+  static const byteBuddy = "$path/bytebuddy.png";
 }

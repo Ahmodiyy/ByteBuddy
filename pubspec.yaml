@@ -1,4 +1,4 @@
-name: ByteBuddy
+name: bytebuddy
 description: A cheap data(internet connectivity) reselling app.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -43,6 +43,10 @@ dependencies:
   http: ^1.1.0
   smooth_page_indicator: ^1.1.0
   auto_size_text: ^3.0.0
+  gap: ^3.0.1
+  google_fonts: ^6.1.0
+
+
 
 dev_dependencies:
   flutter_test:

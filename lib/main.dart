@@ -1,10 +1,12 @@
-import 'dart:math';
-import 'package:ByteBuddy/themes/Pallete.dart';
+import 'package:bytebuddy/features/auth/presentation/login.dart';
+import 'package:bytebuddy/features/auth/presentation/register.dart';
+import 'package:bytebuddy/features/auth/presentation/reset_password.dart';
+import 'package:bytebuddy/themes/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_paystack_plus/flutter_paystack_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ByteBuddy/features/onboarding/presentation/view/onboarding_screen.dart';
+import 'package:bytebuddy/features/onboarding/presentation/view/onboarding.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -17,6 +19,16 @@ final _router = GoRouter(
       path: '/',
       builder: (context, state) => const OnboardingScreen(),
     ),
+    GoRoute(path: '/auth', builder: (context, state) => const Login(), routes: [
+      GoRoute(
+        path: 'register',
+        builder: (context, state) => const Register(),
+      ),
+      GoRoute(
+        path: 'resetPassword',
+        builder: (context, state) => const ResetPassword(),
+      ),
+    ]),
   ],
 );
 
@@ -30,42 +42,51 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: _router,
       theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Pallete.whiteColor,
+        ),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.black12,
         ),
         elevatedButtonTheme: const ElevatedButtonThemeData(
           style: ButtonStyle(
-            shape: MaterialStatePropertyAll(
-              RoundedRectangleBorder(
-                side: BorderSide(color: Pallete.greenColor),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+              shape: MaterialStatePropertyAll(
+                RoundedRectangleBorder(
+                  side: BorderSide(color: Pallete.greenColor),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(40),
+                  ),
                 ),
               ),
-            ),
-            padding: MaterialStatePropertyAll(
-              EdgeInsets.all(18),
-            ),
-            backgroundColor: MaterialStatePropertyAll(Pallete.greenColor),
+              padding: MaterialStatePropertyAll(
+                EdgeInsets.all(18),
+              ),
+              backgroundColor: MaterialStatePropertyAll(Pallete.greenColor),
+              foregroundColor: MaterialStatePropertyAll(Pallete.whiteColor),
+              textStyle: MaterialStatePropertyAll(
+                  TextStyle(fontSize: 16, fontWeight: FontWeight.w700))),
+        ),
+        textTheme: TextTheme(
+          bodyLarge: GoogleFonts.roboto(
+            textStyle:
+                const TextStyle(fontSize: 48.0, color: Pallete.greenColor),
+          ),
+          bodyMedium: GoogleFonts.roboto(
+            textStyle:
+                const TextStyle(fontSize: 22.0, color: Pallete.deepPurple),
+          ),
+          bodySmall: GoogleFonts.roboto(
+            textStyle:
+                const TextStyle(fontSize: 16.0, color: Pallete.lightBlack),
           ),
         ),
-        textTheme: const TextTheme(
-          displayLarge: TextStyle(
-              fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.black),
-          displaySmall: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-          bodyMedium: TextStyle(fontSize: 18.0, color: Colors.black45),
-          bodySmall: TextStyle(fontSize: 13.0, color: Colors.black45),
-        ),
-        scaffoldBackgroundColor: Pallete.backgroundColor,
+        scaffoldBackgroundColor: Pallete.whiteColor,
       ),
     );
   }
 }
 
+/**
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
@@ -110,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Center(
                 child: Text(
-                  "fgsfgff",
+                  "projectTitle",
                   style: Theme.of(context).textTheme.headline5?.copyWith(
                         color: Colors.black,
                         fontWeight: FontWeight.w800,
@@ -138,6 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   final amount = int.parse(amountController.text);
                   try {
                     return await FlutterPaystackPlus.openPaystackPopup(
+                        publicKey: "",
                         context: context,
                         secretKey: "",
                         currency: 'NGN',
@@ -146,11 +168,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         reference: ref,
                         onClosed: () {
                           debugPrint(
-                              '============================Could\'nt finish payment');
+                              'Could\'nnnnnnnnnnnnnnnnnnnnnnnnnnnnnt finish payment');
                         },
                         onSuccess: () {
                           debugPrint(
-                              '============================Payment successful');
+                              'Payment succeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeessful');
                         });
                   } catch (e) {
                     debugPrint(e.toString());
@@ -177,3 +199,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+**/
