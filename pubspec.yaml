@@ -43,8 +43,13 @@ dependencies:
   http: ^1.1.0
   smooth_page_indicator: ^1.1.0
   auto_size_text: ^3.0.0
+  flutter_animate: ^4.3.0
   gap: ^3.0.1
   google_fonts: ^6.1.0
+  font_awesome_flutter: ^10.6.0
+  firebase_core: ^2.24.1
+  firebase_auth: ^4.15.1
+  cloud_firestore: ^4.13.4
 
 
 
@@ -101,6 +106,6 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_native_splash:
-  color: "#00BD70"
+  color: "#1DC99B"
   image: assets/images/bytebuddy.png
 

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bytebuddy/constants/image_constant.dart';
 import 'package:bytebuddy/constants/extension_constant.dart';
 import 'package:bytebuddy/features/onboarding/presentation/widget/custom_pageview_scrollphysics.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gap/gap.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
@@ -22,8 +24,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
   late PageController pageController;
   late AnimationController _controller;
   final double bottomSheetHeight = 150;
-  final double gapSize = 20.0;
-  final double paddingSize = 40.0;
+  final double gapSize = 40.0;
+  final double paddingSize = 50.0;
 
   bool initBound = true;
   double pageViewHalfPixel = 1.0;
@@ -50,7 +52,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
             // Animation duration
           );
 
-          CurvedAnimation(parent: _controller, curve: Curves.easeIn);
           initBound = false;
           rate = 6.0 / pageController.position.maxScrollExtent;
           pageViewHalfPixel = pageController.position.maxScrollExtent / 2;
@@ -66,13 +67,20 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
     return SafeArea(
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
+          double maxWidth = constraints.maxWidth;
           if (constraints.isMobile) {
+            double height = (constraints.maxHeight - bottomSheetHeight) / 2;
             return Scaffold(
               body: Container(
                 padding: EdgeInsets.only(
-                    bottom: bottomSheetHeight, top: 20, right: 20, left: 20),
+                    bottom: bottomSheetHeight, top: 50, right: 50, left: 50),
                 child: Stack(alignment: Alignment.topCenter, children: [
-                  AnimatedBuilder(
+                  Positioned(
+                    top: 50,
+                    bottom: height,
+                    left: 0.0,
+                    right: 0.0,
+                    child: AnimatedBuilder(
                       animation: _controller,
                       builder: (BuildContext context, Widget? child) {
                         double animationValue = _controller.value * rate;
@@ -82,35 +90,51 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                           transform: Matrix4.identity()
                             ..rotateY(animationValue),
                           child: _controller.value < pageViewHalfPixel
-                              ? OnboardingImageWidget(
+                              ? ImageWidget(
                                   imageUrl: animationValue < 1.5
                                       ? ImageAssetConstant.data
                                       : ImageAssetConstant.support)
-                              : OnboardingImageWidget(
+                              : ImageWidget(
                                   imageUrl: animationValue < 4.5
                                       ? ImageAssetConstant.support
-                                      : ImageAssetConstant.alert),
+                                      : ImageAssetConstant.settings),
                         );
                       },
-                      child: Container()),
+                    ),
+                  ),
                   PageView(
                     physics: const CustomPageViewScrollPhysics(),
                     controller: pageController,
-                    children: const [
-                      OnboardingInfoWidget(
+                    children: [
+                      InfoWidget(
                         title: 'Cheap',
+                        titleStyle: context.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                         briefExplanation:
                             'Buy cheap mtn, airtel, glo and etisalat data plan',
+                        briefExplanationStyle: context.bodySmall,
+                        mainAxisAlignment: MainAxisAlignment.end,
                       ),
-                      OnboardingInfoWidget(
+                      InfoWidget(
                         title: 'Support',
+                        titleStyle: context.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                         briefExplanation:
                             'Realtime chat support for questions, enquires etc',
+                        briefExplanationStyle: context.bodySmall,
+                        mainAxisAlignment: MainAxisAlignment.end,
                       ),
-                      OnboardingInfoWidget(
+                      InfoWidget(
                         title: 'Low',
+                        titleStyle: context.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                         briefExplanation:
                             'Low data alert, set low data limit for remainder',
+                        briefExplanationStyle: context.bodySmall,
+                        mainAxisAlignment: MainAxisAlignment.end,
                       ),
                     ],
                   ),
@@ -120,7 +144,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 color: Pallete.whiteColor,
                 height: bottomSheetHeight,
                 width: double.infinity,
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                padding: const EdgeInsets.only(left: 50, right: 50, bottom: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -145,7 +169,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                     Flexible(
                       child: ElevatedButton(
                         onPressed: () => context.push('/auth/register'),
-                        child: Text(
+                        child: const Text(
                           'Get started',
                         ),
                       ),
@@ -156,56 +180,293 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
             );
           }
           return Scaffold(
-            appBar: PreferredSize(
-              preferredSize: const Size(double.infinity, 50),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: paddingSize),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("ByteBuddy",
-                          style: context.bodyMedium?.copyWith(
-                              color: Pallete.greenColor,
-                              fontWeight: FontWeight.w400)),
-                      Row(
+              appBar: PreferredSize(
+                preferredSize: const Size(double.infinity, 100),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: paddingSize, vertical: 20),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Bytebuddy',
+                              style: context.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Pallete.greenColor,
+                              ),
+                            ),
+                            Gap(gapSize),
+                            InkWell(
+                              onTap: () {
+                                context.go("/auth/register");
+                              },
+                              child: Text(
+                                'Register',
+                                style: context.bodySmall
+                                    ?.copyWith(color: Pallete.deepPurple),
+                              ),
+                            ),
+                            Gap(gapSize),
+                            InkWell(
+                              onTap: () {
+                                context.go("/auth");
+                              },
+                              child: Text(
+                                'Login',
+                                style: context.bodySmall
+                                    ?.copyWith(color: Pallete.deepPurple),
+                              ),
+                            ),
+                          ],
+                        )
+                      ]),
+                ),
+              ),
+              body: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(left: paddingSize),
+                      alignment: Alignment.topLeft,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                        image: AssetImage(ImageAssetConstant
+                            .intro), // Replace with your image asset
+                        fit: BoxFit.cover,
+                      )),
+                      child: InfoWidget(
+                        title: "Affordable Internet Enchantment!",
+                        titleStyle: context.bodyLarge?.copyWith(
+                            color: Pallete.whiteColor,
+                            fontWeight: FontWeight.bold),
+                        briefExplanation:
+                            "✨ Immerse yourself in the enchanting world of Bytebuddy, "
+                            "where budget-friendly data plans weave seamlessly with w izardly support and"
+                            " personalized enchantments. Explore the digital realm with affordable "
+                            "magic at your fingertips—sign up now and let the enchantment begin! 🌌✨",
+                        briefExplanationStyle: context.bodySmall?.copyWith(
+                            color: Pallete.deepPurple,
+                            letterSpacing: 2,
+                            wordSpacing: 2,
+                            height: 2),
+                        height: 500,
+                        weight: maxWidth * 0.43,
+                        textAlign: TextAlign.left,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(paddingSize),
+                      child: AutoSizeText(
+                        "Our Services",
+                        textAlign: TextAlign.left,
+                        style: context.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Pallete.deepPurple),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(60),
+                      alignment: Alignment.center,
+                      color: Pallete.greenColor,
+                      child: Row(
                         children: [
-                          InkWell(
-                            onTap: () {},
-                            child: Text(
-                              'Home',
-                              style: context.bodyMedium
-                                  ?.copyWith(color: Pallete.greenColor),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 60),
+                              child: InfoWidget(
+                                title: "🌐 Cheap Data Delight:",
+                                titleStyle: context.bodyLarge?.copyWith(
+                                    color: Pallete.whiteColor,
+                                    fontWeight: FontWeight.bold),
+                                briefExplanation:
+                                    "Embark on a digital journey without breaking "
+                                    "the bank! Our pocket-friendly internet subscriptions "
+                                    "ensure you stay seamlessly connected without compromising "
+                                    "on speed or reliability. Dive into a world of affordable data "
+                                    "plans that cater to your needs, bringing the power of the internet to your fingertips without burning a hole in your wallet.",
+                                briefExplanationStyle: context.bodyMedium
+                                    ?.copyWith(
+                                        color: Pallete.whiteColor,
+                                        letterSpacing: 2,
+                                        wordSpacing: 2,
+                                        height: 2),
+                                height: 500,
+                                textAlign: TextAlign.left,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                              ),
                             ),
                           ),
-                          Gap(gapSize),
-                          InkWell(
-                            onTap: () {
-                              context.go("/auth/register");
-                            },
-                            child: Text(
-                              'Register',
-                              style: context.bodyMedium
-                                  ?.copyWith(color: Pallete.deepPurple),
-                            ),
-                          ),
-                          Gap(gapSize),
-                          InkWell(
-                            onTap: () {
-                              context.go("/auth");
-                            },
-                            child: Text(
-                              'Login',
-                              style: context.bodyMedium
-                                  ?.copyWith(color: Pallete.deepPurple),
+                          Expanded(
+                              child: ImageWidget(
+                            imageUrl: ImageAssetConstant.data,
+                          ))
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(60),
+                      alignment: Alignment.center,
+                      color: Pallete.whiteColor,
+                      child: Row(
+                        children: [
+                          Expanded(
+                              child: ImageWidget(
+                            imageUrl: ImageAssetConstant.support,
+                          )),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 60),
+                              child: InfoWidget(
+                                title: "🤝 Customer Care Concierge:",
+                                titleStyle: context.bodyLarge?.copyWith(
+                                    color: Pallete.greenColor,
+                                    fontWeight: FontWeight.bold),
+                                briefExplanation:
+                                    "Say goodbye to frustrating support experiences! Our dedicated customer service "
+                                    "team is here to make your life easier. Need assistance? We've got your back! "
+                                    "From inquiries to troubleshooting, we're just a message or call away. "
+                                    "Experience customer support that goes beyond expectations, "
+                                    "ensuring your journey with us is as smooth as a buffering-free video stream",
+                                briefExplanationStyle: context.bodyMedium
+                                    ?.copyWith(
+                                        color: Pallete.deepPurple,
+                                        letterSpacing: 2,
+                                        wordSpacing: 2,
+                                        height: 2),
+                                height: 500,
+                                textAlign: TextAlign.left,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                              ),
                             ),
                           ),
                         ],
-                      )
-                    ]),
-              ),
-            ),
-            body: Container(),
-          );
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(60),
+                      alignment: Alignment.center,
+                      color: Pallete.greenColor,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 60),
+                              child: InfoWidget(
+                                title: "⚙️ Tailored Settings, Just for You:",
+                                titleStyle: context.bodyLarge?.copyWith(
+                                    color: Pallete.whiteColor,
+                                    fontWeight: FontWeight.bold),
+                                briefExplanation:
+                                    "Customize your connectivity experience like never before! Take control with"
+                                    " personalized settings that match your preferences. Whether it's adjusting data "
+                                    "limits, optimizing speed, or configuring special features, our user-friendly interface empowers you to "
+                                    "tailor your internet experience. Enjoy connectivity on your terms, with settings that reflect "
+                                    "your unique digital lifestyle.",
+                                briefExplanationStyle: context.bodyMedium
+                                    ?.copyWith(
+                                        color: Pallete.whiteColor,
+                                        letterSpacing: 2,
+                                        wordSpacing: 2,
+                                        height: 2),
+                                textAlign: TextAlign.left,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                              ),
+                            ),
+                          ),
+                          const Expanded(
+                              child: ImageWidget(
+                            imageUrl: ImageAssetConstant.settings,
+                          ))
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(60),
+                      alignment: Alignment.center,
+                      color: Pallete.lightWhite,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Expanded(
+                              child: ImageWidget(
+                            imageUrl: ImageAssetConstant.app,
+                            width: 350,
+                            height: 350,
+                          )),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 60),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    AutoSizeText(
+                                      "B",
+                                      style: context.bodyLarge?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 50,
+                                      ),
+                                    ),
+                                    Gap(gapSize),
+                                    RichText(
+                                      text: TextSpan(
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: 'Coming soon on ',
+                                            style: context.bodyMedium?.copyWith(
+                                                color: Pallete.lightBlack),
+                                          ),
+                                          TextSpan(
+                                            text: 'Android',
+                                            style: context.bodyMedium?.copyWith(
+                                              color: Pallete.greenColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ]),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(paddingSize),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Bytebuddy',
+                            style: context.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Pallete.greenColor,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(FontAwesomeIcons.twitter),
+                              ),
+                              Gap(gapSize),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(FontAwesomeIcons.whatsapp),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ));
         },
       ),
     );
