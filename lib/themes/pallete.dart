@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Pallete {
-  //#1DC99B
   static const Color greenColor = Color(0xFF1DC99B);
   static const Color deepPurple = Color(0xFF210F60);
   static const Color whiteColor = Colors.white;
