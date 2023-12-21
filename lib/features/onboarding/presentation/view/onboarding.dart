@@ -36,7 +36,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
   //web
   late ScrollController _scrollController;
   bool hasScrollClient = false;
-  final FocusNode _focusNode = FocusNode();
   @override
   void initState() {
     super.initState();
@@ -112,12 +111,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                           child: _controller.value < pageViewHalfPixel
                               ? ImageWidget(
                                   imageUrl: animationValue < 1.5
-                                      ? ImageAssetConstant.data
-                                      : ImageAssetConstant.support)
+                                      ? ImageConstant.data
+                                      : ImageConstant.support)
                               : ImageWidget(
                                   imageUrl: animationValue < 4.5
-                                      ? ImageAssetConstant.support
-                                      : ImageAssetConstant.settings),
+                                      ? ImageConstant.support
+                                      : ImageConstant.settings),
                         );
                       },
                     ),
@@ -188,6 +187,16 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                     ),
                     Flexible(
                       child: ElevatedButton(
+                        style: const ButtonStyle(
+                          shape: MaterialStatePropertyAll(
+                            RoundedRectangleBorder(
+                              side: BorderSide(color: Pallete.greenColor),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(40),
+                              ),
+                            ),
+                          ),
+                        ),
                         onPressed: () => context.push('/auth/register'),
                         child: const Text(
                           'Get started',
@@ -220,7 +229,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                             Gap(gapSize),
                             InkWell(
                               onTap: () {
-                                context.go("/auth/register");
+                                context.push("/auth/register");
                               },
                               child: Text(
                                 'Register',
@@ -231,7 +240,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                             Gap(gapSize),
                             InkWell(
                               onTap: () {
-                                context.go("/auth");
+                                context.push("/auth");
                               },
                               child: Text(
                                 'Login',
@@ -260,7 +269,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                           alignment: Alignment.topLeft,
                           decoration: const BoxDecoration(
                               image: DecorationImage(
-                            image: AssetImage(ImageAssetConstant
+                            image: AssetImage(ImageConstant
                                 .intro), // Replace with your image asset
                             fit: BoxFit.cover,
                           )),
@@ -341,7 +350,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                               ),
                               const Expanded(
                                   child: ImageWidget(
-                                imageUrl: ImageAssetConstant.data,
+                                imageUrl: ImageConstant.data,
                               ))
                             ],
                           ),
@@ -354,7 +363,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                             children: [
                               Expanded(
                                   child: ImageWidget(
-                                imageUrl: ImageAssetConstant.support,
+                                imageUrl: ImageConstant.support,
                               )),
                               Expanded(
                                 child: Padding(
@@ -443,7 +452,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                               ),
                               const Expanded(
                                   child: ImageWidget(
-                                imageUrl: ImageAssetConstant.settings,
+                                imageUrl: ImageConstant.settings,
                               ))
                             ],
                           ),
@@ -457,7 +466,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                             children: [
                               const Expanded(
                                   child: ImageWidget(
-                                imageUrl: ImageAssetConstant.app,
+                                imageUrl: ImageConstant.app,
                                 width: 350,
                                 height: 350,
                               )),
@@ -471,8 +480,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                           MainAxisAlignment.start,
                                       children: [
                                         const ImageWidget(
-                                          imageUrl: ImageAssetConstant
-                                              .byteBuddySquare,
+                                          imageUrl:
+                                              ImageConstant.byteBuddySquare,
                                           width: 100,
                                           height: 100,
                                         ),
@@ -544,19 +553,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
 
   @override
   void dispose() {
-    super.dispose();
     _pageController.dispose();
     _controller.dispose();
     _scrollController.dispose();
-  }
-
-  void _scroll(int direction) {
-    final scrollOffset = _scrollController.offset +
-        (direction * 50); // Adjust the scrolling speed
-    _scrollController.animateTo(
-      scrollOffset,
-      duration: Duration(milliseconds: 200),
-      curve: Curves.easeInOut,
-    );
+    super.dispose();
   }
 }

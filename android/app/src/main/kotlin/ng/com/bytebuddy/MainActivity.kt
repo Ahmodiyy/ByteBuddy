@@ -1,4 +1,4 @@
-package com.example.bytebuddy
+package ng.com.bytebuddy
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -6,5 +6,6 @@ class Pallete {
   static const Color whiteColor = Colors.white;
   static const Color lightWhite = Color(0xFFEDEDED);
   static const Color blackColor = Colors.black;
-  static const Color lightBlack = Color(0xff515152);
+  static const Color lightBlack = Color(0xFF515152);
+  static const Color greyColor = Color(0xFFF8F8FB);
 }

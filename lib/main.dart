@@ -1,46 +1,67 @@
-import 'package:bytebuddy/features/auth/presentation/login.dart';
-import 'package:bytebuddy/features/auth/presentation/register.dart';
-import 'package:bytebuddy/features/auth/presentation/reset_password.dart';
+import 'package:bytebuddy/features/auth/presentation/view/login.dart';
+import 'package:bytebuddy/features/auth/presentation/view/register.dart';
+import 'package:bytebuddy/features/auth/presentation/view/reset_password.dart';
+import 'package:bytebuddy/features/home.dart';
+import 'package:bytebuddy/firebase_options.dart';
 import 'package:bytebuddy/themes/pallete.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bytebuddy/features/onboarding/presentation/view/onboarding.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() {
-  runApp(const ProviderScope(child: MyApp()));
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  final User? user = FirebaseAuth.instance.currentUser;
+  runApp(ProviderScope(child: MyApp(user: user)));
 }
 
-final _router = GoRouter(
-  initialLocation: '/',
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const OnboardingScreen(),
-    ),
-    GoRoute(path: '/auth', builder: (context, state) => const Login(), routes: [
+GoRouter _router(User? user) {
+  return GoRouter(
+    //initialLocation: user != null ? '/auth' : '/',
+    initialLocation: "/",
+    routes: [
       GoRoute(
-        path: 'register',
-        builder: (context, state) => const Register(),
+        path: '/',
+        builder: (context, state) => const OnboardingScreen(),
       ),
       GoRoute(
-        path: 'resetPassword',
-        builder: (context, state) => const ResetPassword(),
+          path: '/auth',
+          builder: (context, state) => const Login(),
+          routes: [
+            GoRoute(
+              path: 'register',
+              builder: (context, state) => const Register(),
+            ),
+            GoRoute(
+              path: 'resetPassword',
+              builder: (context, state) => const ResetPassword(),
+            ),
+          ]),
+      GoRoute(
+        path: '/home',
+        builder: (context, state) => const Home(),
       ),
-    ]),
-  ],
-);
+    ],
+  );
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final User? user;
+
+  const MyApp({required this.user, super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      routerConfig: _router,
+      routerConfig: _router(user),
       theme: ThemeData(
         scaffoldBackgroundColor: Pallete.whiteColor,
         appBarTheme: const AppBarTheme(
@@ -55,7 +76,7 @@ class MyApp extends StatelessWidget {
                 RoundedRectangleBorder(
                   side: BorderSide(color: Pallete.greenColor),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(40),
+                    Radius.circular(10),
                   ),
                 ),
               ),

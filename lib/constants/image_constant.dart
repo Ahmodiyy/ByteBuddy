@@ -1,4 +1,4 @@
-class ImageAssetConstant {
+class ImageConstant {
   static const path = "assets/images";
   static const data = "$path/data.jpg";
   static const settings = "$path/settings.jpg";
