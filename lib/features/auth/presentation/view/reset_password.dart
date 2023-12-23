@@ -129,7 +129,7 @@ class _RegisterState extends ConsumerState<ResetPassword> {
                                     TextSpan(
                                       recognizer: _tapGestureRecognizer
                                         ..onTap = () {
-                                          context.push("/auth");
+                                          context.pop();
                                         },
                                       text: 'Go back!',
                                       style: context.bodySmall

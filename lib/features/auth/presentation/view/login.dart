@@ -51,7 +51,7 @@ class _RegisterState extends ConsumerState<Login> {
       (previous, next) {
         next.when(
           data: (data) {
-            context.push("/home");
+            context.go("/dashboard");
           },
           error: (error, stackTrace) {
             MessageWidget.showSnackBar(context, error.toString());

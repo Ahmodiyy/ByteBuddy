@@ -1,7 +1,7 @@
 import 'package:bytebuddy/features/auth/presentation/view/login.dart';
 import 'package:bytebuddy/features/auth/presentation/view/register.dart';
 import 'package:bytebuddy/features/auth/presentation/view/reset_password.dart';
-import 'package:bytebuddy/features/home.dart';
+import 'package:bytebuddy/features/dashboard.dart';
 import 'package:bytebuddy/firebase_options.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -44,8 +44,8 @@ GoRouter _router(User? user) {
             ),
           ]),
       GoRoute(
-        path: '/home',
-        builder: (context, state) => const Home(),
+        path: '/dashboard',
+        builder: (context, state) => const Dashboard(),
       ),
     ],
   );
