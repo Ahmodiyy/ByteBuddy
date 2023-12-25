@@ -23,21 +23,21 @@ class AuthController extends AutoDisposeAsyncNotifier<User?> {
     return null;
   }
 
-  Future<void> signIn({required String email, required String password}) async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async {
-      return await ref
-          .read(authRepoProvider)
-          .signIn(email: email, password: password);
-    });
-  }
-
   Future<void> signUp({required String email, required String password}) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       return await ref
           .read(authRepoProvider)
           .signUp(email: email, password: password);
+    });
+  }
+
+  Future<void> signIn({required String email, required String password}) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      return await ref
+          .read(authRepoProvider)
+          .signIn(email: email, password: password);
     });
   }
 
@@ -57,10 +57,7 @@ class AuthController extends AutoDisposeAsyncNotifier<User?> {
     });
   }
 
-  Future<void> getCurrentUser() async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async {
-      return ref.read(authRepoProvider).getCurrentUser();
-    });
+  User? getCurrentUser() {
+    return ref.read(authRepoProvider).getCurrentUser();
   }
 }

@@ -22,9 +22,10 @@ Future<void> main() async {
 }
 
 GoRouter _router(User? user) {
+  debugPrint(
+      'inside main user : ${user?.email}, verified : ${user?.emailVerified}');
   return GoRouter(
-    //initialLocation: user != null ? '/auth' : '/',
-    initialLocation: "/",
+    initialLocation: user != null && user.emailVerified ? '/dashboard' : '/',
     routes: [
       GoRoute(
         path: '/',
@@ -51,14 +52,14 @@ GoRouter _router(User? user) {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   final User? user;
 
   const MyApp({required this.user, super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: _router(user),

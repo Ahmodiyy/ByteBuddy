@@ -4,6 +4,7 @@ import 'package:bytebuddy/features/topup/presentation/view/home.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Dashboard extends ConsumerStatefulWidget {
   const Dashboard({super.key});
@@ -43,17 +44,21 @@ class _HomeScreenState extends ConsumerState<Dashboard> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.login_outlined,
+              FontAwesomeIcons.house,
             ),
-            label: 'Log',
+            label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.electric_bolt_sharp),
-            label: 'Sensor',
+            icon: Icon(
+              FontAwesomeIcons.comments,
+            ),
+            label: 'Chat',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.report_gmailerrorred_outlined),
-            label: 'Report',
+            icon: Icon(
+              FontAwesomeIcons.gear,
+            ),
+            label: 'Settings',
           ),
         ],
       ),

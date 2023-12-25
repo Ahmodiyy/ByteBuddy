@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authRepoProvider = Provider<AuthRepo>((ref) {
@@ -16,7 +17,6 @@ class AuthRepo {
       await _firebaseAuth.currentUser?.sendEmailVerification();
       return _firebaseAuth.currentUser;
     } catch (e) {
-      print('Error signing up: $e');
       rethrow;
     }
   }
@@ -26,13 +26,12 @@ class AuthRepo {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      //await _firebaseAuth.currentUser?.reload();
+      await _firebaseAuth.currentUser?.reload();
       if (!_firebaseAuth.currentUser!.emailVerified) {
         throw Exception("click the link in your inbox to verify your email!");
       }
       return _firebaseAuth.currentUser;
     } catch (e) {
-      print('Error signing in: $e');
       rethrow;
     }
   }
@@ -41,7 +40,6 @@ class AuthRepo {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
     } catch (e) {
-      print("Error sending password reset email: $e");
       rethrow;
     }
   }
@@ -50,7 +48,6 @@ class AuthRepo {
     try {
       await _firebaseAuth.signOut();
     } catch (e) {
-      print('Error signing out: $e');
       rethrow;
     }
   }

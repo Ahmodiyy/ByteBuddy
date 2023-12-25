@@ -8,4 +8,5 @@ class Pallete {
   static const Color blackColor = Colors.black;
   static const Color lightBlack = Color(0xFF515152);
   static const Color greyColor = Color(0xFFF8F8FB);
+  static const Color scaffoldColor = Color(0xFFF8F8FB);
 }
