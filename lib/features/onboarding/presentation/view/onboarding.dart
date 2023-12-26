@@ -280,7 +280,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                 fontWeight: FontWeight.bold),
                             briefExplanation:
                                 "✨ Immerse yourself in the enchanting world of Bytebuddy, "
-                                "where budget-friendly data plans weave seamlessly with w izardly support and"
+                                "where budget-friendly data plans weave seamlessly with wizardly support and"
                                 " personalized enchantments. Explore the digital realm with affordable "
                                 "magic at your fingertips—sign up now and let the enchantment begin! 🌌✨",
                             briefExplanationStyle: context.bodySmall?.copyWith(
