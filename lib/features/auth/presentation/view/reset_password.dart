@@ -1,10 +1,8 @@
-import 'package:bytebuddy/common/loading_widget.dart';
-import 'package:bytebuddy/common/message_widget.dart';
+import 'package:bytebuddy/common/common.dart';
 import 'package:bytebuddy/constants/constant.dart';
 import 'package:bytebuddy/features/auth/presentation/controller/auth_controller.dart';
 import 'package:bytebuddy/features/auth/presentation/widget/functions.dart';
 import 'package:bytebuddy/features/auth/presentation/widget/header_text_widget.dart';
-import 'package:bytebuddy/features/auth/presentation/widget/icon_widget.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +64,7 @@ class _RegisterState extends ConsumerState<ResetPassword> {
                   child: Center(
                     child: Container(
                       alignment: Alignment.center,
-                      width: constraints.isMobile ? double.infinity : 500.0,
+                      width: constraints.isMobile ? double.infinity : 400.0,
                       child: Form(
                         key: _formKey,
                         child: Padding(

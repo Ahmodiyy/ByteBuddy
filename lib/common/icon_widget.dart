@@ -3,14 +3,21 @@ import 'package:flutter/material.dart';
 
 class IconWidget extends StatelessWidget {
   final IconData iconData;
-  const IconWidget({super.key, required this.iconData});
+  final Color color;
+  final double size;
+  const IconWidget({
+    super.key,
+    required this.iconData,
+    this.color = Pallete.greenColor,
+    this.size = 15.0,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Icon(
       iconData,
-      size: 15.0,
-      color: Pallete.greenColor,
+      size: size,
+      color: color,
     );
   }
 }

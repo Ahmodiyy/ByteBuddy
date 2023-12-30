@@ -6,4 +6,8 @@ class SvgConstant {
   static const chatsFilled = "$path/chats_filled.svg";
   static const settingsOutlined = "$path/settings_outlined.svg";
   static const settingsFilled = "$path/settings_filled.svg";
+  static const airtime = "$path/airtime.svg";
+  static const data = "$path/data.svg";
+  static const mobile = "$path/mobile.svg";
+  static const back = "$path/back.svg";
 }
