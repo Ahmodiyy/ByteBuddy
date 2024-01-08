@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bytebuddy/common/common.dart';
 import 'package:bytebuddy/constants/constant.dart';
 import 'package:bytebuddy/features/auth/presentation/controller/auth_controller.dart';
@@ -26,6 +27,8 @@ class _RegisterState extends ConsumerState<ResetPassword> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late TextEditingController _email;
+  late TextEditingController _errorMessage;
+  late TextEditingController _successMessage;
 
   late TapGestureRecognizer _tapGestureRecognizer;
 
@@ -33,6 +36,8 @@ class _RegisterState extends ConsumerState<ResetPassword> {
   void initState() {
     super.initState();
     _email = TextEditingController();
+    _errorMessage = TextEditingController();
+    _successMessage = TextEditingController();
     _tapGestureRecognizer = TapGestureRecognizer();
   }
 
@@ -43,11 +48,12 @@ class _RegisterState extends ConsumerState<ResetPassword> {
       (previous, next) {
         next.when(
           data: (data) {
-            MessageWidget.showSnackBar(
-                context, "check your inbox to reset your password");
+            _successMessage.text = 'check your inbox to reset your password';
           },
           error: (error, stackTrace) {
-            MessageWidget.showSnackBar(context, error.toString());
+            RegExp regExp = RegExp(r'\[.*?\]');
+            String cleanedMessage = error.toString().replaceAll(regExp, '');
+            _errorMessage.text = cleanedMessage.trim();
           },
           loading: () {},
         );
@@ -91,6 +97,24 @@ class _RegisterState extends ConsumerState<ResetPassword> {
                                 },
                               ),
                               const Gap(20),
+                              _errorMessage.text.isNotEmpty
+                                  ? Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      child: AutoSizeText(_errorMessage.text,
+                                          style: context.bodySmall?.copyWith(
+                                              color: Pallete.lightRed)),
+                                    )
+                                  : Container(),
+                              _successMessage.text.isNotEmpty
+                                  ? Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      child: AutoSizeText(_successMessage.text,
+                                          style: context.bodySmall?.copyWith(
+                                              color: Pallete.greenColor)),
+                                    )
+                                  : Container(),
                               RichText(
                                 text: TextSpan(children: [
                                   TextSpan(
@@ -108,6 +132,8 @@ class _RegisterState extends ConsumerState<ResetPassword> {
                               const Gap(20),
                               ElevatedButton(
                                 onPressed: () {
+                                  _errorMessage.clear();
+                                  _successMessage.clear();
                                   if (_formKey.currentState!.validate()) {
                                     ref
                                         .read(
@@ -151,6 +177,8 @@ class _RegisterState extends ConsumerState<ResetPassword> {
   @override
   void dispose() {
     _email.dispose();
+    _errorMessage.dispose();
+    _successMessage.dispose();
     _tapGestureRecognizer.dispose();
     super.dispose();
   }

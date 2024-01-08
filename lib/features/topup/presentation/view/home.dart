@@ -85,13 +85,13 @@ class DepositWidget extends ConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  flex: 3,
+                Flexible(
                   child: InkWell(
                       onTap: () => ref
                           .read(togglePasswordProvider.notifier)
                           .update((state) => !state),
                       child: Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Flexible(
                             child: AutoSizeText(
@@ -102,20 +102,23 @@ class DepositWidget extends ConsumerWidget {
                             ),
                           ),
                           togglePassword
-                              ? const IconWidget(
-                                  iconData: FontAwesomeIcons.eyeSlash,
-                                  color: Pallete.lightWhite,
+                              ? const Flexible(
+                                  child: IconWidget(
+                                    iconData: FontAwesomeIcons.eyeSlash,
+                                    color: Pallete.lightWhite,
+                                  ),
                                 )
-                              : const IconWidget(
-                                  iconData: FontAwesomeIcons.eye,
-                                  color: Pallete.lightWhite,
+                              : const Flexible(
+                                  child: IconWidget(
+                                    iconData: FontAwesomeIcons.eye,
+                                    color: Pallete.lightWhite,
+                                  ),
                                 ),
                         ],
                       )),
                 ),
-                const Expanded(child: SizedBox()),
-                Expanded(
-                  flex: 3,
+                const Spacer(),
+                Flexible(
                   child: InkWell(
                     onTap: () => context.push("/dashboard/transaction_history"),
                     child: AutoSizeText(

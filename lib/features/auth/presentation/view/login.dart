@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bytebuddy/common/common.dart';
 import 'package:bytebuddy/constants/constant.dart';
 import 'package:bytebuddy/features/auth/presentation/controller/auth_controller.dart';
@@ -27,6 +28,7 @@ class _RegisterState extends ConsumerState<Login> {
 
   late TextEditingController _email;
   late TextEditingController _password;
+  late TextEditingController _message;
 
   late TapGestureRecognizer _tapGestureRecognizer;
   late TapGestureRecognizer _resetTapGestureRecognizer;
@@ -36,6 +38,7 @@ class _RegisterState extends ConsumerState<Login> {
     super.initState();
     _email = TextEditingController();
     _password = TextEditingController();
+    _message = TextEditingController();
 
     _tapGestureRecognizer = TapGestureRecognizer();
     _resetTapGestureRecognizer = TapGestureRecognizer();
@@ -52,7 +55,9 @@ class _RegisterState extends ConsumerState<Login> {
             context.go("/dashboard");
           },
           error: (error, stackTrace) {
-            MessageWidget.showSnackBar(context, error.toString());
+            RegExp regExp = RegExp(r'\[.*?\]');
+            String cleanedMessage = error.toString().replaceAll(regExp, '');
+            _message.text = cleanedMessage.trim();
           },
           loading: () {},
         );
@@ -122,6 +127,15 @@ class _RegisterState extends ConsumerState<Login> {
                                 },
                               ),
                               const Gap(20),
+                              _message.text.isNotEmpty
+                                  ? Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      child: AutoSizeText(_message.text,
+                                          style: context.bodySmall?.copyWith(
+                                              color: Pallete.lightRed)),
+                                    )
+                                  : Container(),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
@@ -143,6 +157,7 @@ class _RegisterState extends ConsumerState<Login> {
                               const Gap(40),
                               ElevatedButton(
                                 onPressed: () {
+                                  _message.clear();
                                   if (_formKey.currentState!.validate()) {
                                     ref
                                         .read(authControllerLoginProvider
@@ -192,6 +207,7 @@ class _RegisterState extends ConsumerState<Login> {
   void dispose() {
     _email.dispose();
     _password.dispose();
+    _message.dispose();
     _tapGestureRecognizer.dispose();
     _resetTapGestureRecognizer.dispose();
     super.dispose();

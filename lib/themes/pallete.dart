@@ -11,11 +11,11 @@ class Pallete {
   static const Color deepPurple = Color(0xFF210F60);
 
   static const Color whiteColor = Colors.white;
-  static const Color lightWhite = Color(0xFFD9F4EB);
+  static const Color lightWhite = Color(0xFFE9EAE9);
 
   static const Color blackColor = Color(0xFF262626);
   static const Color lightBlack = Color(0xFF595959);
 
-  static const Color greyColor = Color(0xFFF8F8FB);
+  static const Color greyColor = Color(0xFFE9EAE9);
   static const Color scaffoldColor = Color(0xFFF8F8FB);
 }

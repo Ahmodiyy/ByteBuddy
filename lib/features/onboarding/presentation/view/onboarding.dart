@@ -460,7 +460,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                         Container(
                           padding: const EdgeInsets.all(60),
                           alignment: Alignment.center,
-                          color: Pallete.lightWhite,
+                          color: Pallete.greyColor,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

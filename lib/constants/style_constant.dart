@@ -6,6 +6,18 @@ class StyleConstant {
     fillColor: Pallete.greyColor,
     filled: true,
     hintText: 'Enter',
+    errorBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Pallete.lightRed, width: 1.0),
+      borderRadius: BorderRadius.all(Radius.circular(
+        10,
+      )),
+    ),
+    focusedErrorBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Pallete.lightRed, width: 1.0),
+      borderRadius: BorderRadius.all(Radius.circular(
+        10,
+      )),
+    ),
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(color: Pallete.greyColor, width: 1.0),
       borderRadius: BorderRadius.all(Radius.circular(

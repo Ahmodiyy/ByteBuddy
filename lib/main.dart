@@ -2,7 +2,7 @@ import 'package:bytebuddy/features/auth/presentation/view/login.dart';
 import 'package:bytebuddy/features/auth/presentation/view/register.dart';
 import 'package:bytebuddy/features/auth/presentation/view/reset_password.dart';
 import 'package:bytebuddy/features/dashboard.dart';
-import 'package:bytebuddy/features/topup/presentation/view/Funding.dart';
+import 'package:bytebuddy/features/topup/presentation/view/funding.dart';
 import 'package:bytebuddy/features/topup/presentation/view/deposit.dart';
 import 'package:bytebuddy/features/topup/presentation/view/top_up.dart';
 import 'package:bytebuddy/features/topup/presentation/view/transaction_history.dart';

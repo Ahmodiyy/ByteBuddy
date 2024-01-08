@@ -82,7 +82,7 @@ class _FundingState extends ConsumerState<Funding> {
                     controller: _amount,
                     keyboardType: TextInputType.number,
                     decoration: StyleConstant.input.copyWith(
-                      hintText: '100.00-2,450.00',
+                      hintText: '100.00 - 2,450.00',
                       prefixIcon: const IconWidget(
                         iconData: FontAwesomeIcons.nairaSign,
                         color: Pallete.blackColor,
@@ -96,7 +96,7 @@ class _FundingState extends ConsumerState<Funding> {
                       if (enteredValue == null ||
                           enteredValue < 100 ||
                           enteredValue > 2450) {
-                        return 'value must be 100-2450';
+                        return 'value must be 100 - 2,450';
                       }
                       return null;
                     },
