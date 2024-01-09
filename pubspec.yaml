@@ -39,7 +39,6 @@ dependencies:
   flutter_native_splash: ^2.3.5
   flutter_riverpod: ^2.4.6
   go_router: ^6.5.9
-  http: ^1.1.0
   smooth_page_indicator: ^1.1.0
   smooth_scroll_multiplatform: ^1.0.8
   auto_size_text: ^3.0.0
@@ -53,6 +52,7 @@ dependencies:
   flutter_svg: ^2.0.9
   uuid: ^3.0.4
   dio: ^5.4.0
+  connectivity_plus: ^4.0.1
 
 
 dev_dependencies:

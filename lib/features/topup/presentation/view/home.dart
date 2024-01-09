@@ -75,8 +75,7 @@ class DepositWidget extends ConsumerWidget {
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Pallete.greenColor,
-        borderRadius:
-            BorderRadius.circular(15.0), // Adjust the corner radius as needed
+        borderRadius: BorderRadius.circular(15.0),
       ),
       child: Column(
         children: [
@@ -93,7 +92,7 @@ class DepositWidget extends ConsumerWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Flexible(
+                          Expanded(
                             child: AutoSizeText(
                               "Available Balance ",
                               maxLines: 1,
@@ -102,22 +101,18 @@ class DepositWidget extends ConsumerWidget {
                             ),
                           ),
                           togglePassword
-                              ? const Flexible(
-                                  child: IconWidget(
-                                    iconData: FontAwesomeIcons.eyeSlash,
-                                    color: Pallete.lightWhite,
-                                  ),
+                              ? const IconWidget(
+                                  iconData: FontAwesomeIcons.eyeSlash,
+                                  color: Pallete.lightWhite,
                                 )
-                              : const Flexible(
-                                  child: IconWidget(
-                                    iconData: FontAwesomeIcons.eye,
-                                    color: Pallete.lightWhite,
-                                  ),
+                              : const IconWidget(
+                                  iconData: FontAwesomeIcons.eye,
+                                  color: Pallete.lightWhite,
                                 ),
                         ],
                       )),
                 ),
-                const Spacer(),
+                const Gap(20),
                 Flexible(
                   child: InkWell(
                     onTap: () => context.push("/dashboard/transaction_history"),
