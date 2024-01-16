@@ -1,11 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bytebuddy/common/icon_widget.dart';
-import 'package:bytebuddy/common/loading_widget.dart';
 import 'package:bytebuddy/constants/constant.dart';
 import 'package:bytebuddy/constants/paystack_constant.dart';
 import 'package:bytebuddy/features/auth/presentation/controller/auth_controller.dart';
-import 'package:bytebuddy/features/topup/data/log_repo.dart';
-import 'package:bytebuddy/features/topup/presentation/controller/log_controller.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +40,6 @@ class _FundingState extends ConsumerState<Funding> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(logControllerTransactionReferenceProvider);
-    final isLoading = state is AsyncLoading;
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
@@ -140,47 +135,20 @@ class _FundingState extends ConsumerState<Funding> {
                               .read(authControllerLoginProvider.notifier)
                               .getCurrentUser()!
                               .email!;
-                          final amount = double.parse(_amount.text);
-                          await ref
-                              .read(
-                                logControllerTransactionReferenceProvider
-                                    .notifier,
-                              )
-                              .logTransactionReference(
-                                email: email,
-                                transactionReference: transactionReference,
-                              );
-                          return await FlutterPaystackPlus.openPaystackPopup(
-                              publicKey: PaystackConstant.testPublicKey,
-                              context: context,
-                              secretKey: PaystackConstant.testSecretKey,
-                              currency: 'NGN',
-                              customerEmail: ref
-                                  .read(authControllerLoginProvider.notifier)
-                                  .getCurrentUser()!
-                                  .email!,
-                              amount: (amount * 100).toString(),
-                              reference: transactionReference,
-                              onClosed: () {
-                                debugPrint(
-                                    'Could\'nnnnnnnnnnnnnnnnnnnnnnnnnnnnnt finish payment');
-                              },
-                              onSuccess: () {
-                                debugPrint(
-                                    'Payment succeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeessful');
-                              });
+                          final amountInDouble = double.parse(_amount.text);
+                          final amount = (amountInDouble * 100).toString();
+                          return await payWithPaystack(context,
+                              transactionReference: transactionReference,
+                              email: email,
+                              amount: amount);
                         } catch (e) {
                           debugPrint('Paystack payment error ${e.toString()}');
                         }
                       }
                     },
-                    child: isLoading
-                        ? const CircularProgressIndicator(
-                            color: Pallete.whiteColor,
-                          )
-                        : const Text(
-                            'Pay with Paystack',
-                          ),
+                    child: const Text(
+                      'Pay with Paystack',
+                    ),
                   ),
                   const Gap(20),
                 ],
@@ -198,4 +166,24 @@ class _FundingState extends ConsumerState<Funding> {
     _message.dispose();
     super.dispose();
   }
+}
+
+Future<void> payWithPaystack(BuildContext context,
+    {required String transactionReference,
+    required String email,
+    required String amount}) async {
+  return await FlutterPaystackPlus.openPaystackPopup(
+      publicKey: PaystackConstant.testPublicKey,
+      context: context,
+      secretKey: PaystackConstant.testSecretKey,
+      currency: 'NGN',
+      customerEmail: email,
+      amount: amount,
+      reference: transactionReference,
+      onClosed: () {
+        debugPrint('Could\'nt finish payment');
+      },
+      onSuccess: () {
+        debugPrint('Payment successful');
+      });
 }
