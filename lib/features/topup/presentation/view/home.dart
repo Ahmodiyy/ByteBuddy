@@ -216,16 +216,28 @@ class GridItemWidget extends StatelessWidget {
   GridItemWidget({super.key});
   final List<TopUpSvgAndText> svgs = [
     TopUpSvgAndText(
-      SvgConstant.airtime,
-      "Airtime",
-    ),
-    TopUpSvgAndText(
       SvgConstant.data,
       "Data",
     ),
     TopUpSvgAndText(
-      SvgConstant.mobile,
-      "mobile",
+      SvgConstant.airtime,
+      "Airtime",
+    ),
+    TopUpSvgAndText(
+      SvgConstant.pin,
+      "Pin",
+    ),
+    TopUpSvgAndText(
+      SvgConstant.tv,
+      "TV",
+    ),
+    TopUpSvgAndText(
+      SvgConstant.electric,
+      "Electric",
+    ),
+    TopUpSvgAndText(
+      SvgConstant.printing,
+      "Printing",
     ),
   ];
   @override
@@ -233,6 +245,7 @@ class GridItemWidget extends StatelessWidget {
     return Container(
       height: 180,
       width: double.infinity,
+      padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Pallete.whiteColor,
         borderRadius:
@@ -240,34 +253,40 @@ class GridItemWidget extends StatelessWidget {
       ),
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3, // Number of columns
-          crossAxisSpacing: 15.0, // Spacing between columns
-          mainAxisSpacing: 15.0, // Spacing between rows
-        ),
-        padding: const EdgeInsets.all(15),
+            crossAxisCount: 3,
+            crossAxisSpacing: 20.0,
+            mainAxisSpacing: 20.0,
+            mainAxisExtent: 65),
+
         itemCount: svgs.length, // Total number of items (rows * columns)
         itemBuilder: (context, index) {
-          return Column(
-            children: [
-              Expanded(
-                flex: 3,
-                child: CircleAvatar(
-                    backgroundColor: Pallete.lightGreen,
-                    child: SvgPicture.asset(svgs[index].svgUrl,
-                        width: 20, height: 20)),
-              ),
-              Expanded(
-                child: Center(
-                  child: Text(
-                    svgs[index].text,
-                    style: context.bodySmall?.copyWith(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
+          return InkWell(
+            onTap: () {},
+            child: SizedBox(
+              height: 50.0,
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: CircleAvatar(
+                        backgroundColor: Pallete.lightGreen,
+                        child: SvgPicture.asset(svgs[index].svgUrl,
+                            width: 25, height: 25)),
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        svgs[index].text,
+                        style: context.bodySmall?.copyWith(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           );
         },
       ),

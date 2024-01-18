@@ -10,4 +10,8 @@ class SvgConstant {
   static const data = "$path/data.svg";
   static const mobile = "$path/mobile.svg";
   static const back = "$path/back.svg";
+  static const electric = "$path/electric.svg";
+  static const tv = "$path/tv.svg";
+  static const pin = "$path/pin.svg";
+  static const printing = "$path/printing.svg";
 }
