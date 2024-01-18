@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bytebuddy/common/icon_widget.dart';
 import 'package:bytebuddy/constants/constant.dart';
+import 'package:bytebuddy/features/topup/data/transaction_repo.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 final togglePasswordProvider = StateProvider<bool>((ref) {
   return true;
@@ -70,6 +72,8 @@ class DepositWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final togglePassword = ref.watch(togglePasswordProvider);
+    final balanceState = ref.watch(balanceStreamProvider);
+
     return Container(
       height: 180,
       padding: const EdgeInsets.all(15),
@@ -131,10 +135,31 @@ class DepositWidget extends ConsumerWidget {
             flex: 2,
             child: Row(
               children: [
-                AutoSizeText(
-                  togglePassword ? "****" : "45334",
-                  style: context.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.bold, color: Pallete.whiteColor),
+                balanceState.when(
+                  data: (data) {
+                    var formatter = NumberFormat.currency(symbol: '₦');
+                    var balanceInNaira = formatter.format(data);
+                    return Flexible(
+                      child: AutoSizeText(
+                        togglePassword ? "****" : balanceInNaira,
+                        style: context.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Pallete.whiteColor),
+                      ),
+                    );
+                  },
+                  error: (error, stackTrace) {
+                    return Flexible(
+                      child: AutoSizeText(
+                        error.toString(),
+                        style: context.bodyMedium
+                            ?.copyWith(color: Pallete.whiteColor),
+                      ),
+                    );
+                  },
+                  loading: () => const CircularProgressIndicator(
+                    color: Pallete.whiteColor,
+                  ),
                 ),
               ],
             ),
@@ -215,7 +240,7 @@ class GridItemWidget extends StatelessWidget {
       ),
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4, // Number of columns
+          crossAxisCount: 3, // Number of columns
           crossAxisSpacing: 15.0, // Spacing between columns
           mainAxisSpacing: 15.0, // Spacing between rows
         ),
