@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bytebuddy/common/appBar_widget.dart';
 import 'package:bytebuddy/common/icon_widget.dart';
 import 'package:bytebuddy/constants/constant.dart';
 import 'package:bytebuddy/constants/paystack_constant.dart';
@@ -44,30 +45,7 @@ class _FundingState extends ConsumerState<Funding> {
       builder: (context, constraints) {
         return SafeArea(
           child: Scaffold(
-            appBar: PreferredSize(
-              preferredSize: const Size(double.infinity, 100),
-              child: Row(
-                children: [
-                  InkWell(
-                    onTap: () => context.pop(),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: SvgPicture.asset(
-                        SvgConstant.back,
-                        width: 18,
-                      ),
-                    ),
-                  ),
-                  //const Gap(20),
-                  AutoSizeText(
-                    "Funding",
-                    maxLines: 1,
-                    style:
-                        context.bodySmall?.copyWith(color: Pallete.blackColor),
-                  ),
-                ],
-              ),
-            ),
+            appBar: AppBarWidget.appbar(context, "Funding"),
             body: SingleChildScrollView(
               child: Center(
                 child: Container(

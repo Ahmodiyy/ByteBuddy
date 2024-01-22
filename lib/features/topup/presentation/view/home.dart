@@ -261,7 +261,8 @@ class GridItemWidget extends StatelessWidget {
         itemCount: svgs.length, // Total number of items (rows * columns)
         itemBuilder: (context, index) {
           return InkWell(
-            onTap: () {},
+            onTap: () =>
+                context.push("/dashboard/${svgs[index].text.toLowerCase()}"),
             child: SizedBox(
               height: 50.0,
               child: Column(

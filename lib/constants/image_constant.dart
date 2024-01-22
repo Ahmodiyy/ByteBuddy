@@ -7,4 +7,8 @@ class ImageConstant {
   static const byteBuddy = "$path/bytebuddy.png";
   static const byteBuddySquare = "$path/bytebuddysquare.png";
   static const app = "$path/app.gif";
+  static const mtn = "$path/mtn.png";
+  static const airtel = "$path/airtel.png";
+  static const glo = "$path/glo.png";
+  static const nineMobile = "$path/9mobile.png";
 }

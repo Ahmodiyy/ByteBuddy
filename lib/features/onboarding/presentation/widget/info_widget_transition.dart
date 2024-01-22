@@ -48,7 +48,7 @@ class InfoWidgetTransition extends ConsumerWidget {
                   .animate()
                   .slide(
                       curve: Curves.easeIn,
-                      duration: 1000.ms,
+                      duration: 700.ms,
                       begin: const Offset(0.0, 1),
                       end: const Offset(0.0, 0.0))
                   .fadeIn(),
@@ -68,8 +68,8 @@ class InfoWidgetTransition extends ConsumerWidget {
                   .animate()
                   .slide(
                       curve: Curves.easeIn,
-                      duration: 1000.ms,
-                      delay: 500.ms,
+                      duration: 700.ms,
+                      delay: 400.ms,
                       begin: const Offset(0.0, 0.5),
                       end: const Offset(0.0, 0.0))
                   .fadeIn(),

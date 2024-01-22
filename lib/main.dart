@@ -3,8 +3,7 @@ import 'package:bytebuddy/features/auth/presentation/view/register.dart';
 import 'package:bytebuddy/features/auth/presentation/view/reset_password.dart';
 import 'package:bytebuddy/features/dashboard.dart';
 import 'package:bytebuddy/features/topup/presentation/view/funding.dart';
-import 'package:bytebuddy/features/topup/presentation/view/deposit.dart';
-import 'package:bytebuddy/features/topup/presentation/view/top_up.dart';
+import 'package:bytebuddy/features/topup/presentation/view/data.dart';
 import 'package:bytebuddy/features/topup/presentation/view/transaction_history.dart';
 import 'package:bytebuddy/firebase_options.dart';
 import 'package:bytebuddy/themes/pallete.dart';
@@ -61,12 +60,8 @@ GoRouter _router(User? user) {
               builder: (context, state) => const Funding(),
             ),
             GoRoute(
-              path: 'deposit',
-              builder: (context, state) => const Deposit(),
-            ),
-            GoRoute(
-              path: 'top_up',
-              builder: (context, state) => const TopUp(),
+              path: 'data',
+              builder: (context, state) => const Data(),
             ),
           ]),
     ],
