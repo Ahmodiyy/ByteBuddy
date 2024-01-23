@@ -80,7 +80,7 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: _router(user),
       theme: ThemeData(
-        scaffoldBackgroundColor: Pallete.whiteColor,
+        scaffoldBackgroundColor: Pallete.scaffoldColor,
         appBarTheme: const AppBarTheme(
           backgroundColor: Pallete.whiteColor,
         ),

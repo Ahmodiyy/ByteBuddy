@@ -11,25 +11,28 @@ class AppBarWidget {
   static PreferredSizeWidget appbar(BuildContext context, String screenText) {
     return PreferredSize(
       preferredSize: const Size(double.infinity, 100),
-      child: Row(
-        children: [
-          InkWell(
-            onTap: () => context.pop(),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: SvgPicture.asset(
-                SvgConstant.back,
-                width: 18,
+      child: Container(
+        color: Pallete.whiteColor,
+        child: Row(
+          children: [
+            InkWell(
+              onTap: () => context.pop(),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: SvgPicture.asset(
+                  SvgConstant.back,
+                  width: 18,
+                ),
               ),
             ),
-          ),
-          //const Gap(20),
-          AutoSizeText(
-            screenText,
-            maxLines: 1,
-            style: context.bodySmall?.copyWith(color: Pallete.blackColor),
-          ),
-        ],
+            //const Gap(20),
+            AutoSizeText(
+              screenText,
+              maxLines: 1,
+              style: context.bodySmall?.copyWith(color: Pallete.blackColor),
+            ),
+          ],
+        ),
       ),
     );
   }

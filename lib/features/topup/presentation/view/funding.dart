@@ -46,6 +46,7 @@ class _FundingState extends ConsumerState<Funding> {
         return SafeArea(
           child: Scaffold(
             appBar: AppBarWidget.appbar(context, "Funding"),
+            backgroundColor: Pallete.whiteColor,
             body: SingleChildScrollView(
               child: Center(
                 child: Container(
