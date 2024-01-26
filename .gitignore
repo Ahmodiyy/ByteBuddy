@@ -20,6 +20,9 @@ database.rules.json
 #paystack
 paystack_constant.dart
 
+#api file
+data_repo.dart
+data_service_model.dart
 
 # IntelliJ related
 *.iml

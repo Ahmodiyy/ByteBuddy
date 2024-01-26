@@ -2,6 +2,7 @@ import 'package:bytebuddy/features/auth/presentation/view/login.dart';
 import 'package:bytebuddy/features/auth/presentation/view/register.dart';
 import 'package:bytebuddy/features/auth/presentation/view/reset_password.dart';
 import 'package:bytebuddy/features/dashboard.dart';
+import 'package:bytebuddy/features/topup/presentation/view/check_out.dart';
 import 'package:bytebuddy/features/topup/presentation/view/funding.dart';
 import 'package:bytebuddy/features/topup/presentation/view/data.dart';
 import 'package:bytebuddy/features/topup/presentation/view/transaction_history.dart';
@@ -62,6 +63,10 @@ GoRouter _router(User? user) {
             GoRoute(
               path: 'data',
               builder: (context, state) => const Data(),
+            ),
+            GoRoute(
+              path: 'checkout',
+              builder: (context, state) => const CheckOut(),
             ),
           ]),
     ],

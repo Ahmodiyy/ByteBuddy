@@ -3,6 +3,7 @@ import 'package:bytebuddy/common/icon_widget.dart';
 import 'package:bytebuddy/constants/constant.dart';
 import 'package:bytebuddy/features/topup/data/transaction_repo.dart';
 import 'package:bytebuddy/themes/pallete.dart';
+import 'package:bytebuddy/util/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -137,11 +138,11 @@ class DepositWidget extends ConsumerWidget {
               children: [
                 balanceState.when(
                   data: (data) {
-                    var formatter = NumberFormat.currency(symbol: '₦');
-                    var balanceInNaira = formatter.format(data);
                     return Flexible(
                       child: AutoSizeText(
-                        togglePassword ? "****" : balanceInNaira,
+                        togglePassword
+                            ? "****"
+                            : Functions.convertToNaira(data),
                         style: context.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Pallete.whiteColor),
@@ -151,7 +152,7 @@ class DepositWidget extends ConsumerWidget {
                   error: (error, stackTrace) {
                     return Flexible(
                       child: AutoSizeText(
-                        error.toString(),
+                        "Please check your internet connection and try again.",
                         style: context.bodyMedium
                             ?.copyWith(color: Pallete.whiteColor),
                       ),
