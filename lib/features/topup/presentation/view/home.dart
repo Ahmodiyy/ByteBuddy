@@ -10,7 +10,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 final togglePasswordProvider = StateProvider<bool>((ref) {
   return true;
@@ -58,7 +57,6 @@ class _HomeState extends ConsumerState<Home> {
               const Gap(20),
               GridItemWidget(),
               const Gap(20),
-              Column(),
             ]),
           ),
         ),

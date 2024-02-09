@@ -1,16 +1,16 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bytebuddy/common/common.dart';
 import 'package:bytebuddy/constants/constant.dart';
+import 'package:bytebuddy/features/topup/model/data_purchase_model.dart';
 import 'package:bytebuddy/features/topup/model/data_service_model.dart';
 import 'package:bytebuddy/features/topup/presentation/controller/data_controller.dart';
 import 'package:bytebuddy/themes/pallete.dart';
-import 'package:bytebuddy/util/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-final networkDataProvider = StateProvider<String>((ref) {
+final serviceIDProvider = StateProvider<String>((ref) {
   return 'mtn_sme';
 });
 
@@ -34,7 +34,7 @@ class _DataState extends ConsumerState<Data> {
 
   @override
   Widget build(BuildContext context) {
-    final networkData = ref.watch(networkDataProvider);
+    final networkData = ref.watch(serviceIDProvider);
     final dataServiceModelStatus = ref.watch(dataControllerProvider);
     return SafeArea(
       child: Scaffold(
@@ -74,7 +74,7 @@ class _DataState extends ConsumerState<Data> {
                       }).toList(),
                       onChanged: (value) {
                         ref
-                            .read(networkDataProvider.notifier)
+                            .read(serviceIDProvider.notifier)
                             .update((state) => value!);
                         ref.invalidate(dataControllerProvider);
                       },
@@ -126,12 +126,13 @@ class _DataState extends ConsumerState<Data> {
                           GridDataWidget(
                             dataServiceModel: data,
                             formKey: _formKey,
+                            numberController: numberController,
                           ),
                         ],
                       ),
                     ),
-                    error: (error, stackTrace) =>
-                        AutoSizeText(error.toString()),
+                    error: (error, stackTrace) => AutoSizeText(
+                        "Please check your internet connection and try again."),
                     loading: () => const CircularProgressIndicator(
                         color: Pallete.greenColor),
                   )),
@@ -143,14 +144,18 @@ class _DataState extends ConsumerState<Data> {
   }
 }
 
-class GridDataWidget extends StatelessWidget {
+class GridDataWidget extends ConsumerWidget {
   final DataServiceModel dataServiceModel;
   final GlobalKey<FormState> formKey;
+  final TextEditingController numberController;
   const GridDataWidget(
-      {super.key, required this.dataServiceModel, required this.formKey});
+      {super.key,
+      required this.dataServiceModel,
+      required this.formKey,
+      required this.numberController});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
@@ -163,7 +168,14 @@ class GridDataWidget extends StatelessWidget {
         return InkWell(
           onTap: () {
             if (formKey.currentState!.validate()) {
-              context.go('/dashboard/checkout');
+              context.push('/dashboard/checkout',
+                  extra: DataPurchaseModel(
+                    service: dataServiceModel.service,
+                    serviceID: ref.read(serviceIDProvider),
+                    planIndex: index,
+                    number: numberController.text,
+                    dataPlan: dataServiceModel.plans[index],
+                  ));
             }
           },
           child: Container(
@@ -177,7 +189,8 @@ class GridDataWidget extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 3,
-                  child: Center(
+                  child: Align(
+                    alignment: Alignment.topCenter,
                     child: AutoSizeText(
                       dataServiceModel.plans[index].displayName,
                       textAlign: TextAlign.center,
@@ -189,7 +202,8 @@ class GridDataWidget extends StatelessWidget {
                 ),
                 const Gap(10),
                 Expanded(
-                  child: Center(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
                     child: AutoSizeText(
                       '\u20A6${dataServiceModel.plans[index].price}',
                       textAlign: TextAlign.center,

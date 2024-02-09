@@ -8,11 +8,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class AppBarWidget {
-  static PreferredSizeWidget appbar(BuildContext context, String screenText) {
+  static PreferredSizeWidget appbar(BuildContext context, String screenText,
+      {Color backgroundColor = Pallete.whiteColor}) {
     return PreferredSize(
       preferredSize: const Size(double.infinity, 100),
       child: Container(
-        color: Pallete.whiteColor,
+        color: backgroundColor,
         child: Row(
           children: [
             InkWell(

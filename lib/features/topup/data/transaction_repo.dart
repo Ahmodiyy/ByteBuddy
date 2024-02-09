@@ -2,6 +2,10 @@ import 'package:bytebuddy/features/auth/presentation/controller/auth_controller.
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+final transactionRepoProvider = Provider<TransactionRepo>((ref) {
+  return TransactionRepo();
+});
+
 final balanceStreamProvider = StreamProvider<dynamic>((ref) async* {
   // Call the getBalance method to get the initial balance
   var initialBalance = await TransactionRepo.getBalance(
@@ -13,7 +17,6 @@ final balanceStreamProvider = StreamProvider<dynamic>((ref) async* {
   await for (var snapshot in snapshots) {
     Map<String, dynamic>? data = snapshot.data();
     dynamic balance = data?['balance'] ?? 0.0;
-    print('balance is $balance');
     yield balance;
   }
 });

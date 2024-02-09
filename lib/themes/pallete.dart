@@ -15,6 +15,7 @@ class Pallete {
 
   static const Color blackColor = Color(0xFF262626);
   static const Color lightBlack = Color(0xFF595959);
+  static const Color lighterBlack = Color(0xFF8C8C8C);
 
   static const Color greyColor = Color(0xFFE9EAE9);
   static const Color scaffoldColor = Color(0xFFF8F8FB);
