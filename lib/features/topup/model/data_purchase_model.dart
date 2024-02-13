@@ -5,6 +5,7 @@ class DataPurchaseModel {
   String serviceID;
   int planIndex;
   String number;
+
   DataPlanModel dataPlan;
 
   DataPurchaseModel({

@@ -7,6 +7,7 @@ import 'package:bytebuddy/features/topup/presentation/view/check_out.dart';
 import 'package:bytebuddy/features/topup/presentation/view/funding.dart';
 import 'package:bytebuddy/features/topup/presentation/view/data.dart';
 import 'package:bytebuddy/features/topup/presentation/view/transaction_history.dart';
+import 'package:bytebuddy/features/topup/presentation/view/transaction_status.dart';
 import 'package:bytebuddy/firebase_options.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -69,6 +70,11 @@ GoRouter _router(User? user) {
               path: 'checkout',
               builder: (context, state) =>
                   CheckOut(state.extra as DataPurchaseModel),
+            ),
+            GoRoute(
+              path: 'transaction_status',
+              builder: (context, state) =>
+                  TransactionStatus(state.extra as Map<String, dynamic>),
             ),
           ]),
     ],

@@ -1,11 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bytebuddy/common/appBar_widget.dart';
 import 'package:bytebuddy/constants/constant.dart';
+import 'package:bytebuddy/features/auth/presentation/controller/auth_controller.dart';
+import 'package:bytebuddy/features/topup/application/subscription_service.dart';
 import 'package:bytebuddy/features/topup/model/data_purchase_model.dart';
+import 'package:bytebuddy/features/topup/presentation/controller/subscription_controller.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class CheckOut extends ConsumerWidget {
   final DataPurchaseModel dataPurchaseModel;
@@ -16,6 +20,40 @@ class CheckOut extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    String service = dataPurchaseModel.service;
+    String number = dataPurchaseModel.number;
+    String serviceID = dataPurchaseModel.serviceID;
+    int planIndex = dataPurchaseModel.planIndex;
+    String price = dataPurchaseModel.dataPlan.price;
+    String displayName = dataPurchaseModel.dataPlan.displayName;
+
+    ref.listen(
+      subscriptionControllerProvider,
+      (previous, next) {
+        next.when(
+          data: (data) {
+            context.go("/dashboard/transaction_status");
+          },
+          error: (error, stackTrace) {
+            var snackBar = SnackBar(
+              content: Text('Hello, SnackBar!'),
+              duration:
+                  Duration(seconds: 2), // Optional, how long it stays on screen
+              action: SnackBarAction(
+                label: 'Close',
+                onPressed: () {
+                  // Some code to execute when this action is selected
+                },
+              ),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          },
+          loading: () {},
+        );
+      },
+    );
+    final state = ref.watch(subscriptionControllerProvider);
+    bool isLoading = state is AsyncLoading;
     return SafeArea(
       child: Scaffold(
         appBar: AppBarWidget.appbar(context, "Data",
@@ -36,8 +74,7 @@ class CheckOut extends ConsumerWidget {
                 ),
                 const Gap(10),
                 Center(
-                  child: AutoSizeText(
-                      '\u20A6${dataPurchaseModel.dataPlan.price}',
+                  child: AutoSizeText('\u20A6$price',
                       style: context.bodyMedium?.copyWith(
                           color: Pallete.blackColor,
                           fontWeight: FontWeight.bold)),
@@ -67,7 +104,7 @@ class CheckOut extends ConsumerWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 20),
                               child: AutoSizeText(
-                                dataPurchaseModel.service,
+                                service,
                                 style: context.bodySmall,
                                 textAlign: TextAlign.right,
                               ),
@@ -88,7 +125,7 @@ class CheckOut extends ConsumerWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 20),
                               child: AutoSizeText(
-                                dataPurchaseModel.number,
+                                number,
                                 style: context.bodySmall,
                                 textAlign: TextAlign.right,
                               ),
@@ -109,7 +146,7 @@ class CheckOut extends ConsumerWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 20),
                               child: AutoSizeText(
-                                dataPurchaseModel.dataPlan.displayName,
+                                displayName,
                                 style: context.bodySmall,
                                 textAlign: TextAlign.right,
                               ),
@@ -128,7 +165,7 @@ class CheckOut extends ConsumerWidget {
                           ),
                           TableCell(
                             child: AutoSizeText(
-                              '\u20A6${dataPurchaseModel.dataPlan.price}',
+                              '\u20A6$price',
                               style: context.bodySmall,
                               textAlign: TextAlign.right,
                             ),
@@ -140,8 +177,26 @@ class CheckOut extends ConsumerWidget {
                 ),
                 const Gap(50),
                 ElevatedButton(
-                  onPressed: () {},
-                  child: const AutoSizeText('Pay'),
+                  onPressed: () {
+                    ref
+                        .read(subscriptionServiceProvider("data"))
+                        .buySubscription(
+                          subscriptionType: 'data',
+                          serviceID: serviceID,
+                          planIndex: planIndex,
+                          phone: number,
+                          email: ref
+                              .read(authControllerLoginProvider.notifier)
+                              .getCurrentUser()!
+                              .email!,
+                          price: price,
+                        );
+                  },
+                  child: isLoading
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : const AutoSizeText('Pay'),
                 )
               ],
             ),
