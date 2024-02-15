@@ -3,8 +3,7 @@ import 'package:bytebuddy/features/topup/data/subscription_factory.dart';
 import 'package:bytebuddy/features/topup/data/transaction_repo.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final subscriptionServiceProvider =
-    Provider.family<SubscriptionService, String>((ref, subscriptionType) {
+final subscriptionServiceProvider = Provider<SubscriptionService>((ref) {
   return SubscriptionService(
       ref.read(transactionRepoProvider), ref.read(subscriptionFactoryProvider));
 });
@@ -26,15 +25,19 @@ class SubscriptionService {
       required String email,
       required String price}) async {
     try {
-      double balance = _transactionRepo.getBalance(email) as double;
+      dynamic dynamicBalance = await _transactionRepo.getBalance(email);
+      String stringBalance = dynamicBalance.toString();
+      print('string balance $stringBalance');
+      double balance = double.parse(stringBalance);
       double amount = double.parse(price);
       if (amount > balance) {
         throw Exception('Insufficient funds');
       }
       Subscription subscription =
           _subscriptionFactory.createSubscription(subscriptionType);
-      return subscription.buy(serviceID, planIndex, phone, email);
+      return await subscription.buy(serviceID, planIndex, phone, email);
     } catch (error) {
+      print('inside subscription service ${error.toString()}');
       rethrow;
     }
   }

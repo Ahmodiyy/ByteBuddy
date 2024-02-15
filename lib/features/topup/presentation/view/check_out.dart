@@ -35,16 +35,18 @@ class CheckOut extends ConsumerWidget {
             context.go("/dashboard/transaction_status");
           },
           error: (error, stackTrace) {
+            debugPrint('in checkout.dart riverpod error listener');
             var snackBar = SnackBar(
-              content: Text('Hello, SnackBar!'),
-              duration:
-                  Duration(seconds: 2), // Optional, how long it stays on screen
+              content: Text(error.toString()),
+              duration: const Duration(
+                  seconds: 3), // Optional, how long it stays on screen
               action: SnackBarAction(
                 label: 'Close',
                 onPressed: () {
                   // Some code to execute when this action is selected
                 },
               ),
+              backgroundColor: Pallete.whiteColor,
             );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           },
@@ -53,7 +55,7 @@ class CheckOut extends ConsumerWidget {
       },
     );
     final state = ref.watch(subscriptionControllerProvider);
-    bool isLoading = state is AsyncLoading;
+    final isLoading = state is AsyncLoading;
     return SafeArea(
       child: Scaffold(
         appBar: AppBarWidget.appbar(context, "Data",
@@ -178,9 +180,7 @@ class CheckOut extends ConsumerWidget {
                 const Gap(50),
                 ElevatedButton(
                   onPressed: () {
-                    ref
-                        .read(subscriptionServiceProvider("data"))
-                        .buySubscription(
+                    ref.read(subscriptionControllerProvider.notifier).subscribe(
                           subscriptionType: 'data',
                           serviceID: serviceID,
                           planIndex: planIndex,

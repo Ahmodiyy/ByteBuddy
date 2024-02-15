@@ -19,6 +19,7 @@ database.rules.json
 
 #paystack
 paystack_constant.dart
+endpoint_constant.dart
 
 #api file
 data_repo.dart

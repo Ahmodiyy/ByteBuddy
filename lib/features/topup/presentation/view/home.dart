@@ -138,9 +138,7 @@ class DepositWidget extends ConsumerWidget {
                   data: (data) {
                     return Flexible(
                       child: AutoSizeText(
-                        togglePassword
-                            ? "****"
-                            : Functions.convertToNaira(data),
+                        togglePassword ? "****" : '\u20A6$data',
                         style: context.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Pallete.whiteColor),
