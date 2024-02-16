@@ -32,6 +32,8 @@ class DataSubscriptionRepo implements Subscription {
       );
       Map<String, dynamic> jsonData = response.data;
       return jsonData;
+    } on DioException catch (e) {
+      throw Exception("Please check your internet connection and try again.");
     } catch (error) {
       rethrow;
     }
@@ -41,8 +43,13 @@ class DataSubscriptionRepo implements Subscription {
     try {
       Response response =
           await _dio.get('${EndpointConstant.getDataPlanEndpoint}$network');
+      if (response.data == null) {
+        throw Exception("This service has been disabled for now");
+      }
       Map<String, dynamic> jsonData = response.data;
       return DataServiceModel.fromJson(jsonData);
+    } on DioException catch (e) {
+      throw Exception("Please check your internet connection and try again.");
     } catch (error) {
       rethrow;
     }

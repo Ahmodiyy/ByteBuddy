@@ -131,8 +131,8 @@ class _DataState extends ConsumerState<Data> {
                         ],
                       ),
                     ),
-                    error: (error, stackTrace) => AutoSizeText(
-                        "Please check your internet connection and try again."),
+                    error: (error, stackTrace) =>
+                        AutoSizeText(error.toString()),
                     loading: () => const CircularProgressIndicator(
                         color: Pallete.greenColor),
                   )),

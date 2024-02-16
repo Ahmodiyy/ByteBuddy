@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bytebuddy/common/appBar_widget.dart';
 import 'package:bytebuddy/constants/constant.dart';
 import 'package:bytebuddy/features/auth/presentation/controller/auth_controller.dart';
-import 'package:bytebuddy/features/topup/application/subscription_service.dart';
 import 'package:bytebuddy/features/topup/model/data_purchase_model.dart';
 import 'package:bytebuddy/features/topup/presentation/controller/subscription_controller.dart';
 import 'package:bytebuddy/themes/pallete.dart';
@@ -32,18 +31,22 @@ class CheckOut extends ConsumerWidget {
       (previous, next) {
         next.when(
           data: (data) {
-            context.go("/dashboard/transaction_status");
+            context.push("/dashboard/transaction_status", extra: data);
           },
           error: (error, stackTrace) {
             debugPrint('in checkout.dart riverpod error listener');
             var snackBar = SnackBar(
-              content: Text(error.toString()),
+              content: AutoSizeText(
+                error.toString(),
+                style: context.bodySmall?.copyWith(color: Pallete.lightRed),
+              ),
               duration: const Duration(
-                  seconds: 3), // Optional, how long it stays on screen
+                  seconds: 10), // Optional, how long it stays on screen
               action: SnackBarAction(
                 label: 'Close',
+                textColor: Pallete.greenColor,
                 onPressed: () {
-                  // Some code to execute when this action is selected
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 },
               ),
               backgroundColor: Pallete.whiteColor,
