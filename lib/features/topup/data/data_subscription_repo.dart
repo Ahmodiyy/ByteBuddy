@@ -30,6 +30,9 @@ class DataSubscriptionRepo implements Subscription {
           },
         ),
       );
+      if (response.data == null) {
+        throw Exception("This service has been disabled for now");
+      }
       Map<String, dynamic> jsonData = response.data;
       return jsonData;
     } on DioException catch (e) {

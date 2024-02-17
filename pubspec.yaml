@@ -55,6 +55,7 @@ dependencies:
   dio: ^5.4.0
   connectivity_plus: ^4.0.1
   rive: ^0.12.4
+  url_launcher: ^6.1.2
 
 
 dev_dependencies:
@@ -83,6 +84,7 @@ flutter:
   assets:
     - assets/images/
     - assets/svgs/
+    - assets/rive/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

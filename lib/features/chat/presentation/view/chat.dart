@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 
 class Chat extends ConsumerStatefulWidget {
   const Chat({super.key});
@@ -13,11 +14,22 @@ class Chat extends ConsumerStatefulWidget {
 class _ChatState extends ConsumerState<Chat> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Pallete.scaffoldColor,
-      body: InkWell(
-        child: AutoSizeText("message us on whatsapp"),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Pallete.scaffoldColor,
+        body: Center(
+          child: Column(
+            children: [
+              const AutoSizeText("Coming soon"),
+              const Gap(10),
+              ElevatedButton(
+                  onPressed: () {},
+                  child: const AutoSizeText('Chat us on whatsapp'))
+            ],
+          ),
+        ),
       ),
     );
   }
 }
+//launchUrl(Uri.parse('https://wa.me/2347043760387'))
