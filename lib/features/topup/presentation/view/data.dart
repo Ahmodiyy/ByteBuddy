@@ -40,103 +40,221 @@ class _DataState extends ConsumerState<Data> {
       child: Scaffold(
         appBar: AppBarWidget.appbar(context, "Data"),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(20.0),
-                color: Pallete.whiteColor,
-                child: Row(
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              if (constraints.isMobile) {
+                return Column(
                   children: [
-                    DropdownButton(
-                      value: networkData,
-                      elevation: 0,
-                      underline: Container(),
-                      itemHeight: 50,
-                      items: dropdownItems.map((item) {
-                        return DropdownMenuItem(
-                          value: item['value'],
-                          child: Row(
-                            children: [
-                              ClipOval(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10, bottom: 10),
-                                  child: Image.asset(
-                                    item['image']!,
-                                    height: 40,
-                                    width: 40,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        ref
-                            .read(serviceIDProvider.notifier)
-                            .update((state) => value!);
-                        ref.invalidate(dataControllerProvider);
-                      },
-                    ),
-                    const Gap(10),
-                    Expanded(
-                      child: Form(
-                        key: _formKey,
-                        child: TextFormField(
-                          controller: numberController,
-                          keyboardType: TextInputType.number,
-                          decoration: StyleConstant.input.copyWith(
-                            hintText: 'Phone number',
-                            fillColor: Pallete.whiteColor,
-                          ),
-                          validator: (value) {
-                            return value?.length == 11
-                                ? null
-                                : "input valid number";
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Gap(20),
-              Container(
-                  margin:
-                      const EdgeInsets.only(left: 20, right: 20, bottom: 40),
-                  child: dataServiceModelStatus.when(
-                    data: (data) => Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        color: Pallete.whiteColor,
-                        borderRadius: BorderRadius.circular(
-                            15.0), // Adjust the corner radius as needed
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
+                    Container(
+                      padding: const EdgeInsets.all(20.0),
+                      color: Pallete.secondaryColor,
+                      child: Row(
                         children: [
-                          AutoSizeText(
-                            data.service,
-                            textAlign: TextAlign.center,
-                            style: context.bodySmall?.copyWith(),
+                          DropdownButton(
+                            value: networkData,
+                            elevation: 0,
+                            underline: Container(),
+                            itemHeight: 50,
+                            items: dropdownItems.map((item) {
+                              return DropdownMenuItem(
+                                value: item['value'],
+                                child: Row(
+                                  children: [
+                                    ClipOval(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 10, bottom: 10),
+                                        child: Image.asset(
+                                          item['image']!,
+                                          height: 40,
+                                          width: 40,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              ref
+                                  .read(serviceIDProvider.notifier)
+                                  .update((state) => value!);
+                              ref.invalidate(dataControllerProvider);
+                            },
                           ),
                           const Gap(10),
-                          GridDataWidget(
-                            dataServiceModel: data,
-                            formKey: _formKey,
-                            numberController: numberController,
+                          Expanded(
+                            child: Form(
+                              key: _formKey,
+                              child: TextFormField(
+                                controller: numberController,
+                                keyboardType: TextInputType.number,
+                                decoration: StyleConstant.input.copyWith(
+                                  hintText: 'Phone number',
+                                  fillColor: Pallete.secondaryColor,
+                                ),
+                                validator: (value) {
+                                  return value?.length == 11
+                                      ? null
+                                      : "input valid number";
+                                },
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    error: (error, stackTrace) =>
-                        AutoSizeText(error.toString()),
-                    loading: () => const CircularProgressIndicator(
-                        color: Pallete.greenColor),
-                  )),
-            ],
+                    const Gap(20),
+                    Container(
+                        margin: const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 40),
+                        child: dataServiceModelStatus.when(
+                          data: (data) => Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                              color: Pallete.secondaryColor,
+                              borderRadius: BorderRadius.circular(
+                                  15.0), // Adjust the corner radius as needed
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                AutoSizeText(
+                                  data.service,
+                                  textAlign: TextAlign.center,
+                                  style: context.bodySmall?.copyWith(),
+                                ),
+                                const Gap(10),
+                                GridDataWidget(
+                                  dataServiceModel: data,
+                                  formKey: _formKey,
+                                  numberController: numberController,
+                                ),
+                              ],
+                            ),
+                          ),
+                          error: (error, stackTrace) => AutoSizeText(
+                              error.toString(),
+                              textAlign: TextAlign.center),
+                          loading: () => const CircularProgressIndicator(
+                              color: Pallete.primaryColor),
+                        )),
+                  ],
+                );
+              }
+              return Padding(
+                padding: const EdgeInsets.all(30),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        padding: const EdgeInsets.all(20.0),
+                        color: Pallete.secondaryColor,
+                        child: Row(
+                          children: [
+                            DropdownButton(
+                              value: networkData,
+                              elevation: 0,
+                              underline: Container(),
+                              itemHeight: 50,
+                              items: dropdownItems.map((item) {
+                                return DropdownMenuItem(
+                                  value: item['value'],
+                                  child: Row(
+                                    children: [
+                                      ClipOval(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, bottom: 10),
+                                          child: Image.asset(
+                                            item['image']!,
+                                            height: 40,
+                                            width: 40,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                ref
+                                    .read(serviceIDProvider.notifier)
+                                    .update((state) => value!);
+                                ref.invalidate(dataControllerProvider);
+                              },
+                            ),
+                            const Gap(10),
+                            Expanded(
+                              child: Form(
+                                key: _formKey,
+                                child: TextFormField(
+                                  controller: numberController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: StyleConstant.input.copyWith(
+                                    hintText: 'Phone number',
+                                    fillColor: Pallete.secondaryColor,
+                                  ),
+                                  validator: (value) {
+                                    return value?.length == 11
+                                        ? null
+                                        : "input valid number";
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Gap(20),
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                          margin: const EdgeInsets.only(
+                              left: 20, right: 20, bottom: 40),
+                          child: dataServiceModelStatus.when(
+                            data: (data) => Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                color: Pallete.secondaryColor,
+                                borderRadius: BorderRadius.circular(
+                                    15.0), // Adjust the corner radius as needed
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  AutoSizeText(
+                                    data.service,
+                                    textAlign: TextAlign.center,
+                                    style: context.bodySmall?.copyWith(),
+                                  ),
+                                  const Gap(10),
+                                  GridDataWidget(
+                                    dataServiceModel: data,
+                                    formKey: _formKey,
+                                    numberController: numberController,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            error: (error, stackTrace) => AutoSizeText(
+                                error.toString(),
+                                textAlign: TextAlign.center),
+                            loading: () => const Center(
+                              child: CircularProgressIndicator(
+                                  color: Pallete.primaryColor),
+                            ),
+                          )),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ),
       ),
@@ -181,7 +299,7 @@ class GridDataWidget extends ConsumerWidget {
           child: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Pallete.scaffoldColor,
+              color: Pallete.backgroundColor,
               borderRadius: BorderRadius.circular(10.0),
             ),
             height: 100.0,
@@ -195,7 +313,7 @@ class GridDataWidget extends ConsumerWidget {
                       dataServiceModel.plans[index].displayName,
                       textAlign: TextAlign.center,
                       style: context.bodyMedium?.copyWith(
-                          color: Pallete.blackColor,
+                          color: Pallete.primaryColor,
                           fontWeight: FontWeight.w900),
                     ),
                   ),
@@ -209,7 +327,7 @@ class GridDataWidget extends ConsumerWidget {
                       textAlign: TextAlign.center,
                       style: context.bodySmall?.copyWith(
                         fontWeight: FontWeight.w500,
-                        color: Pallete.greenColor,
+                        color: Pallete.primaryColor,
                       ),
                     ),
                   ),

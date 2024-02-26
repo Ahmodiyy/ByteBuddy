@@ -9,7 +9,7 @@ class LoadingWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return const Scaffold(
       body: Center(
-        child: CircularProgressIndicator(color: Pallete.greenColor),
+        child: CircularProgressIndicator(color: Pallete.primaryColor),
       ),
     );
   }

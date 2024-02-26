@@ -103,7 +103,7 @@ class _RegisterState extends ConsumerState<ResetPassword> {
                                           const EdgeInsets.only(bottom: 20),
                                       child: AutoSizeText(_errorMessage.text,
                                           style: context.bodySmall?.copyWith(
-                                              color: Pallete.lightRed)),
+                                              color: Pallete.errorColor)),
                                     )
                                   : Container(),
                               _successMessage.text.isNotEmpty
@@ -112,7 +112,7 @@ class _RegisterState extends ConsumerState<ResetPassword> {
                                           const EdgeInsets.only(bottom: 20),
                                       child: AutoSizeText(_successMessage.text,
                                           style: context.bodySmall?.copyWith(
-                                              color: Pallete.greenColor)),
+                                              color: Pallete.primaryColor)),
                                     )
                                   : Container(),
                               RichText(
@@ -120,7 +120,7 @@ class _RegisterState extends ConsumerState<ResetPassword> {
                                   TextSpan(
                                     text: '*',
                                     style: context.bodySmall
-                                        ?.copyWith(color: Pallete.greenColor),
+                                        ?.copyWith(color: Pallete.primaryColor),
                                   ),
                                   TextSpan(
                                     text:
@@ -156,8 +156,8 @@ class _RegisterState extends ConsumerState<ResetPassword> {
                                           context.pop();
                                         },
                                       text: 'Go back!',
-                                      style: context.bodySmall
-                                          ?.copyWith(color: Pallete.greenColor),
+                                      style: context.bodySmall?.copyWith(
+                                          color: Pallete.primaryColor),
                                     ),
                                   ]),
                                 ),

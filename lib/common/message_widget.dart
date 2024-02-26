@@ -19,7 +19,7 @@ class MessageWidget {
           child: Container(
             alignment: Alignment.center,
             child: Card(
-              color: Pallete.blackColor,
+              color: Pallete.primaryColor,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(

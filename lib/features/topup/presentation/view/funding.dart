@@ -46,7 +46,7 @@ class _FundingState extends ConsumerState<Funding> {
         return SafeArea(
           child: Scaffold(
             appBar: AppBarWidget.appbar(context, "Funding"),
-            backgroundColor: Pallete.whiteColor,
+            backgroundColor: Pallete.secondaryColor,
             body: SingleChildScrollView(
               child: Center(
                 child: Container(
@@ -63,7 +63,7 @@ class _FundingState extends ConsumerState<Funding> {
                             "Amount",
                             maxLines: 1,
                             style: context.bodySmall?.copyWith(
-                              color: Pallete.blackColor,
+                              color: Pallete.primaryColor,
                             ),
                           ),
                           const Gap(10),
@@ -74,7 +74,7 @@ class _FundingState extends ConsumerState<Funding> {
                               hintText: '100.00 - 2,450.00',
                               prefixIcon: const IconWidget(
                                 iconData: FontAwesomeIcons.nairaSign,
-                                color: Pallete.blackColor,
+                                color: Pallete.primaryColor,
                               ),
                             ),
                             validator: (value) {
@@ -95,8 +95,8 @@ class _FundingState extends ConsumerState<Funding> {
                               ? Padding(
                                   padding: const EdgeInsets.only(bottom: 20),
                                   child: AutoSizeText(_message.text,
-                                      style: context.bodySmall
-                                          ?.copyWith(color: Pallete.lightRed)),
+                                      style: context.bodySmall?.copyWith(
+                                          color: Pallete.errorColor)),
                                 )
                               : Container(),
                           ElevatedButton(

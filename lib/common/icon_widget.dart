@@ -8,7 +8,7 @@ class IconWidget extends StatelessWidget {
   const IconWidget({
     super.key,
     required this.iconData,
-    this.color = Pallete.greenColor,
+    this.color = Pallete.primaryColor,
     this.size = 15.0,
   });
 

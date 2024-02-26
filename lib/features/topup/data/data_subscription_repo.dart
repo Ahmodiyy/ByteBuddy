@@ -26,14 +26,14 @@ class DataSubscriptionRepo implements Subscription {
         options: Options(
           headers: {
             'Content-Type': 'application/json',
-            // Add additional headers if required
           },
         ),
       );
-      if (response.data == null) {
+      final data = response.data;
+      if (data == null || data.toString().isEmpty) {
         throw Exception("This service has been disabled for now");
       }
-      Map<String, dynamic> jsonData = response.data;
+      Map<String, dynamic> jsonData = data;
       return jsonData;
     } on DioException catch (e) {
       throw Exception("Please check your internet connection and try again.");
@@ -42,14 +42,24 @@ class DataSubscriptionRepo implements Subscription {
     }
   }
 
-  Future<DataServiceModel> getDataPlans(String network) async {
+  Future<DataServiceModel> getDataPlans(String serviceID) async {
     try {
-      Response response =
-          await _dio.get('${EndpointConstant.getDataPlanEndpoint}$network');
-      if (response.data == null) {
+      final response = await _dio.post(
+        EndpointConstant.getDataPlanEndpoint,
+        data: {
+          "serviceID": serviceID,
+        },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      final data = response.data;
+      if (data == null || data.toString().isEmpty) {
         throw Exception("This service has been disabled for now");
       }
-      Map<String, dynamic> jsonData = response.data;
+      Map<String, dynamic> jsonData = data;
       return DataServiceModel.fromJson(jsonData);
     } on DioException catch (e) {
       throw Exception("Please check your internet connection and try again.");

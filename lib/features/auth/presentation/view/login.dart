@@ -133,7 +133,7 @@ class _RegisterState extends ConsumerState<Login> {
                                           const EdgeInsets.only(bottom: 20),
                                       child: AutoSizeText(_message.text,
                                           style: context.bodySmall?.copyWith(
-                                              color: Pallete.lightRed)),
+                                              color: Pallete.errorColor)),
                                     )
                                   : Container(),
                               Column(
@@ -148,7 +148,7 @@ class _RegisterState extends ConsumerState<Login> {
                                           },
                                         text: 'Forgot Password?',
                                         style: context.bodySmall?.copyWith(
-                                            color: Pallete.greenColor),
+                                            color: Pallete.primaryColor),
                                       ),
                                     ]),
                                   )
@@ -185,8 +185,8 @@ class _RegisterState extends ConsumerState<Login> {
                                           context.push("/auth/register");
                                         },
                                       text: 'Sign up',
-                                      style: context.bodySmall
-                                          ?.copyWith(color: Pallete.greenColor),
+                                      style: context.bodySmall?.copyWith(
+                                          color: Pallete.secondaryColor),
                                     ),
                                   ]),
                                 ),

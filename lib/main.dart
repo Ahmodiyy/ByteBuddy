@@ -93,9 +93,9 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: _router(user),
       theme: ThemeData(
-        scaffoldBackgroundColor: Pallete.scaffoldColor,
+        scaffoldBackgroundColor: Pallete.backgroundColor,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Pallete.whiteColor,
+          backgroundColor: Pallete.secondaryColor,
         ),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.black12,
@@ -104,7 +104,7 @@ class MyApp extends ConsumerWidget {
           style: ButtonStyle(
               shape: MaterialStatePropertyAll(
                 RoundedRectangleBorder(
-                  side: BorderSide(color: Pallete.greenColor),
+                  side: BorderSide(color: Pallete.primaryColor),
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),
@@ -113,23 +113,23 @@ class MyApp extends ConsumerWidget {
               padding: MaterialStatePropertyAll(
                 EdgeInsets.all(18),
               ),
-              backgroundColor: MaterialStatePropertyAll(Pallete.greenColor),
-              foregroundColor: MaterialStatePropertyAll(Pallete.whiteColor),
+              backgroundColor: MaterialStatePropertyAll(Pallete.primaryColor),
+              foregroundColor: MaterialStatePropertyAll(Pallete.secondaryColor),
               textStyle: MaterialStatePropertyAll(
-                  TextStyle(fontSize: 16, fontWeight: FontWeight.w700))),
+                  TextStyle(fontSize: 20, fontWeight: FontWeight.w700))),
         ),
         textTheme: TextTheme(
           bodyLarge: GoogleFonts.roboto(
             fontSize: 32.0,
-            color: Pallete.greenColor,
+            color: Pallete.textColor,
           ),
           bodyMedium: GoogleFonts.roboto(
             fontSize: 24.0,
-            color: Pallete.deepPurple,
+            color: Pallete.textColor,
           ),
           bodySmall: GoogleFonts.roboto(
             fontSize: 16.0,
-            color: Pallete.lightBlack,
+            color: Pallete.secondaryTextColor,
           ),
         ),
       ),

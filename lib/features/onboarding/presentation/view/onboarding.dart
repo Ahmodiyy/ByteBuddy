@@ -160,7 +160,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 ]),
               ),
               bottomSheet: Container(
-                color: Pallete.whiteColor,
+                color: Pallete.backgroundColor,
                 height: bottomSheetHeight,
                 width: double.infinity,
                 padding: const EdgeInsets.only(left: 50, right: 50, bottom: 20),
@@ -176,7 +176,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                             controller: _pageController,
                             count: 3,
                             effect: const WormEffect(
-                              activeDotColor: Pallete.greenColor,
+                              activeDotColor: Pallete.primaryColor,
                               dotColor: Colors.black12,
                               dotHeight: 10,
                               dotWidth: 10,
@@ -190,7 +190,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                         style: const ButtonStyle(
                           shape: MaterialStatePropertyAll(
                             RoundedRectangleBorder(
-                              side: BorderSide(color: Pallete.greenColor),
+                              side: BorderSide(color: Pallete.primaryColor),
                               borderRadius: BorderRadius.all(
                                 Radius.circular(40),
                               ),
@@ -223,7 +223,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                               'Bytebuddy',
                               style: context.bodyMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: Pallete.greenColor,
+                                color: Pallete.primaryColor,
                               ),
                             ),
                             Gap(gapSize),
@@ -234,7 +234,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                               child: Text(
                                 'Register',
                                 style: context.bodySmall
-                                    ?.copyWith(color: Pallete.deepPurple),
+                                    ?.copyWith(color: Pallete.textColor),
                               ),
                             ),
                             Gap(gapSize),
@@ -245,7 +245,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                               child: Text(
                                 'Login',
                                 style: context.bodySmall
-                                    ?.copyWith(color: Pallete.deepPurple),
+                                    ?.copyWith(color: Pallete.textColor),
                               ),
                             ),
                           ],
@@ -255,9 +255,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
               ),
               body: DynMouseScroll(builder: (context, controller, physics) {
                 _scrollController = controller;
+
                 return Scrollbar(
-                  controller: _scrollController,
+                  thickness: 10.0,
+                  radius: Radius.circular(5.0),
+                  trackVisibility: true,
                   thumbVisibility: true,
+                  controller: _scrollController,
                   child: SingleChildScrollView(
                     controller: _scrollController,
                     physics: physics,
@@ -276,7 +280,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                           child: InfoWidgetTransition(
                             title: "Affordable Internet Enchantment!",
                             titleStyle: context.bodyLarge?.copyWith(
-                                color: Pallete.whiteColor,
+                                color: Pallete.secondaryColor,
                                 fontWeight: FontWeight.bold),
                             briefExplanation:
                                 "✨ Immerse yourself in the enchanting world of Bytebuddy, "
@@ -284,7 +288,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                 " personalized enchantments. Explore the digital realm with affordable "
                                 "magic at your fingertips—sign up now and let the enchantment begin! 🌌✨",
                             briefExplanationStyle: context.bodySmall?.copyWith(
-                                color: Pallete.deepPurple,
+                                color: Pallete.secondaryColor,
+                                fontWeight: FontWeight.bold,
                                 letterSpacing: 2,
                                 wordSpacing: 2,
                                 height: 2),
@@ -301,13 +306,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                             textAlign: TextAlign.left,
                             style: context.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: Pallete.deepPurple),
+                                color: Pallete.primaryColor),
                           ),
                         ),
                         Container(
                           padding: EdgeInsets.all(60),
                           alignment: Alignment.center,
-                          color: Pallete.greenColor,
+                          color: Pallete.primaryColor,
                           child: Row(
                             children: [
                               Expanded(
@@ -323,7 +328,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                           title: "🌐 Cheap Data Delight:",
                                           titleStyle: context.bodyLarge
                                               ?.copyWith(
-                                                  color: Pallete.whiteColor,
+                                                  color: Pallete.secondaryColor,
                                                   fontWeight: FontWeight.bold),
                                           briefExplanation:
                                               "Embark on a digital journey without breaking "
@@ -333,7 +338,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                               "plans that cater to your needs, bringing the power of the internet to your fingertips without burning a hole in your wallet.",
                                           briefExplanationStyle:
                                               context.bodyMedium?.copyWith(
-                                                  color: Pallete.whiteColor,
+                                                  color: Pallete
+                                                      .secondaryTextColor,
                                                   letterSpacing: 2,
                                                   wordSpacing: 2,
                                                   height: 2),
@@ -358,7 +364,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                         Container(
                           padding: EdgeInsets.all(60),
                           alignment: Alignment.center,
-                          color: Pallete.whiteColor,
+                          color: Pallete.secondaryColor,
                           child: Row(
                             children: [
                               Expanded(
@@ -378,7 +384,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                           title: "🤝 Customer Care Concierge:",
                                           titleStyle: context.bodyLarge
                                               ?.copyWith(
-                                                  color: Pallete.greenColor,
+                                                  color: Pallete.textColor,
                                                   fontWeight: FontWeight.bold),
                                           briefExplanation:
                                               "Say goodbye to frustrating support experiences! Our dedicated customer service "
@@ -388,7 +394,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                               "ensuring your journey with us is as smooth as a buffering-free video stream",
                                           briefExplanationStyle:
                                               context.bodyMedium?.copyWith(
-                                                  color: Pallete.deepPurple,
+                                                  color: Pallete
+                                                      .secondaryTextColor,
                                                   letterSpacing: 2,
                                                   wordSpacing: 2,
                                                   height: 2),
@@ -409,7 +416,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                         Container(
                           padding: const EdgeInsets.all(60),
                           alignment: Alignment.center,
-                          color: Pallete.greenColor,
+                          color: Pallete.primaryColor,
                           child: Row(
                             children: [
                               Expanded(
@@ -426,7 +433,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                               "⚙️ Tailored Settings, Just for You:",
                                           titleStyle: context.bodyLarge
                                               ?.copyWith(
-                                                  color: Pallete.whiteColor,
+                                                  color: Pallete.secondaryColor,
                                                   fontWeight: FontWeight.bold),
                                           briefExplanation:
                                               "Customize your connectivity experience like never before! Take control with"
@@ -436,7 +443,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                               "your unique digital lifestyle.",
                                           briefExplanationStyle:
                                               context.bodyMedium?.copyWith(
-                                                  color: Pallete.whiteColor,
+                                                  color: Pallete.secondaryColor,
                                                   letterSpacing: 2,
                                                   wordSpacing: 2,
                                                   height: 2),
@@ -460,7 +467,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                         Container(
                           padding: const EdgeInsets.all(60),
                           alignment: Alignment.center,
-                          color: Pallete.greyColor,
+                          color: Pallete.secondaryColor,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -480,8 +487,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                           MainAxisAlignment.start,
                                       children: [
                                         const ImageWidget(
-                                          imageUrl:
-                                              ImageConstant.byteBuddySquare,
+                                          imageUrl: ImageConstant.byteBuddy,
                                           width: 100,
                                           height: 100,
                                         ),
@@ -493,14 +499,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                                 text: 'Coming soon on ',
                                                 style: context.bodyMedium
                                                     ?.copyWith(
-                                                        color:
-                                                            Pallete.lightBlack),
+                                                        color: Pallete
+                                                            .secondaryTextColor),
                                               ),
                                               TextSpan(
                                                 text: 'Android',
                                                 style: context.bodyMedium
                                                     ?.copyWith(
-                                                  color: Pallete.greenColor,
+                                                  color: Pallete.primaryColor,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -522,7 +528,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                 'Bytebuddy',
                                 style: context.bodyMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
-                                  color: Pallete.greenColor,
+                                  color: Pallete.primaryColor,
                                 ),
                               ),
                               Row(

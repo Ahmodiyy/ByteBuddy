@@ -33,20 +33,21 @@ class TransactionStatus extends ConsumerWidget {
                 transactionStatusData['status'].toString().toLowerCase(),
                 textAlign: TextAlign.center,
                 style: context.bodyMedium?.copyWith(
-                    color: Pallete.blackColor, fontWeight: FontWeight.w300),
+                    color: Pallete.textColor, fontWeight: FontWeight.w300),
               ),
               const Gap(5),
               AutoSizeText(
                 transactionStatusData['description'].toString().toLowerCase(),
                 textAlign: TextAlign.center,
-                style: context.bodySmall?.copyWith(color: Pallete.lightBlack),
+                style: context.bodySmall
+                    ?.copyWith(color: Pallete.secondaryTextColor),
               ),
               const Gap(100),
               AutoSizeText(
                 'Bytebuddy',
                 textAlign: TextAlign.center,
                 style: context.bodySmall?.copyWith(
-                    color: Pallete.greenColor, fontWeight: FontWeight.bold),
+                    color: Pallete.primaryColor, fontWeight: FontWeight.bold),
               ),
             ],
           ),

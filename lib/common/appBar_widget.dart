@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 
 class AppBarWidget {
   static PreferredSizeWidget appbar(BuildContext context, String screenText,
-      {Color backgroundColor = Pallete.whiteColor}) {
+      {Color backgroundColor = Pallete.secondaryColor}) {
     return PreferredSize(
       preferredSize: const Size(double.infinity, 100),
       child: Container(
@@ -30,7 +30,7 @@ class AppBarWidget {
             AutoSizeText(
               screenText,
               maxLines: 1,
-              style: context.bodySmall?.copyWith(color: Pallete.blackColor),
+              style: context.bodySmall?.copyWith(color: Pallete.primaryColor),
             ),
           ],
         ),

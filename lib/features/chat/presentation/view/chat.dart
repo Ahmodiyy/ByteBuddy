@@ -16,9 +16,11 @@ class _ChatState extends ConsumerState<Chat> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Pallete.scaffoldColor,
+        backgroundColor: Pallete.backgroundColor,
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const AutoSizeText("Coming soon"),
               const Gap(10),

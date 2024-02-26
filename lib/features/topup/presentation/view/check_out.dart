@@ -38,18 +38,18 @@ class CheckOut extends ConsumerWidget {
             var snackBar = SnackBar(
               content: AutoSizeText(
                 error.toString(),
-                style: context.bodySmall?.copyWith(color: Pallete.lightRed),
+                style: context.bodySmall?.copyWith(color: Pallete.errorColor),
               ),
               duration: const Duration(
                   seconds: 10), // Optional, how long it stays on screen
               action: SnackBarAction(
                 label: 'Close',
-                textColor: Pallete.greenColor,
+                textColor: Pallete.primaryColor,
                 onPressed: () {
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 },
               ),
-              backgroundColor: Pallete.whiteColor,
+              backgroundColor: Pallete.secondaryColor,
             );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           },
@@ -59,153 +59,169 @@ class CheckOut extends ConsumerWidget {
     );
     final state = ref.watch(subscriptionControllerProvider);
     final isLoading = state is AsyncLoading;
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBarWidget.appbar(context, "Data",
-            backgroundColor: Pallete.scaffoldColor),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Gap(10),
-                Center(
-                  child: AutoSizeText(
-                    'Actual Payment',
-                    style: context.bodySmall?.copyWith(
-                        color: Pallete.lightBlack, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const Gap(10),
-                Center(
-                  child: AutoSizeText('\u20A6$price',
-                      style: context.bodyMedium?.copyWith(
-                          color: Pallete.blackColor,
-                          fontWeight: FontWeight.bold)),
-                ),
-                const Gap(10),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color: Pallete.whiteColor,
-                    borderRadius: BorderRadius.circular(
-                        15.0), // Adjust the corner radius as needed
-                  ),
-                  child: Table(
-                    border: null,
-                    children: [
-                      TableRow(
-                        children: [
-                          TableCell(
-                            child: AutoSizeText(
-                              'Service name',
-                              style: context.bodySmall
-                                  ?.copyWith(color: Pallete.lighterBlack),
-                            ),
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return SafeArea(
+          child: Scaffold(
+            appBar: AppBarWidget.appbar(context, "Data",
+                backgroundColor: Pallete.backgroundColor),
+            body: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: SingleChildScrollView(
+                child: Center(
+                  child: Container(
+                    width: constraints.isMobile ? double.infinity : 400.0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Gap(10),
+                        Center(
+                          child: AutoSizeText(
+                            'Actual Payment',
+                            style: context.bodySmall?.copyWith(
+                                color: Pallete.secondaryTextColor,
+                                fontWeight: FontWeight.bold),
                           ),
-                          TableCell(
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: AutoSizeText(
-                                service,
-                                style: context.bodySmall,
-                                textAlign: TextAlign.right,
+                        ),
+                        const Gap(10),
+                        Center(
+                          child: AutoSizeText('\u20A6$price',
+                              style: context.bodyMedium?.copyWith(
+                                  color: Pallete.primaryColor,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                        const Gap(10),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                            color: Pallete.secondaryColor,
+                            borderRadius: BorderRadius.circular(
+                                15.0), // Adjust the corner radius as needed
+                          ),
+                          child: Table(
+                            border: null,
+                            children: [
+                              TableRow(
+                                children: [
+                                  TableCell(
+                                    child: AutoSizeText(
+                                      'Service name',
+                                      style: context.bodySmall?.copyWith(
+                                          color: Pallete.secondaryTextColor),
+                                    ),
+                                  ),
+                                  TableCell(
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      child: AutoSizeText(
+                                        service,
+                                        style: context.bodySmall,
+                                        textAlign: TextAlign.right,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      TableRow(
-                        children: [
-                          TableCell(
-                            child: AutoSizeText(
-                              'Phone number',
-                              style: context.bodySmall
-                                  ?.copyWith(color: Pallete.lighterBlack),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: AutoSizeText(
-                                number,
-                                style: context.bodySmall,
-                                textAlign: TextAlign.right,
+                              TableRow(
+                                children: [
+                                  TableCell(
+                                    child: AutoSizeText(
+                                      'Phone number',
+                                      style: context.bodySmall?.copyWith(
+                                          color: Pallete.secondaryTextColor),
+                                    ),
+                                  ),
+                                  TableCell(
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      child: AutoSizeText(
+                                        number,
+                                        style: context.bodySmall,
+                                        textAlign: TextAlign.right,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      TableRow(
-                        children: [
-                          TableCell(
-                            child: AutoSizeText(
-                              'Data plan',
-                              style: context.bodySmall
-                                  ?.copyWith(color: Pallete.lighterBlack),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: AutoSizeText(
-                                displayName,
-                                style: context.bodySmall,
-                                textAlign: TextAlign.right,
+                              TableRow(
+                                children: [
+                                  TableCell(
+                                    child: AutoSizeText(
+                                      'Data plan',
+                                      style: context.bodySmall?.copyWith(
+                                          color: Pallete.secondaryTextColor),
+                                    ),
+                                  ),
+                                  TableCell(
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      child: AutoSizeText(
+                                        displayName,
+                                        style: context.bodySmall,
+                                        textAlign: TextAlign.right,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                              TableRow(
+                                children: [
+                                  TableCell(
+                                    child: AutoSizeText(
+                                      'Amount',
+                                      style: context.bodySmall?.copyWith(
+                                          color: Pallete.secondaryTextColor),
+                                    ),
+                                  ),
+                                  TableCell(
+                                    child: AutoSizeText(
+                                      '\u20A6$price',
+                                      style: context.bodySmall,
+                                      textAlign: TextAlign.right,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      TableRow(
-                        children: [
-                          TableCell(
-                            child: AutoSizeText(
-                              'Amount',
-                              style: context.bodySmall
-                                  ?.copyWith(color: Pallete.lighterBlack),
-                            ),
-                          ),
-                          TableCell(
-                            child: AutoSizeText(
-                              '\u20A6$price',
-                              style: context.bodySmall,
-                              textAlign: TextAlign.right,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const Gap(50),
-                ElevatedButton(
-                  onPressed: () {
-                    ref.read(subscriptionControllerProvider.notifier).subscribe(
-                          subscriptionType: 'data',
-                          serviceID: serviceID,
-                          planIndex: planIndex,
-                          phone: number,
-                          email: ref
-                              .read(authControllerLoginProvider.notifier)
-                              .getCurrentUser()!
-                              .email!,
-                          price: price,
-                        );
-                  },
-                  child: isLoading
-                      ? const CircularProgressIndicator(
-                          color: Colors.white,
+                        ),
+                        const Gap(50),
+                        ElevatedButton(
+                          onPressed: () {
+                            ref
+                                .read(subscriptionControllerProvider.notifier)
+                                .subscribe(
+                                  subscriptionType: 'data',
+                                  serviceID: serviceID,
+                                  planIndex: planIndex,
+                                  phone: number,
+                                  email: ref
+                                      .read(
+                                          authControllerLoginProvider.notifier)
+                                      .getCurrentUser()!
+                                      .email!,
+                                  price: price,
+                                );
+                          },
+                          child: isLoading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : const AutoSizeText('Pay'),
                         )
-                      : const AutoSizeText('Pay'),
-                )
-              ],
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

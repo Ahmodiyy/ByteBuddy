@@ -48,16 +48,30 @@ class _HomeState extends ConsumerState<Home> {
             ),
           ),
         ),
-        backgroundColor: Pallete.scaffoldColor,
+        backgroundColor: Pallete.backgroundColor,
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: SingleChildScrollView(
-            child: Column(children: [
-              const DepositWidget(),
-              const Gap(20),
-              GridItemWidget(),
-              const Gap(20),
-            ]),
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                if (constraints.isMobile) {
+                  return Column(children: [
+                    const DepositWidget(),
+                    const Gap(20),
+                    GridItemWidget(),
+                    const Gap(20),
+                  ]);
+                }
+                return Row(
+                  children: [
+                    const Expanded(flex: 2, child: DepositWidget()),
+                    const Gap(20),
+                    Expanded(flex: 3, child: GridItemWidget()),
+                    const Gap(20),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -77,7 +91,7 @@ class DepositWidget extends ConsumerWidget {
       height: 180,
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Pallete.greenColor,
+        color: Pallete.primaryColor,
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Column(
@@ -95,22 +109,22 @@ class DepositWidget extends ConsumerWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Expanded(
+                          Flexible(
                             child: AutoSizeText(
                               "Available Balance ",
                               maxLines: 1,
                               style: context.bodySmall
-                                  ?.copyWith(color: Pallete.lightWhite),
+                                  ?.copyWith(color: Pallete.secondaryColor),
                             ),
                           ),
                           togglePassword
                               ? const IconWidget(
                                   iconData: FontAwesomeIcons.eyeSlash,
-                                  color: Pallete.lightWhite,
+                                  color: Pallete.secondaryColor,
                                 )
                               : const IconWidget(
                                   iconData: FontAwesomeIcons.eye,
-                                  color: Pallete.lightWhite,
+                                  color: Pallete.secondaryColor,
                                 ),
                         ],
                       )),
@@ -123,7 +137,7 @@ class DepositWidget extends ConsumerWidget {
                       "Transaction History >",
                       maxLines: 1,
                       style: context.bodySmall
-                          ?.copyWith(color: Pallete.lightWhite),
+                          ?.copyWith(color: Pallete.secondaryColor),
                     ),
                   ),
                 ),
@@ -141,7 +155,7 @@ class DepositWidget extends ConsumerWidget {
                         togglePassword ? "****" : '\u20A6$data',
                         style: context.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: Pallete.whiteColor),
+                            color: Pallete.secondaryColor),
                       ),
                     );
                   },
@@ -150,12 +164,12 @@ class DepositWidget extends ConsumerWidget {
                       child: AutoSizeText(
                         "Please check your internet connection and try again.",
                         style: context.bodyMedium
-                            ?.copyWith(color: Pallete.whiteColor),
+                            ?.copyWith(color: Pallete.secondaryColor),
                       ),
                     );
                   },
                   loading: () => const CircularProgressIndicator(
-                    color: Pallete.whiteColor,
+                    color: Pallete.secondaryColor,
                   ),
                 ),
               ],
@@ -175,14 +189,14 @@ class DepositWidget extends ConsumerWidget {
                         height: 50,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: Pallete.whiteColor,
+                          color: Pallete.secondaryColor,
                           borderRadius: BorderRadius.circular(
                               10.0), // Adjust the corner radius as needed
                         ),
                         child: const Center(
                           child: IconWidget(
                             iconData: FontAwesomeIcons.plus,
-                            color: Pallete.greenColor,
+                            color: Pallete.primaryColor,
                             size: 20,
                           ),
                         ),
@@ -195,7 +209,7 @@ class DepositWidget extends ConsumerWidget {
                         "Add money",
                         maxLines: 1,
                         style: context.bodySmall
-                            ?.copyWith(color: Pallete.lightWhite),
+                            ?.copyWith(color: Pallete.secondaryColor),
                       ),
                     )
                   ],
@@ -244,7 +258,7 @@ class GridItemWidget extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Pallete.whiteColor,
+        color: Pallete.secondaryColor,
         borderRadius:
             BorderRadius.circular(15.0), // Adjust the corner radius as needed
       ),
@@ -267,7 +281,7 @@ class GridItemWidget extends StatelessWidget {
                   Expanded(
                     flex: 3,
                     child: CircleAvatar(
-                        backgroundColor: Pallete.lightGreen,
+                        backgroundColor: Pallete.backgroundColor,
                         child: SvgPicture.asset(svgs[index].svgUrl,
                             width: 25, height: 25)),
                   ),

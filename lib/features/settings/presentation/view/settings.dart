@@ -18,9 +18,11 @@ class _SettingsState extends ConsumerState<Settings> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Pallete.scaffoldColor,
+        backgroundColor: Pallete.backgroundColor,
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const AutoSizeText("Coming soon"),
               const Gap(10),
@@ -29,6 +31,8 @@ class _SettingsState extends ConsumerState<Settings> {
                     await ref
                         .read(authControllerLoginProvider.notifier)
                         .sign0ut();
+                    if (!mounted) return;
+                    context.go('/');
                   },
                   child: const AutoSizeText('Log out'))
             ],

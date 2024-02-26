@@ -16,7 +16,7 @@ class HeaderTextWidget extends StatelessWidget {
     return AutoSizeText(
       headerTextString,
       style: context.bodyLarge
-          ?.copyWith(fontWeight: FontWeight.bold, color: Pallete.blackColor),
+          ?.copyWith(fontWeight: FontWeight.bold, color: Pallete.textColor),
     );
   }
 }

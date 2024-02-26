@@ -171,7 +171,7 @@ class _RegisterState extends ConsumerState<Register> {
                                             const EdgeInsets.only(bottom: 20),
                                         child: AutoSizeText(_message.text,
                                             style: context.bodySmall?.copyWith(
-                                                color: Pallete.lightRed)),
+                                                color: Pallete.errorColor)),
                                       )
                                     : Container(),
                                 RichText(
@@ -184,8 +184,8 @@ class _RegisterState extends ConsumerState<Register> {
                                       recognizer: _tapGestureRecognizer
                                         ..onTap = () {},
                                       text: 'Sign Up ',
-                                      style: context.bodySmall
-                                          ?.copyWith(color: Pallete.greenColor),
+                                      style: context.bodySmall?.copyWith(
+                                          color: Pallete.secondaryColor),
                                     ),
                                     TextSpan(
                                       text: 'button, ',
@@ -200,7 +200,7 @@ class _RegisterState extends ConsumerState<Register> {
                                         ..onTap = () {},
                                       text: 'Terms & Condition ',
                                       style: context.bodySmall?.copyWith(
-                                        color: Pallete.greenColor,
+                                        color: Pallete.primaryColor,
                                         decoration: TextDecoration.underline,
                                       ),
                                     ),
@@ -238,7 +238,7 @@ class _RegisterState extends ConsumerState<Register> {
                                           },
                                         text: 'Sign in',
                                         style: context.bodySmall?.copyWith(
-                                            color: Pallete.greenColor),
+                                            color: Pallete.primaryColor),
                                       ),
                                     ]),
                                   ),

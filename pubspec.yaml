@@ -55,7 +55,7 @@ dependencies:
   dio: ^5.4.0
   connectivity_plus: ^4.0.1
   rive: ^0.12.4
-  url_launcher: ^6.1.2
+  url_launcher: ^6.2.4
 
 
 dev_dependencies:
@@ -113,6 +113,9 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_native_splash:
-  color: "#1DC99B"
+  color: "#FFFFFF"
+  icon_background_color: "#FFFFFF"
+  color_web: "#FFFFFF"
+  image_web: assets/images/bytebuddy.gif
   image: assets/images/bytebuddy.png
 
