@@ -185,7 +185,7 @@ class _RegisterState extends ConsumerState<Register> {
                                         ..onTap = () {},
                                       text: 'Sign Up ',
                                       style: context.bodySmall?.copyWith(
-                                          color: Pallete.secondaryColor),
+                                          color: Pallete.primaryColor),
                                     ),
                                     TextSpan(
                                       text: 'button, ',

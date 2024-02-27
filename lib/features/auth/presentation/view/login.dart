@@ -186,7 +186,7 @@ class _RegisterState extends ConsumerState<Login> {
                                         },
                                       text: 'Sign up',
                                       style: context.bodySmall?.copyWith(
-                                          color: Pallete.secondaryColor),
+                                          color: Pallete.primaryColor),
                                     ),
                                   ]),
                                 ),

@@ -115,7 +115,6 @@ flutter:
 flutter_native_splash:
   color: "#FFFFFF"
   icon_background_color: "#FFFFFF"
-  color_web: "#FFFFFF"
-  image_web: assets/images/bytebuddy.gif
+  web: false
   image: assets/images/bytebuddy.png
 

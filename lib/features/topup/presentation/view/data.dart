@@ -313,7 +313,7 @@ class GridDataWidget extends ConsumerWidget {
                       dataServiceModel.plans[index].displayName,
                       textAlign: TextAlign.center,
                       style: context.bodyMedium?.copyWith(
-                          color: Pallete.primaryColor,
+                          color: Pallete.textColor,
                           fontWeight: FontWeight.w900),
                     ),
                   ),

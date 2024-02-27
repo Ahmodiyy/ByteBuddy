@@ -13,6 +13,7 @@ import 'package:bytebuddy/themes/pallete.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bytebuddy/features/onboarding/presentation/view/onboarding.dart';
@@ -133,6 +134,6 @@ class MyApp extends ConsumerWidget {
           ),
         ),
       ),
-    );
+    ).animate().fadeIn();
   }
 }

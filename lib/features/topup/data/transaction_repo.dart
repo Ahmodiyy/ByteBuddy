@@ -40,4 +40,23 @@ class TransactionRepo {
     dynamic balance = data?['balance'] ?? 0.0;
     return balance;
   }
+
+  Future<List<Map<String, dynamic>>> fetchTransactionHistory(
+      String email) async {
+    List<Map<String, dynamic>> transactions = [];
+    try {
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await _cloudStore
+          .collection("log")
+          .doc(email) // Replace 'naza_document_id' with the actual document ID
+          .get();
+      List<dynamic> transactionList =
+          documentSnapshot.data()!['transactionHistory'];
+
+      transactions = List<Map<String, dynamic>>.from(transactionList);
+    } catch (e) {
+      rethrow;
+    }
+
+    return transactions;
+  }
 }

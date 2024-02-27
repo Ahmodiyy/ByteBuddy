@@ -71,6 +71,7 @@ class _FundingState extends ConsumerState<Funding> {
                             controller: _amount,
                             keyboardType: TextInputType.number,
                             decoration: StyleConstant.input.copyWith(
+                              fillColor: Pallete.tertiaryColor,
                               hintText: '100.00 - 2,450.00',
                               prefixIcon: const IconWidget(
                                 iconData: FontAwesomeIcons.nairaSign,

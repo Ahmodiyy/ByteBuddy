@@ -90,6 +90,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
           if (constraints.isMobile) {
             double height = (constraints.maxHeight - bottomSheetHeight) / 2;
             return Scaffold(
+              backgroundColor: Pallete.secondaryColor,
               body: Container(
                 padding: EdgeInsets.only(
                     bottom: bottomSheetHeight, top: 50, right: 50, left: 50),
@@ -160,7 +161,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 ]),
               ),
               bottomSheet: Container(
-                color: Pallete.backgroundColor,
+                color: Pallete.secondaryColor,
                 height: bottomSheetHeight,
                 width: double.infinity,
                 padding: const EdgeInsets.only(left: 50, right: 50, bottom: 20),
@@ -209,6 +210,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
             );
           }
           return Scaffold(
+              backgroundColor: Pallete.secondaryColor,
               appBar: PreferredSize(
                 preferredSize: const Size(double.infinity, 100),
                 child: Padding(
@@ -233,8 +235,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                               },
                               child: Text(
                                 'Register',
-                                style: context.bodySmall
-                                    ?.copyWith(color: Pallete.textColor),
+                                style: context.bodySmall?.copyWith(
+                                  color: Pallete.accentColor,
+                                ),
                               ),
                             ),
                             Gap(gapSize),
@@ -244,8 +247,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                               },
                               child: Text(
                                 'Login',
-                                style: context.bodySmall
-                                    ?.copyWith(color: Pallete.textColor),
+                                style: context.bodySmall?.copyWith(
+                                  color: Pallete.accentColor,
+                                ),
                               ),
                             ),
                           ],
@@ -255,7 +259,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
               ),
               body: DynMouseScroll(builder: (context, controller, physics) {
                 _scrollController = controller;
-
                 return Scrollbar(
                   thickness: 10.0,
                   radius: Radius.circular(5.0),
@@ -288,7 +291,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                 " personalized enchantments. Explore the digital realm with affordable "
                                 "magic at your fingertips—sign up now and let the enchantment begin! 🌌✨",
                             briefExplanationStyle: context.bodySmall?.copyWith(
-                                color: Pallete.secondaryColor,
+                                color: Pallete.accentColor,
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: 2,
                                 wordSpacing: 2,
@@ -328,7 +331,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                           title: "🌐 Cheap Data Delight:",
                                           titleStyle: context.bodyLarge
                                               ?.copyWith(
-                                                  color: Pallete.secondaryColor,
+                                                  color:
+                                                      Pallete.contrastTextColor,
                                                   fontWeight: FontWeight.bold),
                                           briefExplanation:
                                               "Embark on a digital journey without breaking "
@@ -338,8 +342,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                               "plans that cater to your needs, bringing the power of the internet to your fingertips without burning a hole in your wallet.",
                                           briefExplanationStyle:
                                               context.bodyMedium?.copyWith(
-                                                  color: Pallete
-                                                      .secondaryTextColor,
+                                                  color:
+                                                      Pallete.contrastTextColor,
                                                   letterSpacing: 2,
                                                   wordSpacing: 2,
                                                   height: 2),
@@ -384,7 +388,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                           title: "🤝 Customer Care Concierge:",
                                           titleStyle: context.bodyLarge
                                               ?.copyWith(
-                                                  color: Pallete.textColor,
+                                                  color: Pallete.primaryColor,
                                                   fontWeight: FontWeight.bold),
                                           briefExplanation:
                                               "Say goodbye to frustrating support experiences! Our dedicated customer service "
@@ -394,8 +398,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                               "ensuring your journey with us is as smooth as a buffering-free video stream",
                                           briefExplanationStyle:
                                               context.bodyMedium?.copyWith(
-                                                  color: Pallete
-                                                      .secondaryTextColor,
+                                                  color: Pallete.accentColor,
                                                   letterSpacing: 2,
                                                   wordSpacing: 2,
                                                   height: 2),
@@ -433,7 +436,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                               "⚙️ Tailored Settings, Just for You:",
                                           titleStyle: context.bodyLarge
                                               ?.copyWith(
-                                                  color: Pallete.secondaryColor,
+                                                  color:
+                                                      Pallete.contrastTextColor,
                                                   fontWeight: FontWeight.bold),
                                           briefExplanation:
                                               "Customize your connectivity experience like never before! Take control with"
@@ -443,7 +447,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                               "your unique digital lifestyle.",
                                           briefExplanationStyle:
                                               context.bodyMedium?.copyWith(
-                                                  color: Pallete.secondaryColor,
+                                                  color:
+                                                      Pallete.contrastTextColor,
                                                   letterSpacing: 2,
                                                   wordSpacing: 2,
                                                   height: 2),
@@ -519,32 +524,35 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.all(paddingSize),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Bytebuddy',
-                                style: context.bodyMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Pallete.primaryColor,
+                        Container(
+                          color: Pallete.tertiaryColor,
+                          child: Padding(
+                            padding: EdgeInsets.all(paddingSize),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Bytebuddy',
+                                  style: context.bodyMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Pallete.primaryColor,
+                                  ),
                                 ),
-                              ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(FontAwesomeIcons.twitter),
-                                  ),
-                                  Gap(gapSize),
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(FontAwesomeIcons.whatsapp),
-                                  ),
-                                ],
-                              )
-                            ],
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(FontAwesomeIcons.twitter),
+                                    ),
+                                    Gap(gapSize),
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(FontAwesomeIcons.whatsapp),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ],
