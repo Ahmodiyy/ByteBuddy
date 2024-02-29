@@ -134,6 +134,6 @@ class MyApp extends ConsumerWidget {
           ),
         ),
       ),
-    ).animate().fadeIn();
+    );
   }
 }

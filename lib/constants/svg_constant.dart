@@ -14,4 +14,6 @@ class SvgConstant {
   static const tv = "$path/tv.svg";
   static const pin = "$path/pin.svg";
   static const printing = "$path/printing.svg";
+  static const deposit = "$path/deposit.svg";
+  static const datas = "$path/datas.svg";
 }
