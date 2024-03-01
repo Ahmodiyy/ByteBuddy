@@ -309,7 +309,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                             textAlign: TextAlign.left,
                             style: context.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: Pallete.primaryColor),
+                                color: Pallete.accentColor),
                           ),
                         ),
                         Container(
