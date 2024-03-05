@@ -16,26 +16,26 @@ class TransactionHistory extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(transactionControllerProvider);
     return LayoutBuilder(
-      builder: (context, constraints) => Scaffold(
-          backgroundColor: Pallete.secondaryColor,
-          appBar: AppBarWidget.appbar(context, "History",
-              backgroundColor: Pallete.secondaryColor),
-          body: Column(
-            children: [
-              Material(
-                elevation: 10,
-                child: Container(
-                  width: double.infinity,
-                  height: 20,
-                  color: Pallete.secondaryColor,
-                ),
-              ),
-              const Gap(20),
-              state.when(
-                data: (data) {
-                  return Expanded(
-                    child: Center(
-                      child: SingleChildScrollView(
+      builder: (context, constraints) => SafeArea(
+        child: Scaffold(
+            backgroundColor: Pallete.secondaryColor,
+            appBar: AppBarWidget.appbar(context, "History",
+                backgroundColor: Pallete.secondaryColor),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Material(
+                    elevation: 10,
+                    child: Container(
+                      width: double.infinity,
+                      height: 20,
+                      color: Pallete.secondaryColor,
+                    ),
+                  ),
+                  const Gap(20),
+                  state.when(
+                    data: (data) {
+                      return Center(
                         child: Container(
                           padding: const EdgeInsets.all(20),
                           decoration: const BoxDecoration(
@@ -72,26 +72,26 @@ class TransactionHistory extends ConsumerWidget {
                             },
                           ),
                         ),
-                      ),
-                    ),
-                  );
-                },
-                error: (error, stackTrace) {
-                  return Center(
-                      child: AutoSizeText(
-                    error.toString(),
-                    textAlign: TextAlign.center,
-                  ));
-                },
-                loading: () {
-                  return const Center(
-                      child: CircularProgressIndicator(
-                    color: Pallete.primaryColor,
-                  ));
-                },
+                      );
+                    },
+                    error: (error, stackTrace) {
+                      return Center(
+                          child: AutoSizeText(
+                        error.toString(),
+                        textAlign: TextAlign.center,
+                      ));
+                    },
+                    loading: () {
+                      return const Center(
+                          child: CircularProgressIndicator(
+                        color: Pallete.primaryColor,
+                      ));
+                    },
+                  ),
+                ],
               ),
-            ],
-          )),
+            )),
+      ),
     );
   }
 }
