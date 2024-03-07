@@ -34,7 +34,6 @@ class CheckOut extends ConsumerWidget {
             context.push("/dashboard/transaction_status", extra: data);
           },
           error: (error, stackTrace) {
-            debugPrint('in checkout.dart riverpod error listener');
             var snackBar = SnackBar(
               content: AutoSizeText(
                 error.toString(),

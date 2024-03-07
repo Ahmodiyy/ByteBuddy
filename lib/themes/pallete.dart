@@ -15,6 +15,7 @@ class Pallete {
   static const Color iconBackgroundColor = Color(0xFFECFAF5);
 
   static const Color errorColor = Color(0xFFdf3e2f);
+  static const Color secondaryErrorColor = Color(0xFFff6978);
   static const Color accentColor = Color(0xFF210F60);
   static const Color blueGreyColor = Color(0xFFefeff6);
 

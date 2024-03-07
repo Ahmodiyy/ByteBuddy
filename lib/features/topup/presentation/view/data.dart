@@ -91,7 +91,7 @@ class _DataState extends ConsumerState<Data> {
                                 keyboardType: TextInputType.number,
                                 decoration: StyleConstant.input.copyWith(
                                   hintText: 'Phone number',
-                                  fillColor: Pallete.secondaryColor,
+                                  fillColor: Pallete.tertiaryColor,
                                 ),
                                 validator: (value) {
                                   return value?.length == 11
@@ -195,8 +195,8 @@ class _DataState extends ConsumerState<Data> {
                                   controller: numberController,
                                   keyboardType: TextInputType.number,
                                   decoration: StyleConstant.input.copyWith(
-                                    hintText: 'Phone number',
                                     fillColor: Pallete.tertiaryColor,
+                                    hintText: 'Phone number',
                                   ),
                                   validator: (value) {
                                     return value?.length == 11
@@ -286,7 +286,7 @@ class GridDataWidget extends ConsumerWidget {
         return InkWell(
           onTap: () {
             if (formKey.currentState!.validate()) {
-              context.push('/dashboard/checkout',
+              context.go('/dashboard/checkout',
                   extra: DataPurchaseModel(
                     service: dataServiceModel.service,
                     serviceID: ref.read(serviceIDProvider),

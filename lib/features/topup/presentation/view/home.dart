@@ -2,6 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bytebuddy/common/icon_widget.dart';
 import 'package:bytebuddy/constants/constant.dart';
 import 'package:bytebuddy/features/topup/data/transaction_repo.dart';
+import 'package:bytebuddy/features/topup/presentation/controller/transaction_controller.dart';
+import 'package:bytebuddy/features/topup/presentation/view/transaction_history.dart';
+import 'package:bytebuddy/features/topup/presentation/widget/history_widget.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:bytebuddy/util/functions.dart';
 import 'package:flutter/material.dart';
@@ -62,12 +65,24 @@ class _HomeState extends ConsumerState<Home> {
                     const Gap(20),
                   ]);
                 }
-                return Row(
+                return Column(
                   children: [
-                    const Expanded(flex: 2, child: DepositWidget()),
-                    const Gap(20),
-                    Expanded(flex: 3, child: GridItemWidget()),
-                    const Gap(20),
+                    Row(
+                      children: [
+                        const Expanded(flex: 2, child: DepositWidget()),
+                        const Gap(20),
+                        Expanded(flex: 3, child: GridItemWidget()),
+                        const Gap(20),
+                      ],
+                    ),
+                    Gap(40),
+                    Row(
+                      children: [
+                        const Expanded(
+                            flex: 2, child: ShortTransactionHistory()),
+                        Expanded(flex: 3, child: Container()),
+                      ],
+                    ),
                   ],
                 );
               },
@@ -272,18 +287,58 @@ class GridItemWidget extends StatelessWidget {
         itemCount: svgs.length, // Total number of items (rows * columns)
         itemBuilder: (context, index) {
           return InkWell(
-            onTap: () =>
-                context.push("/dashboard/${svgs[index].text.toLowerCase()}"),
+            onTap: () => index == 0
+                ? context.push("/dashboard/${svgs[index].text.toLowerCase()}")
+                : null,
             child: SizedBox(
               height: 50.0,
               child: Column(
                 children: [
                   Expanded(
                     flex: 3,
-                    child: CircleAvatar(
-                        backgroundColor: Pallete.backgroundColor,
-                        child: SvgPicture.asset(svgs[index].svgUrl,
-                            width: 25, height: 25)),
+                    child: index == 0
+                        ? CircleAvatar(
+                            backgroundColor: Pallete.backgroundColor,
+                            child: SvgPicture.asset(svgs[index].svgUrl,
+                                width: 25, height: 25),
+                          )
+                        : Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Pallete.backgroundColor,
+                                child: SvgPicture.asset(svgs[index].svgUrl,
+                                    width: 25, height: 25),
+                              ),
+                              Positioned(
+                                  top: -7,
+                                  right: -25,
+                                  child: Container(
+                                    width: 35,
+                                    height: 15,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 0.5, horizontal: 1),
+                                    decoration: const BoxDecoration(
+                                      color: Pallete.secondaryErrorColor,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(50),
+                                        topRight: Radius.circular(50),
+                                        bottomRight: Radius.circular(50),
+                                      ),
+                                    ),
+                                    child: const Center(
+                                      child: AutoSizeText(
+                                        'soon',
+                                        maxLines: 1,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 0.01,
+                                            color: Pallete.contrastTextColor),
+                                      ),
+                                    ),
+                                  ))
+                            ],
+                          ),
                   ),
                   Expanded(
                     child: Center(
@@ -310,4 +365,68 @@ class TopUpSvgAndText {
   String svgUrl;
   String text;
   TopUpSvgAndText(this.svgUrl, this.text);
+}
+
+class ShortTransactionHistory extends ConsumerWidget {
+  const ShortTransactionHistory({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(transactionControllerProvider);
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Pallete.secondaryColor,
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      alignment: Alignment.center,
+      child: state.when(
+        data: (data) {
+          return ListView.separated(
+            primary: true,
+            shrinkWrap: true,
+            itemCount: 4,
+            itemBuilder: (context, index) {
+              int lengthArray = data.length - 1;
+              final history = data[lengthArray - index];
+              if (history["type"] == 'Add money') {
+                return HistoryWidget(
+                  type: 'Deposit',
+                  date: history['date'],
+                  status: history['status'],
+                  amount: history['amount'],
+                );
+              } else if (history["type"] == 'Data') {
+                return HistoryWidget(
+                  type: 'Data',
+                  date: history['date'],
+                  status: history['status'],
+                  amount: history['amount'],
+                );
+              }
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return const Divider(
+                color: Pallete.blueGreyColor,
+                height: 3,
+              );
+            },
+          );
+        },
+        error: (error, stackTrace) {
+          return Center(
+              child: AutoSizeText(
+            error.toString(),
+            textAlign: TextAlign.center,
+          ));
+        },
+        loading: () {
+          return const Center(
+              child: CircularProgressIndicator(
+            color: Pallete.primaryColor,
+          ));
+        },
+      ),
+    );
+  }
 }
