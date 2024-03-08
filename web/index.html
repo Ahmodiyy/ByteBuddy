@@ -90,6 +90,10 @@
   }
 }
 
+/* Class to stop the animation */
+.paused {
+    animation-play-state: paused;
+  }
 
   </style>
   <script>
@@ -109,8 +113,8 @@
   </script>
 </head>
 <body>
-<div class="circle"></div>
-<img src="favicon.png" alt="B" class="letter" height="60px" width="60px"/>
+<div class="circle" id="circle"></div>
+<img class="letter" id="letter" src="favicon.png" alt="B"  height="60px" width="60px"/>
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script src="paystack_interop.js"></script>
   <script>
@@ -124,9 +128,20 @@
         onEntrypointLoaded: function(engineInitializer) {
           engineInitializer.initializeEngine().then(function(appRunner) {
             appRunner.runApp();
+
           });
         }
-      });
+      }); toggleAnimation();
     });
+
+    const circle = document.getElementById("circle");
+    const letter = document.getElementById("letter");
+    function toggleAnimation() {
+      circle.classList.toggle('paused');
+      letter.classList.toggle('paused');
+  }
+
+    toggleAnimation();
+
   </script>
 </body></html>

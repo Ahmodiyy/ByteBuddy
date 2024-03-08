@@ -13,6 +13,7 @@ import 'package:go_router/go_router.dart';
 import 'package:gap/gap.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smooth_scroll_multiplatform/smooth_scroll_multiplatform.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
@@ -541,12 +542,18 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                 Row(
                                   children: [
                                     IconButton(
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        await launchUrl(Uri.parse(
+                                            'https://twitter.com/ByteBuddy101'));
+                                      },
                                       icon: Icon(FontAwesomeIcons.twitter),
                                     ),
                                     Gap(gapSize),
                                     IconButton(
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        await launchUrl(Uri.parse(
+                                            'https://wa.me/2347043760387'));
+                                      },
                                       icon: Icon(FontAwesomeIcons.whatsapp),
                                     ),
                                   ],

@@ -31,7 +31,7 @@ class CheckOut extends ConsumerWidget {
       (previous, next) {
         next.when(
           data: (data) {
-            context.push("/dashboard/transaction_status", extra: data);
+            context.go("/dashboard/transaction_status", extra: data);
           },
           error: (error, stackTrace) {
             var snackBar = SnackBar(

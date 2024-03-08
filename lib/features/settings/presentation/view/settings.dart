@@ -28,11 +28,9 @@ class _SettingsState extends ConsumerState<Settings> {
               const Gap(10),
               ElevatedButton(
                   onPressed: () async {
-                    await ref
-                        .read(authControllerLoginProvider.notifier)
-                        .sign0ut();
-                    if (!mounted) return;
-                    context.go('/');
+                    myAsyncMethod(ref, context, () {
+                      context.go('/');
+                    });
                   },
                   child: const AutoSizeText('Log out'))
             ],
@@ -41,4 +39,10 @@ class _SettingsState extends ConsumerState<Settings> {
       ),
     );
   }
+}
+
+Future<void> myAsyncMethod(
+    WidgetRef ref, BuildContext context, VoidCallback onSuccess) async {
+  await ref.read(authControllerLoginProvider.notifier).sign0ut();
+  onSuccess.call();
 }

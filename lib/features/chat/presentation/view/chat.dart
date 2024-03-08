@@ -3,6 +3,7 @@ import 'package:bytebuddy/themes/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Chat extends ConsumerStatefulWidget {
   const Chat({super.key});
@@ -25,7 +26,9 @@ class _ChatState extends ConsumerState<Chat> {
               const AutoSizeText("Coming soon"),
               const Gap(10),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await launchUrl(Uri.parse('https://wa.me/2347043760387'));
+                  },
                   child: const AutoSizeText('Chat us on whatsapp'))
             ],
           ),

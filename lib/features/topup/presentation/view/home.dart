@@ -75,7 +75,7 @@ class _HomeState extends ConsumerState<Home> {
                         const Gap(20),
                       ],
                     ),
-                    Gap(40),
+                    const Gap(40),
                     Row(
                       children: [
                         const Expanded(
@@ -332,7 +332,7 @@ class GridItemWidget extends StatelessWidget {
                                         maxLines: 1,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                            fontSize: 0.01,
+                                            fontSize: 0.001,
                                             color: Pallete.contrastTextColor),
                                       ),
                                     ),
@@ -374,7 +374,7 @@ class ShortTransactionHistory extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(transactionControllerProvider);
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Pallete.secondaryColor,
         borderRadius: BorderRadius.circular(15.0),
@@ -385,7 +385,7 @@ class ShortTransactionHistory extends ConsumerWidget {
           return ListView.separated(
             primary: true,
             shrinkWrap: true,
-            itemCount: 4,
+            itemCount: 3,
             itemBuilder: (context, index) {
               int lengthArray = data.length - 1;
               final history = data[lengthArray - index];
