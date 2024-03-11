@@ -24,6 +24,8 @@ endpoint_constant.dart
 #api file
 data_repo.dart
 
+.env
+env.g.dart
 
 # IntelliJ related
 *.iml

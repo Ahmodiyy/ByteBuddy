@@ -13,6 +13,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 final togglePasswordProvider = StateProvider<bool>((ref) {
   return true;
@@ -165,9 +166,13 @@ class DepositWidget extends ConsumerWidget {
               children: [
                 balanceState.when(
                   data: (data) {
+                    final formattedAmount = NumberFormat.currency(
+                      locale: 'en_US',
+                      symbol: '₦',
+                    ).format(1400);
                     return Flexible(
                       child: AutoSizeText(
-                        togglePassword ? "****" : '\u20A6$data',
+                        togglePassword ? "****" : '\u20A6$formattedAmount',
                         style: context.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Pallete.secondaryColor),
