@@ -55,38 +55,43 @@ class _HomeState extends ConsumerState<Home> {
         backgroundColor: Pallete.backgroundColor,
         body: Padding(
           padding: const EdgeInsets.all(20),
-          child: SingleChildScrollView(
-            child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-                if (constraints.isMobile) {
-                  return Column(children: [
-                    const DepositWidget(),
-                    const Gap(20),
-                    GridItemWidget(),
-                    const Gap(20),
-                  ]);
-                }
-                return Column(
-                  children: [
-                    Row(
-                      children: [
-                        const Expanded(flex: 2, child: DepositWidget()),
-                        const Gap(20),
-                        Expanded(flex: 3, child: GridItemWidget()),
-                        const Gap(20),
-                      ],
-                    ),
-                    const Gap(40),
-                    Row(
-                      children: [
-                        const Expanded(
-                            flex: 2, child: ShortTransactionHistory()),
-                        Expanded(flex: 3, child: Container()),
-                      ],
-                    ),
-                  ],
-                );
-              },
+          child: RefreshIndicator(
+            onRefresh: () async {
+              await ref.read(balanceStreamProvider.future);
+            },
+            child: SingleChildScrollView(
+              child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  if (constraints.isMobile) {
+                    return Column(children: [
+                      const DepositWidget(),
+                      const Gap(20),
+                      GridItemWidget(),
+                      const Gap(20),
+                    ]);
+                  }
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          const Expanded(flex: 2, child: DepositWidget()),
+                          const Gap(20),
+                          Expanded(flex: 3, child: GridItemWidget()),
+                          const Gap(20),
+                        ],
+                      ),
+                      const Gap(40),
+                      Row(
+                        children: [
+                          const Expanded(
+                              flex: 2, child: ShortTransactionHistory()),
+                          Expanded(flex: 3, child: Container()),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
           ),
         ),
@@ -169,10 +174,10 @@ class DepositWidget extends ConsumerWidget {
                     final formattedAmount = NumberFormat.currency(
                       locale: 'en_US',
                       symbol: '₦',
-                    ).format(1400);
+                    ).format(data);
                     return Flexible(
                       child: AutoSizeText(
-                        togglePassword ? "****" : '\u20A6$formattedAmount',
+                        togglePassword ? "****" : formattedAmount,
                         style: context.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Pallete.secondaryColor),
@@ -181,10 +186,17 @@ class DepositWidget extends ConsumerWidget {
                   },
                   error: (error, stackTrace) {
                     return Flexible(
-                      child: AutoSizeText(
-                        "Please check your internet connection and try again.",
-                        style: context.bodyMedium
-                            ?.copyWith(color: Pallete.secondaryColor),
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Pallete.errorBackgroundColor,
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: AutoSizeText(
+                          "Please check your internet connection and try again.",
+                          style: context.bodySmall
+                              ?.copyWith(color: Pallete.secondaryColor),
+                        ),
                       ),
                     );
                   },

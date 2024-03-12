@@ -26,6 +26,7 @@ data_repo.dart
 
 .env
 env.g.dart
+Env.g.dart
 
 # IntelliJ related
 *.iml

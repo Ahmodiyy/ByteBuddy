@@ -1,4 +1,5 @@
 import 'package:bytebuddy/constants/endpoint_constant.dart';
+import 'package:bytebuddy/env/Env.dart';
 import 'package:bytebuddy/features/topup/data/subscription.dart';
 import 'package:bytebuddy/features/topup/model/data_service_model.dart';
 import 'package:dio/dio.dart';
@@ -16,7 +17,7 @@ class DataSubscriptionRepo implements Subscription {
       String serviceID, int planIndex, String phone, String email) async {
     try {
       final response = await _dio.post(
-        EndpointConstant.buyDataPlanEndpoint,
+        Env.buyDataPlanEndpoint,
         data: {
           "serviceID": serviceID,
           "planIndex": planIndex,
@@ -45,7 +46,7 @@ class DataSubscriptionRepo implements Subscription {
   Future<DataServiceModel> getDataPlans(String serviceID) async {
     try {
       final response = await _dio.post(
-        EndpointConstant.getDataPlanEndpoint,
+        Env.getDataPlanEndpoint,
         data: {
           "serviceID": serviceID,
         },

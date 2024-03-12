@@ -3,6 +3,7 @@ import 'package:bytebuddy/common/appBar_widget.dart';
 import 'package:bytebuddy/common/icon_widget.dart';
 import 'package:bytebuddy/constants/constant.dart';
 import 'package:bytebuddy/constants/paystack_constant.dart';
+import 'package:bytebuddy/env/Env.dart';
 import 'package:bytebuddy/features/auth/presentation/controller/auth_controller.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -128,11 +129,23 @@ class _FundingState extends ConsumerState<Funding> {
                                       double.parse(_amount.text);
                                   final amount =
                                       (amountInDouble * 100).toString();
-                                  return await payWithPaystack(context,
-                                      transactionReference:
-                                          transactionReference,
-                                      email: email,
-                                      amount: amount);
+                                  return pay(() async {
+                                    await FlutterPaystackPlus.openPaystackPopup(
+                                        publicKey: Env.payStackTestPublicKey,
+                                        context: context,
+                                        secretKey: Env.payStackTestSecretKey,
+                                        currency: 'NGN',
+                                        customerEmail: email,
+                                        amount: amount,
+                                        reference: transactionReference,
+                                        onClosed: () {
+                                          debugPrint(
+                                              'Could\'nt finish payment');
+                                        },
+                                        onSuccess: () {
+                                          debugPrint('Payment successful');
+                                        });
+                                  });
                                 } catch (e) {
                                   debugPrint(
                                       'Paystack payment error ${e.toString()}');
@@ -165,22 +178,6 @@ class _FundingState extends ConsumerState<Funding> {
   }
 }
 
-Future<void> payWithPaystack(BuildContext context,
-    {required String transactionReference,
-    required String email,
-    required String amount}) async {
-  return await FlutterPaystackPlus.openPaystackPopup(
-      publicKey: PaystackConstant.testPublicKey,
-      context: context,
-      secretKey: PaystackConstant.testSecretKey,
-      currency: 'NGN',
-      customerEmail: email,
-      amount: amount,
-      reference: transactionReference,
-      onClosed: () {
-        debugPrint('Could\'nt finish payment');
-      },
-      onSuccess: () {
-        debugPrint('Payment successful');
-      });
+void pay(VoidCallback callback) {
+  callback.call();
 }
