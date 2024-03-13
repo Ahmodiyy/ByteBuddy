@@ -57,8 +57,10 @@ class _HomeState extends ConsumerState<Home> {
           padding: const EdgeInsets.all(20),
           child: RefreshIndicator(
             onRefresh: () async {
-              await ref.read(balanceStreamProvider.future);
+              final newValue = ref.refresh(balanceStreamProvider);
             },
+            color: Pallete.primaryColor,
+            backgroundColor: Pallete.blueGreyColor,
             child: SingleChildScrollView(
               child: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
@@ -187,10 +189,12 @@ class DepositWidget extends ConsumerWidget {
                   error: (error, stackTrace) {
                     return Flexible(
                       child: Container(
-                        padding: const EdgeInsets.all(10),
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(8),
+                        margin: const EdgeInsets.only(bottom: 4),
                         decoration: BoxDecoration(
                           color: Pallete.errorBackgroundColor,
-                          borderRadius: BorderRadius.circular(20.0),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: AutoSizeText(
                           "Please check your internet connection and try again.",
@@ -328,7 +332,7 @@ class GridItemWidget extends StatelessWidget {
                                     width: 25, height: 25),
                               ),
                               Positioned(
-                                  top: -7,
+                                  top: 0,
                                   right: -25,
                                   child: Container(
                                     width: 35,

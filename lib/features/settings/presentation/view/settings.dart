@@ -43,6 +43,7 @@ class _SettingsState extends ConsumerState<Settings> {
 
 Future<void> logout(
     WidgetRef ref, BuildContext context, VoidCallback onSuccess) async {
+   onSuccess.call();
   await ref.read(authControllerLoginProvider.notifier).sign0ut();
-  onSuccess.call();
+
 }

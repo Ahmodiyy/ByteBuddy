@@ -7,6 +7,7 @@ import 'package:bytebuddy/features/topup/presentation/widget/history_widget.dart
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gap/gap.dart';
 
 class TransactionHistory extends ConsumerWidget {
   const TransactionHistory({super.key});
@@ -33,51 +34,49 @@ class TransactionHistory extends ConsumerWidget {
                 state.when(
                   data: (data) {
                     return Expanded(
-                      child: Center(
-                        child: Container(
-                          padding: const EdgeInsets.only(left: 20, bottom: 20),
-                          margin: const EdgeInsets.only(top: 20),
-                          decoration: const BoxDecoration(
-                            color: Pallete.secondaryColor,
-                          ),
-                          alignment: Alignment.center,
-                          width: constraints.isMobile ? double.infinity : 400.0,
-                          child: Scrollbar(
-                            thumbVisibility: true,
-                            trackVisibility: true,
-                            radius: const Radius.circular(50),
-                            thickness: 5,
-                            child: ListView.separated(
-                              primary: true,
-                              shrinkWrap: true,
-                              itemCount: data.length,
-                              itemBuilder: (context, index) {
-                                int lengthArray = data.length - 1;
-                                final history = data[lengthArray - index];
-                                if (history["type"] == 'Add money') {
-                                  return HistoryWidget(
-                                    type: 'Deposit',
-                                    date: history['date'],
-                                    status: history['status'],
-                                    amount: history['amount'],
-                                  );
-                                } else if (history["type"] == 'Data') {
-                                  return HistoryWidget(
-                                    type: 'Data',
-                                    date: history['date'],
-                                    status: history['status'],
-                                    amount: history['amount'],
-                                  );
-                                }
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return const Divider(
-                                  color: Pallete.blueGreyColor,
-                                  height: 3,
+                      child: Container(
+                        padding: const EdgeInsets.only(left: 20, bottom: 20),
+                        margin: const EdgeInsets.only(top: 3),
+                        decoration: const BoxDecoration(
+                          color: Pallete.secondaryColor,
+                        ),
+                        alignment: Alignment.topCenter,
+                        width: constraints.isMobile ? double.infinity : 400.0,
+                        child: Scrollbar(
+                          thumbVisibility: true,
+                          trackVisibility: true,
+                          radius: const Radius.circular(50),
+                          thickness: 5,
+                          child: ListView.separated(
+                            primary: true,
+                            shrinkWrap: true,
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              int lengthArray = data.length - 1;
+                              final history = data[lengthArray - index];
+                              if (history["type"] == 'Add money') {
+                                return HistoryWidget(
+                                  type: 'Deposit',
+                                  date: history['date'],
+                                  status: history['status'],
+                                  amount: history['amount'],
                                 );
-                              },
-                            ),
+                              } else if (history["type"] == 'Data') {
+                                return HistoryWidget(
+                                  type: 'Data',
+                                  date: history['date'],
+                                  status: history['status'],
+                                  amount: history['amount'],
+                                );
+                              }
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return const Divider(
+                                color: Pallete.blueGreyColor,
+                                height: 3,
+                              );
+                            },
                           ),
                         ),
                       ),
@@ -91,10 +90,15 @@ class TransactionHistory extends ConsumerWidget {
                     ));
                   },
                   loading: () {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      color: Pallete.primaryColor,
-                    ));
+                    return const Column(
+                      children: [
+                        Gap(20),
+                        Center(
+                            child: CircularProgressIndicator(
+                          color: Pallete.primaryColor,
+                        )),
+                      ],
+                    );
                   },
                 ),
               ],
