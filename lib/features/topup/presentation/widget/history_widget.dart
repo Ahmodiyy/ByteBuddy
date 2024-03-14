@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 
+import '../../../../util/functions.dart';
+
 class HistoryWidget extends ConsumerWidget {
   final String type;
   final String date;
@@ -22,6 +24,7 @@ class HistoryWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool transactionStatus = status.toString() == 'successful';
+    final formattedPrice = UtilityFunctions.formatCurrency(amount);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12),
       margin: const EdgeInsets.only(right: 30),
@@ -72,7 +75,7 @@ class HistoryWidget extends ConsumerWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: AutoSizeText(
-                    '\u20A6${amount.toString()}',
+                    formattedPrice,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.right,

@@ -56,12 +56,11 @@ class _HomeState extends ConsumerState<Home> {
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: RefreshIndicator(
-            onRefresh: () async {
-              final newValue = ref.refresh(balanceStreamProvider);
-            },
+            onRefresh: () => ref.refresh(balanceStreamProvider.future),
             color: Pallete.primaryColor,
-            backgroundColor: Pallete.blueGreyColor,
+            backgroundColor: Pallete.secondaryColor,
             child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
               child: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
                   if (constraints.isMobile) {
@@ -173,13 +172,11 @@ class DepositWidget extends ConsumerWidget {
               children: [
                 balanceState.when(
                   data: (data) {
-                    final formattedAmount = NumberFormat.currency(
-                      locale: 'en_US',
-                      symbol: '₦',
-                    ).format(data);
+                    final formattedPrice =
+                        UtilityFunctions.formatCurrency(data);
                     return Flexible(
                       child: AutoSizeText(
-                        togglePassword ? "****" : formattedAmount,
+                        togglePassword ? "****" : formattedPrice,
                         style: context.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Pallete.secondaryColor),
@@ -436,10 +433,12 @@ class ShortTransactionHistory extends ConsumerWidget {
         },
         error: (error, stackTrace) {
           return Center(
-              child: AutoSizeText(
-            error.toString(),
-            textAlign: TextAlign.center,
-          ));
+            child: AutoSizeText(
+              "Please check your internet connection and refresh.",
+              style: context.bodyMedium
+                  ?.copyWith(color: Pallete.contrastTextColor),
+            ),
+          );
         },
         loading: () {
           return const Center(

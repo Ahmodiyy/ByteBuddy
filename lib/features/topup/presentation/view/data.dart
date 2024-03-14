@@ -10,6 +10,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../util/functions.dart';
+
 final serviceIDProvider = StateProvider<String>((ref) {
   return 'mtn_sme';
 });
@@ -286,7 +288,7 @@ class GridDataWidget extends ConsumerWidget {
         return InkWell(
           onTap: () {
             if (formKey.currentState!.validate()) {
-              context.go('/dashboard/checkout',
+              context.push('/dashboard/checkout',
                   extra: DataPurchaseModel(
                     service: dataServiceModel.service,
                     serviceID: ref.read(serviceIDProvider),

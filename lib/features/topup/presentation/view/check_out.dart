@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+
+import '../../../../util/functions.dart';
 
 class CheckOut extends ConsumerWidget {
   final DataPurchaseModel dataPurchaseModel;
@@ -25,7 +28,8 @@ class CheckOut extends ConsumerWidget {
     int planIndex = dataPurchaseModel.planIndex;
     String price = dataPurchaseModel.dataPlan.price;
     String displayName = dataPurchaseModel.dataPlan.displayName;
-
+    final formattedPrice =
+        UtilityFunctions.formatCurrency(int.tryParse(price) as num);
     ref.listen(
       subscriptionControllerProvider,
       (previous, next) {
@@ -84,7 +88,7 @@ class CheckOut extends ConsumerWidget {
                         ),
                         const Gap(10),
                         Center(
-                          child: AutoSizeText('\u20A6$price',
+                          child: AutoSizeText(formattedPrice,
                               style: context.bodyMedium?.copyWith(
                                   color: Pallete.primaryColor,
                                   fontWeight: FontWeight.bold)),
@@ -178,7 +182,7 @@ class CheckOut extends ConsumerWidget {
                                   ),
                                   TableCell(
                                     child: AutoSizeText(
-                                      '\u20A6$price',
+                                      formattedPrice,
                                       style: context.bodySmall,
                                       textAlign: TextAlign.right,
                                     ),
