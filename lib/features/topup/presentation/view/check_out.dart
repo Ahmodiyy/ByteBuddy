@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../util/functions.dart';
 
@@ -35,7 +34,7 @@ class CheckOut extends ConsumerWidget {
       (previous, next) {
         next.when(
           data: (data) {
-            context.go("/dashboard/transaction_status", extra: data);
+            context.push("/dashboard/transaction_status", extra: data);
           },
           error: (error, stackTrace) {
             var snackBar = SnackBar(

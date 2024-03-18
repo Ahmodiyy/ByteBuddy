@@ -33,7 +33,7 @@ GoRouter _router(User? user) {
   debugPrint(
       'inside main user : ${user?.email}, verified : ${user?.emailVerified}');
   return GoRouter(
-    initialLocation: user != null && user.emailVerified ? '/dashboard' : '/',
+    initialLocation: user != null && user.emailVerified ? '/auth' : '/',
     routes: [
       GoRoute(
         path: '/',
