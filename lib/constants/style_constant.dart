@@ -19,13 +19,13 @@ class StyleConstant {
       )),
     ),
     enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Pallete.secondaryColor, width: 1.0),
+      borderSide: BorderSide(color: Colors.transparent, width: 1.0),
       borderRadius: BorderRadius.all(Radius.circular(
         10,
       )),
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Pallete.secondaryColor, width: 1.0),
+      borderSide: BorderSide(color: Pallete.primaryColor, width: 1.0),
       borderRadius: BorderRadius.all(Radius.circular(
         10,
       )),

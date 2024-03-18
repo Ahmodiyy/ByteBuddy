@@ -93,7 +93,7 @@ class _DataState extends ConsumerState<Data> {
                                 keyboardType: TextInputType.number,
                                 decoration: StyleConstant.input.copyWith(
                                   hintText: 'Phone number',
-                                  fillColor: Pallete.tertiaryColor,
+                                  fillColor: Pallete.blueGreyColor,
                                 ),
                                 validator: (value) {
                                   return value?.length == 11
@@ -197,7 +197,7 @@ class _DataState extends ConsumerState<Data> {
                                   controller: numberController,
                                   keyboardType: TextInputType.number,
                                   decoration: StyleConstant.input.copyWith(
-                                    fillColor: Pallete.tertiaryColor,
+                                    fillColor: Pallete.blueGreyColor,
                                     hintText: 'Phone number',
                                   ),
                                   validator: (value) {

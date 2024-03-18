@@ -30,7 +30,7 @@ class AppBarWidget {
             AutoSizeText(
               screenText,
               maxLines: 1,
-              style: context.bodySmall?.copyWith(color: Pallete.primaryColor),
+              style: context.bodySmall?.copyWith(color: Pallete.textColor),
             ),
           ],
         ),

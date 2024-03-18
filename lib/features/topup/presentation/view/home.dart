@@ -435,8 +435,7 @@ class ShortTransactionHistory extends ConsumerWidget {
           return Center(
             child: AutoSizeText(
               "Please check your internet connection and refresh.",
-              style: context.bodyMedium
-                  ?.copyWith(color: Pallete.contrastTextColor),
+              style: context.bodyMedium?.copyWith(color: Pallete.textColor),
             ),
           );
         },

@@ -25,54 +25,58 @@ class TransactionHistory extends ConsumerWidget {
               children: [
                 state.when(
                   data: (data) {
+                    if (data.isEmpty) return Container();
                     return Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.only(left: 20, bottom: 20),
-                        decoration: const BoxDecoration(
-                          color: Pallete.secondaryColor,
-                        ),
+                      child: Align(
                         alignment: Alignment.topCenter,
-                        width: constraints.isMobile ? double.infinity : 500.0,
-                        child: Scrollbar(
-                          thumbVisibility: true,
-                          trackVisibility: true,
-                          radius: const Radius.circular(50),
-                          thickness: 5,
-                          child: RefreshIndicator(
-                            onRefresh: () => ref
-                                .refresh(transactionControllerProvider.future),
-                            color: Pallete.primaryColor,
-                            backgroundColor: Pallete.secondaryColor,
-                            child: ListView.separated(
-                              primary: true,
-                              shrinkWrap: true,
-                              itemCount: data.length,
-                              itemBuilder: (context, index) {
-                                int lengthArray = data.length - 1;
-                                final history = data[lengthArray - index];
-                                if (history["type"] == 'Add money') {
-                                  return HistoryWidget(
-                                    type: 'Deposit',
-                                    date: history['date'],
-                                    status: history['status'],
-                                    amount: history['amount'],
+                        child: Container(
+                          padding: const EdgeInsets.only(left: 20, bottom: 20),
+                          decoration: const BoxDecoration(
+                            color: Pallete.secondaryColor,
+                          ),
+                          alignment: Alignment.topCenter,
+                          width: constraints.isMobile ? double.infinity : 500.0,
+                          child: Scrollbar(
+                            thumbVisibility: true,
+                            trackVisibility: true,
+                            radius: const Radius.circular(50),
+                            thickness: 5,
+                            child: RefreshIndicator(
+                              onRefresh: () => ref.refresh(
+                                  transactionControllerProvider.future),
+                              color: Pallete.primaryColor,
+                              backgroundColor: Pallete.secondaryColor,
+                              child: ListView.separated(
+                                primary: true,
+                                shrinkWrap: true,
+                                itemCount: data.length,
+                                itemBuilder: (context, index) {
+                                  int lengthArray = data.length - 1;
+                                  final history = data[lengthArray - index];
+                                  if (history["type"] == 'Add money') {
+                                    return HistoryWidget(
+                                      type: 'Deposit',
+                                      date: history['date'],
+                                      status: history['status'],
+                                      amount: history['amount'],
+                                    );
+                                  } else if (history["type"] == 'Data') {
+                                    return HistoryWidget(
+                                      type: 'Data',
+                                      date: history['date'],
+                                      status: history['status'],
+                                      amount: history['amount'],
+                                    );
+                                  }
+                                },
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  return const Divider(
+                                    color: Pallete.blueGreyColor,
+                                    height: 3,
                                   );
-                                } else if (history["type"] == 'Data') {
-                                  return HistoryWidget(
-                                    type: 'Data',
-                                    date: history['date'],
-                                    status: history['status'],
-                                    amount: history['amount'],
-                                  );
-                                }
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return const Divider(
-                                  color: Pallete.blueGreyColor,
-                                  height: 3,
-                                );
-                              },
+                                },
+                              ),
                             ),
                           ),
                         ),
@@ -84,7 +88,7 @@ class TransactionHistory extends ConsumerWidget {
                       child: AutoSizeText(
                         "Please check your internet connection and refresh.",
                         style: context.bodyMedium
-                            ?.copyWith(color: Pallete.contrastTextColor),
+                            ?.copyWith(color: Pallete.textColor),
                       ),
                     );
                   },

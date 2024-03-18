@@ -19,7 +19,7 @@ class Pallete {
   static const Color secondaryErrorColor = Color(0xFFff6978);
 
   static const Color accentColor = Color(0xFF210F60);
-  static const Color blueGreyColor = Color(0xFFefeff6);
+  static const Color blueGreyColor = Color(0xFFf4f7fa);
 
   static const Color backgroundColor = tertiaryColor;
 
