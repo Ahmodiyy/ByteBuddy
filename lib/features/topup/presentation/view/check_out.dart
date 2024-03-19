@@ -34,7 +34,7 @@ class CheckOut extends ConsumerWidget {
       (previous, next) {
         next.when(
           data: (data) {
-            context.push("/dashboard/transaction_status", extra: data);
+            context.go("/dashboard/transaction_status", extra: data);
           },
           error: (error, stackTrace) {
             var snackBar = SnackBar(
@@ -43,7 +43,7 @@ class CheckOut extends ConsumerWidget {
                 style: context.bodySmall?.copyWith(color: Pallete.errorColor),
               ),
               duration: const Duration(
-                  seconds: 10), // Optional, how long it stays on screen
+                  seconds: 3), // Optional, how long it stays on screen
               action: SnackBarAction(
                 label: 'Close',
                 textColor: Pallete.primaryColor,
