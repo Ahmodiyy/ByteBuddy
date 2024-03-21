@@ -4,6 +4,7 @@ import 'package:bytebuddy/constants/constant.dart';
 import 'package:bytebuddy/features/auth/presentation/controller/auth_controller.dart';
 import 'package:bytebuddy/features/topup/model/data_purchase_model.dart';
 import 'package:bytebuddy/features/topup/presentation/controller/subscription_controller.dart';
+import 'package:bytebuddy/features/topup/presentation/view/transaction_status.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,15 +13,18 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../util/functions.dart';
 
+final dataPurchaseProvider = StateProvider<DataPurchaseModel?>((ref) {
+  return null;
+});
+
 class CheckOut extends ConsumerWidget {
-  final DataPurchaseModel dataPurchaseModel;
-  const CheckOut(
-    this.dataPurchaseModel, {
+  const CheckOut({
     super.key,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dataPurchaseModel = ref.watch(dataPurchaseProvider)!;
     String service = dataPurchaseModel.service;
     String number = dataPurchaseModel.number;
     String serviceID = dataPurchaseModel.serviceID;
@@ -34,7 +38,10 @@ class CheckOut extends ConsumerWidget {
       (previous, next) {
         next.when(
           data: (data) {
-            context.go("/dashboard/transaction_status", extra: data);
+            ref
+                .read(transactionStatusDataProvider.notifier)
+                .update((state) => data);
+            context.go("/dashboard/transaction_status");
           },
           error: (error, stackTrace) {
             var snackBar = SnackBar(

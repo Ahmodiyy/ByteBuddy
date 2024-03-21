@@ -5,20 +5,25 @@ import 'package:gap/gap.dart';
 import 'package:rive/rive.dart';
 import 'package:bytebuddy/constants/constant.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+final transactionStatusDataProvider =
+    StateProvider<Map<String, dynamic>?>((ref) {
+  return null;
+});
 
 class TransactionStatus extends ConsumerWidget {
-  final Map<String, dynamic> transactionStatusData;
-  const TransactionStatus(this.transactionStatusData, {super.key});
+  const TransactionStatus({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final transactionStatusData = ref.watch(transactionStatusDataProvider)!;
     String status = transactionStatusData['status'];
     return SafeArea(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Gap(30),
               SizedBox(
@@ -43,11 +48,11 @@ class TransactionStatus extends ConsumerWidget {
                     ?.copyWith(color: Pallete.secondaryTextColor),
               ),
               const Gap(100),
-              AutoSizeText(
-                'Bytebuddy',
-                textAlign: TextAlign.center,
-                style: context.bodySmall?.copyWith(
-                    color: Pallete.primaryColor, fontWeight: FontWeight.bold),
+              ElevatedButton(
+                onPressed: () => context.go(('/dashboard')),
+                child: const AutoSizeText(
+                  'Done',
+                ),
               ),
             ],
           ),

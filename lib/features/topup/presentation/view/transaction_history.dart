@@ -9,12 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
+import '../../data/transaction_repo.dart';
+
 class TransactionHistory extends ConsumerWidget {
   const TransactionHistory({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(transactionControllerProvider);
+    final state = ref.watch(transactionHistoryStreamProvider);
     return LayoutBuilder(
       builder: (context, constraints) => SafeArea(
         child: Scaffold(
@@ -86,7 +88,7 @@ class TransactionHistory extends ConsumerWidget {
                   error: (error, stackTrace) {
                     return Center(
                       child: AutoSizeText(
-                        "Please check your internet connection and refresh.",
+                        "No history data or internet connection",
                         style: context.bodyMedium
                             ?.copyWith(color: Pallete.textColor),
                       ),

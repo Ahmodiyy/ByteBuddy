@@ -3,7 +3,6 @@ import 'package:bytebuddy/common/icon_widget.dart';
 import 'package:bytebuddy/constants/constant.dart';
 import 'package:bytebuddy/features/topup/data/transaction_repo.dart';
 import 'package:bytebuddy/features/topup/presentation/controller/transaction_controller.dart';
-import 'package:bytebuddy/features/topup/presentation/view/transaction_history.dart';
 import 'package:bytebuddy/features/topup/presentation/widget/history_widget.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:bytebuddy/util/functions.dart';
@@ -389,7 +388,7 @@ class ShortTransactionHistory extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(transactionControllerProvider);
+    final state = ref.watch(transactionHistoryStreamProvider);
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -433,7 +432,7 @@ class ShortTransactionHistory extends ConsumerWidget {
         error: (error, stackTrace) {
           return Center(
             child: AutoSizeText(
-              "Please check your internet connection and refresh.",
+              "No history data or internet connection",
               style: context.bodyMedium?.copyWith(color: Pallete.textColor),
             ),
           );

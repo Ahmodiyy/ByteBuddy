@@ -69,13 +69,11 @@ GoRouter _router(User? user) {
             ),
             GoRoute(
               path: 'checkout',
-              builder: (context, state) =>
-                  CheckOut(state.extra as DataPurchaseModel),
+              builder: (context, state) => const CheckOut(),
             ),
             GoRoute(
               path: 'transaction_status',
-              builder: (context, state) =>
-                  TransactionStatus(state.extra as Map<String, dynamic>),
+              builder: (context, state) => const TransactionStatus(),
             ),
           ]),
     ],

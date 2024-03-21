@@ -4,6 +4,7 @@ import 'package:bytebuddy/constants/constant.dart';
 import 'package:bytebuddy/features/topup/model/data_purchase_model.dart';
 import 'package:bytebuddy/features/topup/model/data_service_model.dart';
 import 'package:bytebuddy/features/topup/presentation/controller/data_controller.dart';
+import 'package:bytebuddy/features/topup/presentation/view/check_out.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -286,14 +287,18 @@ class GridDataWidget extends ConsumerWidget {
         return InkWell(
           onTap: () {
             if (formKey.currentState!.validate()) {
-              context.push('/dashboard/checkout',
-                  extra: DataPurchaseModel(
-                    service: dataServiceModel.service,
-                    serviceID: ref.read(serviceIDProvider),
-                    planIndex: index,
-                    number: numberController.text,
-                    dataPlan: dataServiceModel.plans[index],
-                  ));
+              ref.read(dataPurchaseProvider.notifier).update(
+                    (state) => DataPurchaseModel(
+                      service: dataServiceModel.service,
+                      serviceID: ref.read(serviceIDProvider),
+                      planIndex: index,
+                      number: numberController.text,
+                      dataPlan: dataServiceModel.plans[index],
+                    ),
+                  );
+              context.push(
+                '/dashboard/checkout',
+              );
             }
           },
           child: Container(

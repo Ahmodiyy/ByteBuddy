@@ -104,7 +104,7 @@
   <script src="flutter.js" defer=""></script>
 
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-  <script id="splash-screen-script">
+  <script defer id="splash-screen-script">
     function removeSplashFromWeb() {
       document.getElementById("splash")?.remove();
       document.getElementById("splash-branding")?.remove();
@@ -117,7 +117,7 @@
 <img class="letter" id="letter" src="favicon.png" alt="B"  height="60px" width="60px"/>
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script src="paystack_interop.js"></script>
-  <script>
+  <script defer>
 
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
@@ -127,6 +127,7 @@
         },
         onEntrypointLoaded: function(engineInitializer) {
           engineInitializer.initializeEngine().then(function(appRunner) {
+              toggleAnimation();
             appRunner.runApp();
 
           });
@@ -141,7 +142,7 @@
       letter.classList.toggle('paused');
   }
 
-    toggleAnimation();
+
 
   </script>
 </body></html>

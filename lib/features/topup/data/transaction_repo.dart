@@ -21,6 +21,27 @@ final balanceStreamProvider = StreamProvider<dynamic>((ref) async* {
   }
 });
 
+final transactionHistoryStreamProvider =
+    StreamProvider<List<Map<String, dynamic>>>((ref) async* {
+  // Call the getBalance method to get the initial balance
+  List<Map<String, dynamic>> initialHistory = await TransactionRepo()
+      .fetchTransactionHistory(ref
+          .read(authControllerLoginProvider.notifier)
+          .getCurrentUser()!
+          .email!);
+  yield initialHistory;
+  // Listen to the document snapshots and emit the 'balance' field
+  final snapshots = TransactionRepo().getDocumentStream(
+      ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!);
+  await for (var snapshot in snapshots) {
+    Map<String, dynamic>? data = snapshot.data();
+    List<Map<String, dynamic>> transactions = [];
+    List<dynamic> transactionList = data?['transactionHistory'] ?? [];
+    transactions = List<Map<String, dynamic>>.from(transactionList);
+    yield transactions;
+  }
+});
+
 class TransactionRepo {
   final FirebaseFirestore _cloudStore = FirebaseFirestore.instance;
 
@@ -45,10 +66,8 @@ class TransactionRepo {
       String email) async {
     List<Map<String, dynamic>> transactions = [];
     try {
-      DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await _cloudStore
-          .collection("log")
-          .doc(email) // Replace 'naza_document_id' with the actual document ID
-          .get();
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+          await _cloudStore.collection("log").doc(email).get();
       List<dynamic> transactionList =
           documentSnapshot.data()!['transactionHistory'];
 
