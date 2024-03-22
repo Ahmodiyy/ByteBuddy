@@ -96,12 +96,12 @@
   }
 
   </style>
-  <script>
+  <script defer>
     // The value below is injected by flutter build, do not touch.
     const serviceWorkerVersion = null;
   </script>
   <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer=""></script>
+  <script src="flutter.js" defer></script>
 
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
   <script defer id="splash-screen-script">
@@ -115,8 +115,8 @@
 <body>
 <div class="circle" id="circle"></div>
 <img class="letter" id="letter" src="favicon.png" alt="B"  height="60px" width="60px"/>
-<script src="https://js.paystack.co/v1/inline.js"></script>
-<script src="paystack_interop.js"></script>
+<script src="https://js.paystack.co/v1/inline.js" defer></script>
+<script src="paystack_interop.js" defer></script>
   <script defer>
 
     window.addEventListener('load', function(ev) {
@@ -132,7 +132,7 @@
 
           });
         }
-      }); toggleAnimation();
+      });
     });
 
     const circle = document.getElementById("circle");
