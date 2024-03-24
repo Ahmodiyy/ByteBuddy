@@ -122,9 +122,9 @@
         },
         onEntrypointLoaded: function(engineInitializer) {
           engineInitializer.initializeEngine().then(function(appRunner) {
-              toggleAnimation();
-            appRunner.runApp();
 
+            appRunner.runApp();
+            toggleAnimation();
           });
         }
       });

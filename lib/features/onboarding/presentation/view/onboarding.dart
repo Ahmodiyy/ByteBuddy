@@ -80,6 +80,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
         hasScrollClient = true;
       }
     });
+
+    const imageProvider = AssetImage(ImageConstant.intro);
+
+    precacheImage(imageProvider, context, onError: (exception, stackTrace) {
+      // Handle any errors that occur during image loading
+      print('Error loading image: $exception');
+    });
   }
 
   @override
@@ -276,11 +283,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                           padding: EdgeInsets.only(left: paddingSize),
                           alignment: Alignment.topLeft,
                           decoration: const BoxDecoration(
-                              image: DecorationImage(
-                            image: AssetImage(ImageConstant
-                                .intro), // Replace with your image asset
-                            fit: BoxFit.cover,
-                          )),
+                            color: Pallete.blueGreyColor,
+                            image: DecorationImage(
+                              image: AssetImage(ImageConstant
+                                  .intro), // Replace with your image asset
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                           child: InfoWidgetTransition(
                             title: "Affordable Internet Enchantment!",
                             titleStyle: context.bodyLarge?.copyWith(

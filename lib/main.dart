@@ -1,9 +1,7 @@
-import 'package:bytebuddy/env/Env.dart';
 import 'package:bytebuddy/features/auth/presentation/view/login.dart';
 import 'package:bytebuddy/features/auth/presentation/view/register.dart';
 import 'package:bytebuddy/features/auth/presentation/view/reset_password.dart';
 import 'package:bytebuddy/features/dashboard.dart';
-import 'package:bytebuddy/features/topup/model/data_purchase_model.dart';
 import 'package:bytebuddy/features/topup/presentation/view/check_out.dart';
 import 'package:bytebuddy/features/topup/presentation/view/funding.dart';
 import 'package:bytebuddy/features/topup/presentation/view/data.dart';
@@ -24,6 +22,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   final User? user = FirebaseAuth.instance.currentUser;
   runApp(ProviderScope(child: MyApp(user: user)));
 }
