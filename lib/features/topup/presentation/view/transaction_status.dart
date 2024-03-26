@@ -24,6 +24,8 @@ class TransactionStatus extends ConsumerWidget {
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Gap(30),
               SizedBox(

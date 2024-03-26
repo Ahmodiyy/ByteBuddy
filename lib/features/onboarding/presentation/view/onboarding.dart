@@ -269,7 +269,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                 _scrollController = controller;
                 return Scrollbar(
                   thickness: 10.0,
-                  radius: Radius.circular(5.0),
+                  radius: const Radius.circular(5.0),
                   trackVisibility: true,
                   thumbVisibility: true,
                   controller: _scrollController,
@@ -336,7 +336,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                     builder: (context, child) {
                                       if (_scrollController.hasClients &&
                                           _scrollController.position.pixels >
-                                              250.0) {
+                                              _scrollController.position
+                                                      .maxScrollExtent /
+                                                  3) {
                                         return InfoWidgetTransition(
                                           title: "🌐 Cheap Data Delight:",
                                           titleStyle: context.bodyLarge

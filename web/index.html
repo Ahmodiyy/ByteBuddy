@@ -113,7 +113,6 @@
 <script src="https://js.paystack.co/v1/inline.js" defer></script>
 <script src="paystack_interop.js" defer></script>
   <script defer>
-
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
@@ -122,7 +121,6 @@
         },
         onEntrypointLoaded: function(engineInitializer) {
           engineInitializer.initializeEngine().then(function(appRunner) {
-
             appRunner.runApp();
             toggleAnimation();
           });
@@ -136,8 +134,6 @@
       circle.classList.toggle('paused');
       letter.classList.toggle('paused');
   }
-
-
 
   </script>
 </body></html>
