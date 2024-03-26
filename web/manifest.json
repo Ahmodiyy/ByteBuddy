@@ -3,9 +3,9 @@
     "short_name": "bytebuddy",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#E5F8EB",
+    "theme_color": "#26914A",
+    "description": "cheap internet subscription",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -73,6 +73,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
       debugPrint('has client ${_scrollController.hasClients.toString()}');
       debugPrint('pixel ${_scrollController.position.pixels.toString()}');
       debugPrint(
+          'pixel ${_scrollController.position.maxScrollExtent.toString()}');
+      debugPrint(
           'both ${_scrollController.hasClients && _scrollController.position.pixels > 500.0}');
 
       if (!hasScrollClient) {
@@ -80,17 +82,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
         hasScrollClient = true;
       }
     });
-
-    const imageProvider = AssetImage(ImageConstant.intro);
-
-    precacheImage(imageProvider, context, onError: (exception, stackTrace) {
-      // Handle any errors that occur during image loading
-      print('Error loading image: $exception');
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    const imageProvider = AssetImage(ImageConstant.intro);
+    precacheImage(imageProvider, context, onError: (exception, stackTrace) {
+      // Handle any errors that occur during image loading
+      print('Error loading image: $exception');
+    });
     return SafeArea(
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
@@ -336,9 +336,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                     builder: (context, child) {
                                       if (_scrollController.hasClients &&
                                           _scrollController.position.pixels >
-                                              _scrollController.position
-                                                      .maxScrollExtent /
-                                                  3) {
+                                              250) {
                                         return InfoWidgetTransition(
                                           title: "🌐 Cheap Data Delight:",
                                           titleStyle: context.bodyLarge

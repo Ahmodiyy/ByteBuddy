@@ -398,11 +398,19 @@ class ShortTransactionHistory extends ConsumerWidget {
       alignment: Alignment.center,
       child: state.when(
         data: (data) {
+          if (data.length == 1) {
+            return const AutoSizeText(
+              'No recent transaction history',
+              textAlign: TextAlign.center,
+            );
+          }
           return ListView.separated(
             primary: true,
             shrinkWrap: true,
             itemCount: 3,
             itemBuilder: (context, index) {
+              debugPrint('data length ${data.length.toString()}');
+
               int lengthArray = data.length - 1;
               final history = data[lengthArray - index];
               if (history["type"] == 'Add money') {
