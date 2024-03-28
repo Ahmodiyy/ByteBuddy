@@ -131,9 +131,9 @@ class _FundingState extends ConsumerState<Funding> {
                                       (amountInDouble * 100).toString();
                                   return pay(() async {
                                     await FlutterPaystackPlus.openPaystackPopup(
-                                        publicKey: Env.payStackTestPublicKey,
+                                        publicKey: Env.payStackLivePublicKey,
                                         context: context,
-                                        secretKey: Env.payStackTestSecretKey,
+                                        secretKey: Env.payStackLiveSecretKey,
                                         currency: 'NGN',
                                         customerEmail: email,
                                         amount: amount,
