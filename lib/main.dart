@@ -7,6 +7,7 @@ import 'package:bytebuddy/features/topup/presentation/view/funding.dart';
 import 'package:bytebuddy/features/topup/presentation/view/data.dart';
 import 'package:bytebuddy/features/topup/presentation/view/transaction_history.dart';
 import 'package:bytebuddy/features/topup/presentation/view/transaction_status.dart';
+import 'package:bytebuddy/app_startup_error_widget.dart';
 import 'package:bytebuddy/firebase_options.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,19 +20,25 @@ import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  final User? user = FirebaseAuth.instance.currentUser;
-  runApp(ProviderScope(child: MyApp(user: user)));
+  try {
+    //SharedPreferences prefs = await SharedPreferences.getInstance();
+    //bool seen = (prefs.getBool('authenticated') ?? false);
+    runApp(const ProviderScope(child: MyApp(user: false)));
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e, st) {
+    debugPrint('main method error ${e.toString()}');
+    runApp(const AppStartupErrorWidget());
+  }
+  //const User? user = null;
+  //final User? user = FirebaseAuth.instance.currentUser;
 }
 
-GoRouter _router(User? user) {
-  debugPrint(
-      'inside main user : ${user?.email}, verified : ${user?.emailVerified}');
+GoRouter _router(bool user) {
+  debugPrint('is user loggedIn already?: $user');
   return GoRouter(
-    initialLocation: user != null && user.emailVerified ? '/auth' : '/',
+    initialLocation: user == true ? '/auth' : '/',
     routes: [
       GoRoute(
         path: '/',
@@ -80,7 +87,7 @@ GoRouter _router(User? user) {
 }
 
 class MyApp extends ConsumerWidget {
-  final User? user;
+  final bool user;
 
   const MyApp({required this.user, super.key});
 
@@ -91,6 +98,7 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: _router(user),
       theme: ThemeData(
+        primaryColor: Pallete.primaryColor,
         scaffoldBackgroundColor: Pallete.backgroundColor,
         appBarTheme: const AppBarTheme(
           backgroundColor: Pallete.secondaryColor,

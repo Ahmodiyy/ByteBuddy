@@ -51,7 +51,7 @@ class _RegisterState extends ConsumerState<Login> {
       authControllerLoginProvider,
       (previous, next) {
         next.when(
-          data: (data) {
+          data: (data) async {
             context.go("/dashboard");
           },
           error: (error, stackTrace) {

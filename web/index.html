@@ -12,7 +12,7 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="$FLUTTER_BASE_HREF">
+<!--  <base href="$FLUTTER_BASE_HREF">-->
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -42,7 +42,7 @@
 
      .letter {
       font-size: 3em;
-      transition: opacity 400ms ease-out;
+      transition: opacity 500ms ease-out;
       animation: scaleInOut 0.7s ease-in-out infinite ;
     }
 
@@ -52,7 +52,7 @@
       height: 100px;
       border-radius: 50%;
       background-color: #26914A;
-      transition: opacity 400ms ease-out;
+      transition: opacity 500ms ease-out;
       animation: rotateGradient 3s linear infinite;
 
     }
@@ -112,8 +112,7 @@
 <body>
 <div class="circle" id="circle"></div>
 <img class="letter" id="letter" src="favicon.png" alt="B"  height="60px" width="60px"/>
-<script src="https://js.paystack.co/v1/inline.js" defer></script>
-<script src="paystack_interop.js" defer></script>
+
   <script defer>
    const circle = document.getElementById("circle");
     const letter = document.getElementById("letter");
@@ -126,13 +125,10 @@
         },
         onEntrypointLoaded: function(engineInitializer) {
           engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-            setTimeout(() => {
             circle.style.opacity = "0";
             letter.style.opacity = "0";
+            appRunner.runApp();
             toggleAnimation();
-            }, 400);
-
           });
         }
       });
@@ -145,4 +141,6 @@
   }
 
   </script>
+ <script src="https://js.paystack.co/v1/inline.js" defer></script>
+ <script src="paystack_interop.js" defer></script>
 </body></html>

@@ -27,7 +27,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
   //mobile
   late PageController _pageController;
   late AnimationController _controller;
-  final double bottomSheetHeight = 150;
+  final double bottomSheetHeight = 200;
   final double gapSize = 40.0;
   final double paddingSize = 50.0;
   bool initBound = true;
@@ -91,15 +91,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
       // Handle any errors that occur during image loading
       print('Error loading image: $exception');
     });
-    return SafeArea(
-      child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          double maxWidth = constraints.maxWidth;
-          if (constraints.isMobile) {
-            double height = (constraints.maxHeight - bottomSheetHeight) / 2;
-            return Scaffold(
-              backgroundColor: Pallete.secondaryColor,
-              body: Container(
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        double maxWidth = constraints.maxWidth;
+        if (constraints.isMobile) {
+          double height = (constraints.maxHeight - bottomSheetHeight) / 2;
+          return Scaffold(
+            backgroundColor: Pallete.secondaryColor,
+            body: SafeArea(
+              child: Container(
                 padding: EdgeInsets.only(
                     bottom: bottomSheetHeight, top: 50, right: 50, left: 50),
                 child: Stack(alignment: Alignment.topCenter, children: [
@@ -168,104 +168,129 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                   ),
                 ]),
               ),
-              bottomSheet: Container(
-                color: Pallete.secondaryColor,
-                height: bottomSheetHeight,
-                width: double.infinity,
-                padding: const EdgeInsets.only(left: 50, right: 50, bottom: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 40),
-                          child: SmoothPageIndicator(
-                            controller: _pageController,
-                            count: 3,
-                            effect: const WormEffect(
-                              activeDotColor: Pallete.primaryColor,
-                              dotColor: Colors.black12,
-                              dotHeight: 10,
-                              dotWidth: 10,
-                            ),
+            ),
+            bottomSheet: Container(
+              color: Pallete.secondaryColor,
+              height: bottomSheetHeight,
+              width: double.infinity,
+              padding: const EdgeInsets.only(left: 50, right: 50, bottom: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 20),
+                        child: SmoothPageIndicator(
+                          controller: _pageController,
+                          count: 3,
+                          effect: const WormEffect(
+                            activeDotColor: Pallete.primaryColor,
+                            dotColor: Colors.black12,
+                            dotHeight: 10,
+                            dotWidth: 10,
                           ),
-                        ),
-                      ],
-                    ),
-                    Flexible(
-                      child: ElevatedButton(
-                        style: const ButtonStyle(
-                          shape: MaterialStatePropertyAll(
-                            RoundedRectangleBorder(
-                              side: BorderSide(color: Pallete.primaryColor),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(40),
-                              ),
-                            ),
-                          ),
-                        ),
-                        onPressed: () => context.push('/auth/register'),
-                        child: const Text(
-                          'Get started',
                         ),
                       ),
+                    ],
+                  ),
+                  Flexible(
+                    child: ElevatedButton(
+                      style: const ButtonStyle(
+                        shape: MaterialStatePropertyAll(
+                          RoundedRectangleBorder(
+                            side: BorderSide(color: Pallete.primaryColor),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(40),
+                            ),
+                          ),
+                        ),
+                      ),
+                      onPressed: () => context.push('/auth/register'),
+                      child: const Text(
+                        'Get started',
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                  const Gap(20),
+                  Flexible(
+                    child: ElevatedButton(
+                      style: const ButtonStyle(
+                        shape: MaterialStatePropertyAll(
+                          RoundedRectangleBorder(
+                            side: BorderSide(color: Pallete.primaryColor),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(40),
+                            ),
+                          ),
+                        ),
+                        backgroundColor:
+                            MaterialStatePropertyAll(Pallete.secondaryColor),
+                        foregroundColor:
+                            MaterialStatePropertyAll(Pallete.primaryColor),
+                      ),
+                      onPressed: () => context.push('/auth'),
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(color: Pallete.primaryColor),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            );
-          }
-          return Scaffold(
-              backgroundColor: Pallete.secondaryColor,
-              appBar: PreferredSize(
-                preferredSize: const Size(double.infinity, 100),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: paddingSize, vertical: 20),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              'Bytebuddy',
-                              style: context.bodyMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Pallete.primaryColor,
-                              ),
-                            ),
-                            Gap(gapSize),
-                            InkWell(
-                              onTap: () {
-                                context.push("/auth/register");
-                              },
-                              child: Text(
-                                'Register',
-                                style: context.bodySmall?.copyWith(
-                                  color: Pallete.accentColor,
-                                ),
-                              ),
-                            ),
-                            Gap(gapSize),
-                            InkWell(
-                              onTap: () {
-                                context.push("/auth");
-                              },
-                              child: Text(
-                                'Login',
-                                style: context.bodySmall?.copyWith(
-                                  color: Pallete.accentColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      ]),
-                ),
+            ),
+          );
+        }
+        return Scaffold(
+            backgroundColor: Pallete.secondaryColor,
+            appBar: PreferredSize(
+              preferredSize: const Size(double.infinity, 100),
+              child: Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: paddingSize, vertical: 20),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Bytebuddy',
+                        style: context.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Pallete.primaryColor,
+                        ),
+                      ),
+                      Gap(gapSize),
+                      InkWell(
+                        onTap: () {
+                          context.push("/auth/register");
+                        },
+                        child: Text(
+                          'Register',
+                          style: context.bodySmall?.copyWith(
+                            color: Pallete.accentColor,
+                          ),
+                        ),
+                      ),
+                      Gap(gapSize),
+                      InkWell(
+                        onTap: () {
+                          context.push("/auth");
+                        },
+                        child: Text(
+                          'Login',
+                          style: context.bodySmall?.copyWith(
+                            color: Pallete.accentColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ]),
               ),
-              body: DynMouseScroll(builder: (context, controller, physics) {
+            ),
+            body: SafeArea(
+              child: DynMouseScroll(builder: (context, controller, physics) {
                 _scrollController = controller;
                 return Scrollbar(
                   thickness: 10.0,
@@ -575,9 +600,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                     ),
                   ),
                 );
-              }));
-        },
-      ),
+              }),
+            ));
+      },
     );
   }
 
