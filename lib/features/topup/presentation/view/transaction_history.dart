@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bytebuddy/common/appBar_widget.dart';
 import 'package:bytebuddy/constants/constant.dart';
 import 'package:bytebuddy/features/topup/presentation/controller/transaction_controller.dart';
-import 'package:bytebuddy/features/topup/presentation/view/transaction_history.dart';
 import 'package:bytebuddy/features/topup/presentation/widget/history_widget.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:flutter/material.dart';

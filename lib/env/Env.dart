@@ -8,9 +8,9 @@ abstract class Env {
   static String payStackTestPublicKey = _Env.payStackTestPublicKey;
   @EnviedField(obfuscate: true, varName: 'payStackTestSecretKey')
   static String payStackTestSecretKey = _Env.payStackTestSecretKey;
-  @EnviedField(obfuscate: true, varName: 'payStackTestPublicKey')
+  @EnviedField(obfuscate: true, varName: 'payStackLivePublicKey')
   static String payStackLivePublicKey = _Env.payStackLivePublicKey;
-  @EnviedField(obfuscate: true, varName: 'payStackTestSecretKey')
+  @EnviedField(obfuscate: true, varName: 'payStackLiveSecretKey')
   static String payStackLiveSecretKey = _Env.payStackLiveSecretKey;
   @EnviedField(obfuscate: true, varName: 'getDataPlanEndpoint')
   static String getDataPlanEndpoint = _Env.getDataPlanEndpoint;

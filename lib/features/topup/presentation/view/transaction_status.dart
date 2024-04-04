@@ -23,40 +23,43 @@ class TransactionStatus extends ConsumerWidget {
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Gap(30),
-              SizedBox(
-                  height: 100,
-                  child: status == 'successful'
-                      ? const RiveAnimation.asset(
-                          RiveConstant.success,
-                        )
-                      : const RiveAnimation.asset(RiveConstant.error)),
-              const Gap(10),
-              AutoSizeText(
-                transactionStatusData['status'].toString().toLowerCase(),
-                textAlign: TextAlign.center,
-                style: context.bodyMedium?.copyWith(
-                    color: Pallete.textColor, fontWeight: FontWeight.w300),
-              ),
-              const Gap(5),
-              AutoSizeText(
-                transactionStatusData['description'].toString().toLowerCase(),
-                textAlign: TextAlign.center,
-                style: context.bodySmall
-                    ?.copyWith(color: Pallete.secondaryTextColor),
-              ),
-              const Gap(100),
-              ElevatedButton(
-                onPressed: () => context.go(('/dashboard')),
-                child: const AutoSizeText(
-                  'Done',
+          child: Container(
+            alignment: Alignment.topCenter,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Gap(30),
+                SizedBox(
+                    height: 100,
+                    child: status == 'successful'
+                        ? const RiveAnimation.asset(
+                            RiveConstant.success,
+                          )
+                        : const RiveAnimation.asset(RiveConstant.error)),
+                const Gap(10),
+                AutoSizeText(
+                  transactionStatusData['status'].toString().toLowerCase(),
+                  textAlign: TextAlign.center,
+                  style: context.bodyMedium?.copyWith(
+                      color: Pallete.textColor, fontWeight: FontWeight.w300),
                 ),
-              ),
-            ],
+                const Gap(5),
+                AutoSizeText(
+                  transactionStatusData['description'].toString().toLowerCase(),
+                  textAlign: TextAlign.center,
+                  style: context.bodySmall
+                      ?.copyWith(color: Pallete.secondaryTextColor),
+                ),
+                const Gap(100),
+                ElevatedButton(
+                  onPressed: () => context.go(('/dashboard')),
+                  child: const AutoSizeText(
+                    'Done',
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
