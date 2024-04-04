@@ -70,7 +70,6 @@ class TransactionRepo {
           await _cloudStore.collection("log").doc(email).get();
       List<dynamic> transactionList =
           documentSnapshot.data()!['transactionHistory'];
-
       transactions = List<Map<String, dynamic>>.from(transactionList);
     } catch (e) {
       rethrow;

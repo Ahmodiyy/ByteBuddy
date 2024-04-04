@@ -42,7 +42,7 @@
 
      .letter {
       font-size: 3em;
-      transition: opacity 500ms ease-out;
+      transition: opacity 1500ms ease-out;
       animation: scaleInOut 0.7s ease-in-out infinite ;
     }
 
@@ -52,7 +52,7 @@
       height: 100px;
       border-radius: 50%;
       background-color: #26914A;
-      transition: opacity 500ms ease-out;
+      transition: opacity 1500ms ease-out;
       animation: rotateGradient 3s linear infinite;
 
     }
@@ -125,9 +125,9 @@
         },
         onEntrypointLoaded: function(engineInitializer) {
           engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
             circle.style.opacity = "0";
             letter.style.opacity = "0";
-            appRunner.runApp();
             toggleAnimation();
           });
         }

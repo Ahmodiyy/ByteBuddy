@@ -80,13 +80,13 @@ class _HomeState extends ConsumerState<Home> {
                         ],
                       ),
                       const Gap(40),
-                      Row(
-                        children: [
-                          const Expanded(
-                              flex: 2, child: ShortTransactionHistory()),
-                          Expanded(flex: 3, child: Container()),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     const Expanded(
+                      //         flex: 2, child: ShortTransactionHistory()),
+                      //     Expanded(flex: 3, child: Container()),
+                      //   ],
+                      // ),
                     ],
                   );
                 },
@@ -398,7 +398,7 @@ class ShortTransactionHistory extends ConsumerWidget {
       alignment: Alignment.center,
       child: state.when(
         data: (data) {
-          if (data.length == 1) {
+          if (data.isEmpty) {
             return const AutoSizeText(
               'No recent transaction history',
               textAlign: TextAlign.center,
@@ -409,18 +409,19 @@ class ShortTransactionHistory extends ConsumerWidget {
             shrinkWrap: true,
             itemCount: 3,
             itemBuilder: (context, index) {
-              debugPrint('data length ${data.length.toString()}');
-
-              int lengthArray = data.length - 1;
-              final history = data[lengthArray - index];
-              if (history["type"] == 'Add money') {
+              int indexLength = data.length - 1;
+              debugPrint('data index $index');
+              final history = data[indexLength - index];
+              if (history["type"] == 'Deposit') {
+                debugPrint('This is deposit');
                 return HistoryWidget(
                   type: 'Deposit',
                   date: history['date'],
                   status: history['status'],
                   amount: history['amount'],
                 );
-              } else if (history["type"] == 'Data') {
+              } else {
+                debugPrint('This is data');
                 return HistoryWidget(
                   type: 'Data',
                   date: history['date'],
@@ -441,6 +442,7 @@ class ShortTransactionHistory extends ConsumerWidget {
           return Center(
             child: AutoSizeText(
               "No history data or internet connection",
+              textAlign: TextAlign.center,
               style: context.bodyMedium?.copyWith(color: Pallete.textColor),
             ),
           );

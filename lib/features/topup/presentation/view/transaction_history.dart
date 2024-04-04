@@ -10,11 +10,23 @@ import 'package:gap/gap.dart';
 
 import '../../data/transaction_repo.dart';
 
-class TransactionHistory extends ConsumerWidget {
+class TransactionHistory extends ConsumerStatefulWidget {
   const TransactionHistory({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState createState() => _TransactionHistoryState();
+}
+
+class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
+  @override
+  void initState() {
+    super.initState();
+
+    debugPrint("refgggggggggggggggggggggggggggggggggggggg");
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final state = ref.watch(transactionHistoryStreamProvider);
     return LayoutBuilder(
       builder: (context, constraints) => SafeArea(
@@ -52,16 +64,19 @@ class TransactionHistory extends ConsumerWidget {
                                 shrinkWrap: true,
                                 itemCount: data.length,
                                 itemBuilder: (context, index) {
-                                  int lengthArray = data.length - 1;
-                                  final history = data[lengthArray - index];
-                                  if (history["type"] == 'Add money') {
+                                  int indexLength = data.length - 1;
+                                  debugPrint('data index $index');
+                                  final history = data[indexLength - index];
+                                  if (history["type"] == 'Deposit') {
+                                    debugPrint('This is deposit');
                                     return HistoryWidget(
                                       type: 'Deposit',
                                       date: history['date'],
                                       status: history['status'],
                                       amount: history['amount'],
                                     );
-                                  } else if (history["type"] == 'Data') {
+                                  } else {
+                                    debugPrint('This is data');
                                     return HistoryWidget(
                                       type: 'Data',
                                       date: history['date'],
@@ -88,6 +103,7 @@ class TransactionHistory extends ConsumerWidget {
                     return Center(
                       child: AutoSizeText(
                         "No history data or internet connection",
+                        textAlign: TextAlign.center,
                         style: context.bodyMedium
                             ?.copyWith(color: Pallete.textColor),
                       ),

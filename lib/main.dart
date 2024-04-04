@@ -21,24 +21,20 @@ import 'package:google_fonts/google_fonts.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
-    //SharedPreferences prefs = await SharedPreferences.getInstance();
-    //bool seen = (prefs.getBool('authenticated') ?? false);
-    runApp(const ProviderScope(child: MyApp(user: false)));
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+    final User? user = FirebaseAuth.instance.currentUser;
+    runApp(ProviderScope(child: MyApp(user: user)));
   } catch (e, st) {
     debugPrint('main method error ${e.toString()}');
     runApp(const AppStartupErrorWidget());
   }
-  //const User? user = null;
-  //final User? user = FirebaseAuth.instance.currentUser;
 }
 
-GoRouter _router(bool user) {
-  debugPrint('is user loggedIn already?: $user');
+GoRouter _router(User? user) {
   return GoRouter(
-    initialLocation: user == true ? '/auth' : '/',
+    initialLocation: user != null && user.emailVerified ? '/auth' : '/',
     routes: [
       GoRoute(
         path: '/',
@@ -87,7 +83,7 @@ GoRouter _router(bool user) {
 }
 
 class MyApp extends ConsumerWidget {
-  final bool user;
+  final User? user;
 
   const MyApp({required this.user, super.key});
 
