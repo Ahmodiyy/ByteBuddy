@@ -7,11 +7,15 @@ class AppStartupErrorWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const SafeArea(
-      child: Scaffold(
-        body: Center(
-            child: AutoSizeText(
-                'App startUp error has occurred, please re-run app')),
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Cheeky Chewer',
+      home: SafeArea(
+        child: Scaffold(
+          body: Center(
+              child: AutoSizeText(
+                  'App startUp error has occurred, please re-run app')),
+        ),
       ),
     );
   }

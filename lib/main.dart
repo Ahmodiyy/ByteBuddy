@@ -7,35 +7,30 @@ import 'package:bytebuddy/features/topup/presentation/view/funding.dart';
 import 'package:bytebuddy/features/topup/presentation/view/data.dart';
 import 'package:bytebuddy/features/topup/presentation/view/transaction_history.dart';
 import 'package:bytebuddy/features/topup/presentation/view/transaction_status.dart';
-import 'package:bytebuddy/app_startup_error_widget.dart';
-import 'package:bytebuddy/firebase_options.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bytebuddy/features/onboarding/presentation/view/onboarding.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Future<void> main() async {
+import 'firebase_initialization.dart';
+
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  try {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-    final User? user = FirebaseAuth.instance.currentUser;
-    runApp(ProviderScope(child: MyApp(user: user)));
-  } catch (e, st) {
-    debugPrint('main method error ${e.toString()}');
-    runApp(const AppStartupErrorWidget());
-  }
+  runApp(const ProviderScope(child: MyApp(user: null)));
 }
 
 GoRouter _router(User? user) {
   return GoRouter(
-    initialLocation: user != null && user.emailVerified ? '/auth' : '/',
+    initialLocation:
+        user != null && user.emailVerified ? '/auth' : '/initialization',
     routes: [
+      GoRoute(
+        path: '/initialization',
+        builder: (context, state) => const FirebaseInitialization(),
+      ),
       GoRoute(
         path: '/',
         builder: (context, state) => const OnboardingScreen(),
@@ -87,7 +82,6 @@ class MyApp extends ConsumerWidget {
 
   const MyApp({required this.user, super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
