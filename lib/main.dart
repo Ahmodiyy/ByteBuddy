@@ -27,10 +27,10 @@ Future<void> main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+    FlutterNativeSplash.remove();
     runApp(ProviderScope(
       child: MyApp(FirebaseAuth.instance.currentUser),
     ));
-    FlutterNativeSplash.remove();
   } catch (e, st) {
     runApp(const AppStartupErrorWidget());
   }
