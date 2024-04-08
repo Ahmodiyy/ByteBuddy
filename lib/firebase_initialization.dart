@@ -10,10 +10,7 @@ import 'package:go_router/go_router.dart';
 import 'app_startup_error_widget.dart';
 import 'features/topup/presentation/widget/shimmer_widget.dart';
 import 'firebase_options.dart';
-
-final firebaseInitializationProvider = StateProvider<bool>((ref) {
-  return false;
-});
+import 'main.dart';
 
 class FirebaseInitialization extends ConsumerStatefulWidget {
   const FirebaseInitialization({super.key});
@@ -23,115 +20,147 @@ class FirebaseInitialization extends ConsumerStatefulWidget {
 }
 
 class _TransactionHistoryState extends ConsumerState<FirebaseInitialization> {
-  Future<void> initializeFirebase() async {
-    try {
-      bool _buildComplete = false;
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
-      final User? user = FirebaseAuth.instance.currentUser;
-
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
-        setState(() {
-          _buildComplete = true;
-        });
-      });
-      //
-    } catch (e, st) {
-      debugPrint('ERROR INITIALIZING FIREBASE ${e.toString()}');
-      runApp(const AppStartupErrorWidget());
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    initializeFirebase();
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('INSIDE BUILD METHOD');
-    final initState = ref.watch(firebaseInitializationProvider);
-    // if (initState == true) {
-    //   context.go('/auth');
-    // }
-    return SafeArea(
-      child: Scaffold(
-        appBar: const PreferredSize(
-          preferredSize: Size(double.infinity, 100),
-          child: Padding(
-            padding: EdgeInsets.only(
-              left: 20,
-              top: 20,
-              right: 20,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ShimmerWidget.rectangular(
-                  width: 20,
-                  height: 20,
-                ),
-                ShimmerWidget.rectangular(
-                  width: 20,
-                  height: 20,
-                ),
-              ],
-            ),
-          ),
-        ),
-        backgroundColor: Pallete.secondaryColor,
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
+    return MaterialApp(
+      home: SafeArea(
+        child: Scaffold(
+          backgroundColor: Pallete.secondaryColor,
+          body: Padding(
+            padding: const EdgeInsets.all(20),
             child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
                 if (constraints.isMobile) {
                   return const Column(children: [
-                    ShimmerWidget.rectangular(
-                      width: double.infinity,
-                      height: 180,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ShimmerWidget.rectangular(
+                          width: 50,
+                          height: 50,
+                        ),
+                        ShimmerWidget.rectangular(
+                          width: 50,
+                          height: 50,
+                        ),
+                      ],
                     ),
                     Gap(20),
-                    ShimmerWidget.rectangular(
-                      width: double.infinity,
-                      height: 180,
+                    Expanded(
+                      child: Column(
+                        children: [
+                          ShimmerWidget.rectangular(
+                            width: double.infinity,
+                            height: 180,
+                          ),
+                          Gap(20),
+                          ShimmerWidget.rectangular(
+                            width: double.infinity,
+                            height: 180,
+                          ),
+                          Gap(20),
+                        ],
+                      ),
                     ),
                     Gap(20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ShimmerWidget.rectangular(
+                          width: 50,
+                          height: 50,
+                        ),
+                        ShimmerWidget.rectangular(
+                          width: 50,
+                          height: 50,
+                        ),
+                        ShimmerWidget.rectangular(
+                          width: 50,
+                          height: 50,
+                        ),
+                      ],
+                    )
                   ]);
                 }
-                return const Column(
+                return const Row(
                   children: [
-                    Row(
+                    Column(
                       children: [
-                        Expanded(
-                          flex: 2,
-                          child: ShimmerWidget.rectangular(
-                            width: double.infinity,
-                            height: 180,
-                          ),
+                        ShimmerWidget.rectangular(
+                          width: 55,
+                          height: 55,
+                        ),
+                        Gap(40),
+                        ShimmerWidget.rectangular(
+                          width: 50,
+                          height: 50,
                         ),
                         Gap(20),
-                        Expanded(
-                          flex: 3,
-                          child: ShimmerWidget.rectangular(
-                            width: double.infinity,
-                            height: 180,
-                          ),
+                        ShimmerWidget.rectangular(
+                          width: 50,
+                          height: 50,
                         ),
                         Gap(20),
+                        ShimmerWidget.rectangular(
+                          width: 50,
+                          height: 50,
+                        ),
                       ],
                     ),
                     Gap(40),
-                    // Row(
-                    //   children: [
-                    //     const Expanded(
-                    //         flex: 2, child: ShortTransactionHistory()),
-                    //     Expanded(flex: 3, child: Container()),
-                    //   ],
-                    // ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ShimmerWidget.rectangular(
+                                width: 50,
+                                height: 50,
+                              ),
+                              ShimmerWidget.rectangular(
+                                width: 50,
+                                height: 50,
+                              ),
+                            ],
+                          ),
+                          Gap(40),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: ShimmerWidget.rectangular(
+                                  width: double.infinity,
+                                  height: 180,
+                                ),
+                              ),
+                              Gap(20),
+                              Expanded(
+                                flex: 3,
+                                child: ShimmerWidget.rectangular(
+                                  width: double.infinity,
+                                  height: 180,
+                                ),
+                              ),
+                              Gap(20),
+                            ],
+                          ),
+                          Gap(40),
+                          // Row(
+                          //   children: [
+                          //     const Expanded(
+                          //         flex: 2, child: ShortTransactionHistory()),
+                          //     Expanded(flex: 3, child: Container()),
+                          //   ],
+                          // ),
+                        ],
+                      ),
+                    )
                   ],
                 );
               },

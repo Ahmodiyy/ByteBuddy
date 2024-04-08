@@ -102,7 +102,8 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                   error: (error, stackTrace) {
                     return Center(
                       child: AutoSizeText(
-                        "No history data or internet connection",
+                        //"No history data or internet connection",
+                        error.toString(),
                         textAlign: TextAlign.center,
                         style: context.bodyMedium
                             ?.copyWith(color: Pallete.textColor),

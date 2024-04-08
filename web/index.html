@@ -42,7 +42,7 @@
 
      .letter {
       font-size: 3em;
-      transition: opacity 1500ms ease-out;
+      transition: opacity 300ms ease-out;
       animation: scaleInOut 0.7s ease-in-out infinite ;
     }
 
@@ -52,7 +52,7 @@
       height: 100px;
       border-radius: 50%;
       background-color: #26914A;
-      transition: opacity 1500ms ease-out;
+      transition: opacity 300ms ease-out;
       animation: rotateGradient 3s linear infinite;
 
     }
@@ -98,25 +98,41 @@
   }
 
   </style>
-  <script defer>
+  <script defer="">
     // The value below is injected by flutter build, do not touch.
     const serviceWorkerVersion = null;
   </script>
   <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
+  <script src="flutter.js" defer=""></script>
 
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 
+  <script id="splash-screen-script">
+    function removeSplashFromWeb() {
+      const circle = document.getElementById("circle");
+      const letter = document.getElementById("letter");
+      document.getElementById("splash")?.remove();
+      document.getElementById("splash-branding")?.remove();
+      circle.style.opacity = "0";
+      letter.style.opacity = "0";
+      setTimeout(()=>{
+      console.log("This is inside settimeout");
+      circle.classList.toggle('paused');
+      letter.classList.toggle('paused');
+      document.body.style.background = "transparent";
+      }, 10000);
+
+    }
   </script>
 </head>
 <body>
+  <picture id="splash">
+
+  </picture>
 <div class="circle" id="circle"></div>
-<img class="letter" id="letter" src="favicon.png" alt="B"  height="60px" width="60px"/>
+<img class="letter" id="letter" src="favicon.png" alt="B" height="60px" width="60px">
 
-  <script defer>
-   const circle = document.getElementById("circle");
-    const letter = document.getElementById("letter");
-
+  <script defer="">
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
@@ -126,21 +142,11 @@
         onEntrypointLoaded: function(engineInitializer) {
           engineInitializer.initializeEngine().then(function(appRunner) {
             appRunner.runApp();
-            circle.style.opacity = "0";
-            letter.style.opacity = "0";
-            toggleAnimation();
           });
         }
       });
     });
-
-
-    function toggleAnimation() {
-      circle.classList.toggle('paused');
-      letter.classList.toggle('paused');
-  }
-
   </script>
- <script src="https://js.paystack.co/v1/inline.js" defer></script>
- <script src="paystack_interop.js" defer></script>
+ <script src="https://js.paystack.co/v1/inline.js" defer=""></script>
+ <script src="paystack_interop.js" defer=""></script>
 </body></html>

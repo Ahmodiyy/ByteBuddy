@@ -9,23 +9,36 @@ import 'package:bytebuddy/features/topup/presentation/view/transaction_history.d
 import 'package:bytebuddy/features/topup/presentation/view/transaction_status.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bytebuddy/features/onboarding/presentation/view/onboarding.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import 'app_startup_error_widget.dart';
 import 'firebase_initialization.dart';
+import 'firebase_options.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const ProviderScope(child: MyApp(user: null)));
+Future<void> main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    runApp(ProviderScope(
+      child: MyApp(FirebaseAuth.instance.currentUser),
+    ));
+    FlutterNativeSplash.remove();
+  } catch (e, st) {
+    runApp(const AppStartupErrorWidget());
+  }
 }
 
 GoRouter _router(User? user) {
   return GoRouter(
-    initialLocation:
-        user != null && user.emailVerified ? '/auth' : '/initialization',
+    initialLocation: user != null ? '/auth' : '/',
     routes: [
       GoRoute(
         path: '/initialization',
@@ -80,7 +93,7 @@ GoRouter _router(User? user) {
 class MyApp extends ConsumerWidget {
   final User? user;
 
-  const MyApp({required this.user, super.key});
+  const MyApp(this.user, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -114,16 +127,16 @@ class MyApp extends ConsumerWidget {
               textStyle: MaterialStatePropertyAll(
                   TextStyle(fontSize: 20, fontWeight: FontWeight.w700))),
         ),
-        textTheme: TextTheme(
-          bodyLarge: GoogleFonts.roboto(
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(
             fontSize: 32.0,
             color: Pallete.textColor,
           ),
-          bodyMedium: GoogleFonts.roboto(
+          bodyMedium: TextStyle(
             fontSize: 24.0,
             color: Pallete.textColor,
           ),
-          bodySmall: GoogleFonts.roboto(
+          bodySmall: TextStyle(
             fontSize: 16.0,
             color: Pallete.secondaryTextColor,
           ),

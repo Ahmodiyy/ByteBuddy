@@ -213,7 +213,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                       ),
                     ),
                   ),
-                  const Gap(20),
+                  const Gap(15),
                   Flexible(
                     child: ElevatedButton(
                       style: const ButtonStyle(
