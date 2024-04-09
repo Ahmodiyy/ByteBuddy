@@ -42,7 +42,7 @@
 
      .letter {
       font-size: 3em;
-      transition: opacity 500ms ease-out;
+      transition: opacity 700ms ease-out;
       animation: scaleInOut 0.7s ease-in-out infinite ;
     }
 
@@ -52,7 +52,7 @@
       height: 100px;
       border-radius: 50%;
       background-color: #26914A;
-      transition: opacity 500ms ease-out;
+      transition: opacity 700ms ease-out;
       animation: rotateGradient 3s linear infinite;
 
     }
@@ -115,12 +115,10 @@
       document.getElementById("splash-branding")?.remove();
       circle.style.opacity = "0";
       letter.style.opacity = "0";
-      setTimeout(()=>{
-      console.log("This is inside settimeout");
       circle.classList.toggle('paused');
       letter.classList.toggle('paused');
       document.body.style.background = "transparent";
-      }, 10000);
+
 
     }
   </script>

@@ -1,10 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bytebuddy/features/auth/presentation/controller/auth_controller.dart';
 import 'package:bytebuddy/themes/pallete.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../../main.dart';
 
 class Settings extends ConsumerStatefulWidget {
   const Settings({super.key});
@@ -43,6 +46,10 @@ class _SettingsState extends ConsumerState<Settings> {
 
 Future<void> logout(
     WidgetRef ref, BuildContext context, VoidCallback onSuccess) async {
-  onSuccess.call();
-  await ref.read(authControllerLoginProvider.notifier).sign0ut();
+  try {
+    onSuccess.call();
+    await FirebaseAuth.instance.signOut();
+  } catch (e) {
+    debugPrint('INSIDE Logout METHOD : ${e.toString()}');
+  }
 }
