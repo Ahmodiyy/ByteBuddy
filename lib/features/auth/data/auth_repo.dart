@@ -46,10 +46,8 @@ class AuthRepo {
 
   Future<void> signOut() async {
     try {
-
       await _firebaseAuth.signOut();
     } catch (e) {
-
       rethrow;
     }
   }

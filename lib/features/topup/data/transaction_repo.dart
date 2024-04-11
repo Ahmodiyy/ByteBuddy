@@ -1,5 +1,6 @@
 import 'package:bytebuddy/features/auth/presentation/controller/auth_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final transactionRepoProvider = Provider<TransactionRepo>((ref) {
@@ -68,9 +69,18 @@ class TransactionRepo {
     try {
       DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
           await _cloudStore.collection("log").doc(email).get();
+
+      if (documentSnapshot.data() == null) {
+        throw Exception("No transaction history");
+      }
+
       List<dynamic> transactionList =
           documentSnapshot.data()!['transactionHistory'];
       transactions = List<Map<String, dynamic>>.from(transactionList);
+    } on DioException catch (e) {
+      throw Exception("Please check your internet connection and try again.");
+    } on FirebaseException catch (error) {
+      throw Exception("Please check your internet connection and refresh.");
     } catch (e) {
       rethrow;
     }

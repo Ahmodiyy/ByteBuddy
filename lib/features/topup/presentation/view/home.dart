@@ -192,7 +192,8 @@ class DepositWidget extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: AutoSizeText(
-                          "Please check your internet connection and try again.",
+                          "Please check your internet connection and refresh.",
+                          //error.toString(),
                           style: context.bodySmall
                               ?.copyWith(color: Pallete.secondaryColor),
                         ),
