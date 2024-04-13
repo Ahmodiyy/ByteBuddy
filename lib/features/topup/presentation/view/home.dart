@@ -363,7 +363,7 @@ class GridItemWidget extends StatelessWidget {
                         svgs[index].text,
                         style: context.bodySmall?.copyWith(
                           fontSize: 12,
-                          fontWeight: FontWeight.w300,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
