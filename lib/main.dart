@@ -38,7 +38,7 @@ Future<void> main() async {
 }
 
 GoRouter _router(User? user) {
-  debugPrint('THE CURRENT AUTH USER IS ${user?.email}');
+
   return GoRouter(
     initialLocation: user != null ? '/auth' : '/',
     routes: [

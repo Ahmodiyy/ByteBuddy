@@ -131,9 +131,9 @@ class DepositWidget extends ConsumerWidget {
                         children: [
                           Flexible(
                             child: AutoSizeText(
-                              "Available Balance ",
+                              "Available Balance",
                               maxLines: 1,
-                              style: context.bodySmall
+                              style: context.bodyMedium
                                   ?.copyWith(color: Pallete.secondaryColor),
                             ),
                           ),
@@ -141,23 +141,39 @@ class DepositWidget extends ConsumerWidget {
                               ? const IconWidget(
                                   iconData: FontAwesomeIcons.eyeSlash,
                                   color: Pallete.secondaryColor,
+                                  size: 15,
                                 )
                               : const IconWidget(
                                   iconData: FontAwesomeIcons.eye,
                                   color: Pallete.secondaryColor,
+                                  size: 15,
                                 ),
                         ],
                       )),
                 ),
-                const Gap(20),
+                const Gap(10),
                 Flexible(
                   child: InkWell(
                     onTap: () => context.push("/dashboard/transaction_history"),
-                    child: AutoSizeText(
-                      "Transaction History >",
-                      maxLines: 1,
-                      style: context.bodySmall
-                          ?.copyWith(color: Pallete.secondaryColor),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: AutoSizeText(
+                            "Transaction History",
+                            maxLines: 1,
+                            style: context.bodyMedium?.copyWith(
+                              color: Pallete.secondaryColor,
+                              height: 1,
+                            ),
+                          ),
+                        ),
+                        const IconWidget(
+                          iconData: FontAwesomeIcons.greaterThan,
+                          color: Pallete.secondaryColor,
+                          size: 15,
+                        )
+                      ],
                     ),
                   ),
                 ),
@@ -182,6 +198,10 @@ class DepositWidget extends ConsumerWidget {
                     );
                   },
                   error: (error, stackTrace) {
+                    debugPrint(
+                        'WHY SHOWING PERMISSION ERROR : ${error.toString()}');
+                    debugPrint(
+                        'WHY SHOWING PERMISSION STACKTRACE : ${stackTrace.toString()}');
                     return Flexible(
                       child: Container(
                         alignment: Alignment.center,
@@ -238,7 +258,7 @@ class DepositWidget extends ConsumerWidget {
                     Flexible(
                       flex: 1,
                       child: AutoSizeText(
-                        "Add money",
+                        "Add Money",
                         maxLines: 1,
                         style: context.bodySmall
                             ?.copyWith(color: Pallete.secondaryColor),
@@ -332,7 +352,7 @@ class GridItemWidget extends StatelessWidget {
                                   right: -25,
                                   child: Container(
                                     width: 35,
-                                    height: 15,
+                                    height: 17.5,
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 0.5, horizontal: 1),
                                     decoration: const BoxDecoration(
@@ -363,7 +383,7 @@ class GridItemWidget extends StatelessWidget {
                         svgs[index].text,
                         style: context.bodySmall?.copyWith(
                           fontSize: 12,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),

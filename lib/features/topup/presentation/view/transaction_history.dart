@@ -54,45 +54,39 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                             trackVisibility: true,
                             radius: const Radius.circular(50),
                             thickness: 5,
-                            child: RefreshIndicator(
-                              onRefresh: () => ref.refresh(
-                                  transactionControllerProvider.future),
-                              color: Pallete.primaryColor,
-                              backgroundColor: Pallete.secondaryColor,
-                              child: ListView.separated(
-                                primary: true,
-                                shrinkWrap: true,
-                                itemCount: data.length,
-                                itemBuilder: (context, index) {
-                                  int indexLength = data.length - 1;
-                                  debugPrint('data index $index');
-                                  final history = data[indexLength - index];
-                                  if (history["type"] == 'Deposit') {
-                                    debugPrint('This is deposit');
-                                    return HistoryWidget(
-                                      type: 'Deposit',
-                                      date: history['date'],
-                                      status: history['status'],
-                                      amount: history['amount'],
-                                    );
-                                  } else {
-                                    debugPrint('This is data');
-                                    return HistoryWidget(
-                                      type: 'Data',
-                                      date: history['date'],
-                                      status: history['status'],
-                                      amount: history['amount'],
-                                    );
-                                  }
-                                },
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return const Divider(
-                                    color: Pallete.blueGreyColor,
-                                    height: 3,
+                            child: ListView.separated(
+                              primary: true,
+                              shrinkWrap: true,
+                              itemCount: data.length,
+                              itemBuilder: (context, index) {
+                                int indexLength = data.length - 1;
+                                debugPrint('data index $index');
+                                final history = data[indexLength - index];
+                                if (history["type"] == 'Deposit') {
+                                  debugPrint('This is deposit');
+                                  return HistoryWidget(
+                                    type: 'Deposit',
+                                    date: history['date'],
+                                    status: history['status'],
+                                    amount: history['amount'],
                                   );
-                                },
-                              ),
+                                } else {
+                                  debugPrint('This is data');
+                                  return HistoryWidget(
+                                    type: 'Data',
+                                    date: history['date'],
+                                    status: history['status'],
+                                    amount: history['amount'],
+                                  );
+                                }
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return const Divider(
+                                  color: Pallete.blueGreyColor,
+                                  height: 3,
+                                );
+                              },
                             ),
                           ),
                         ),
@@ -100,14 +94,41 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                     );
                   },
                   error: (error, stackTrace) {
-                    return Center(
-                      child: AutoSizeText(
-                        "No history data or internet connection",
-                        //error.toString(),
-                        textAlign: TextAlign.center,
-                        style: context.bodyMedium
-                            ?.copyWith(color: Pallete.textColor),
-                      ),
+                    return Column(
+                      children: [
+                        const Gap(15),
+                        Center(
+                          child: AutoSizeText(
+                            "No history data or internet connection",
+                            //error.toString(),
+                            textAlign: TextAlign.center,
+                            style: context.bodyMedium
+                                ?.copyWith(color: Pallete.textColor),
+                          ),
+                        ),
+                        const Gap(30),
+                        ElevatedButton(
+                          style: const ButtonStyle(
+                            shape: MaterialStatePropertyAll(
+                              RoundedRectangleBorder(
+                                side: BorderSide(color: Pallete.primaryColor),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                            ),
+                            backgroundColor: MaterialStatePropertyAll(
+                                Pallete.secondaryColor),
+                            foregroundColor:
+                                MaterialStatePropertyAll(Pallete.primaryColor),
+                          ),
+                          onPressed: () =>
+                              ref.invalidate(transactionHistoryStreamProvider),
+                          child: const AutoSizeText(
+                            'Retry',
+                          ),
+                        ),
+                      ],
                     );
                   },
                   loading: () {

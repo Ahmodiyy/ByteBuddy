@@ -53,6 +53,20 @@ class TransactionStatus extends ConsumerWidget {
                 ),
                 const Gap(100),
                 ElevatedButton(
+                  style: const ButtonStyle(
+                    shape: MaterialStatePropertyAll(
+                      RoundedRectangleBorder(
+                        side: BorderSide(color: Pallete.primaryColor),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                    ),
+                    backgroundColor:
+                        MaterialStatePropertyAll(Pallete.secondaryColor),
+                    foregroundColor:
+                        MaterialStatePropertyAll(Pallete.primaryColor),
+                  ),
                   onPressed: () => context.go(('/dashboard')),
                   child: const AutoSizeText(
                     'Done',

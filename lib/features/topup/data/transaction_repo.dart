@@ -2,15 +2,18 @@ import 'package:bytebuddy/features/auth/presentation/controller/auth_controller.
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
 
 final transactionRepoProvider = Provider<TransactionRepo>((ref) {
   return TransactionRepo();
 });
 
-final balanceStreamProvider = StreamProvider<dynamic>((ref) async* {
+final balanceStreamProvider = StreamProvider.autoDispose<dynamic>((ref) async* {
   // Call the getBalance method to get the initial balance
   var initialBalance = await TransactionRepo().getBalance(
       ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!);
+  debugPrint(
+      'THE CURRENT AUTH USER IS ${ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!}');
   yield initialBalance;
   // Listen to the document snapshots and emit the 'balance' field
   final snapshots = TransactionRepo().getDocumentStream(
@@ -23,13 +26,14 @@ final balanceStreamProvider = StreamProvider<dynamic>((ref) async* {
 });
 
 final transactionHistoryStreamProvider =
-    StreamProvider<List<Map<String, dynamic>>>((ref) async* {
+    StreamProvider.autoDispose<List<Map<String, dynamic>>>((ref) async* {
   // Call the getBalance method to get the initial balance
   List<Map<String, dynamic>> initialHistory = await TransactionRepo()
       .fetchTransactionHistory(ref
           .read(authControllerLoginProvider.notifier)
           .getCurrentUser()!
           .email!);
+
   yield initialHistory;
   // Listen to the document snapshots and emit the 'balance' field
   final snapshots = TransactionRepo().getDocumentStream(
