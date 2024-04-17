@@ -21,13 +21,11 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
   @override
   void initState() {
     super.initState();
-
-    debugPrint("refgggggggggggggggggggggggggggggggggggggg");
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(transactionHistoryStreamProvider);
+    final state = ref.watch(transactionControllerProvider);
     return LayoutBuilder(
       builder: (context, constraints) => SafeArea(
         child: Scaffold(

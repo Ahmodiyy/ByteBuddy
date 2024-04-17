@@ -12,11 +12,22 @@ final transactionControllerProvider = AsyncNotifierProvider.autoDispose<
 class TransactionController
     extends AutoDisposeAsyncNotifier<List<Map<String, dynamic>>> {
   @override
-  FutureOr<List<Map<String, dynamic>>> build() {
+  FutureOr<List<Map<String, dynamic>>> build() async {
     state = const AsyncLoading();
-    return ref.read(transactionRepoProvider).fetchTransactionHistory(ref
+    return await ref.read(transactionRepoProvider).getTransactions(ref
         .read(authControllerLoginProvider.notifier)
         .getCurrentUser()!
         .email!);
+  }
+
+  Future<void> getNextTransactions() async {
+    state = await AsyncValue.guard(() async {
+      return await ref.read(transactionRepoProvider).getNextTransactions(
+          ref
+              .read(authControllerLoginProvider.notifier)
+              .getCurrentUser()!
+              .email!,
+          state.value!.length - 1);
+    });
   }
 }

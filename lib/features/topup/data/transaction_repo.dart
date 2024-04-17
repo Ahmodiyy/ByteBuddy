@@ -74,21 +74,47 @@ class TransactionRepo {
       DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
           await _cloudStore.collection("log").doc(email).get();
 
-      if (documentSnapshot.data() == null) {
-        throw Exception("No transaction history");
-      }
-
       List<dynamic> transactionList =
           documentSnapshot.data()!['transactionHistory'];
       transactions = List<Map<String, dynamic>>.from(transactionList);
-    } on DioException catch (e) {
-      throw Exception("Please check your internet connection and try again.");
-    } on FirebaseException catch (error) {
-      throw Exception("Please check your internet connection and refresh.");
     } catch (e) {
       rethrow;
     }
 
     return transactions;
+  }
+
+  Future<List<Map<String, dynamic>>> getTransactions(String email,
+      {int limit = 10}) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+          await _cloudStore.collection("log").doc(email).get();
+      List<dynamic> transactionHistory =
+          documentSnapshot.data()?['transactionHistory'] ?? [];
+      List<dynamic> limitedTransactions = transactionHistory.length > limit
+          ? transactionHistory.sublist(0, limit)
+          : transactionHistory;
+      return List<Map<String, dynamic>>.from(limitedTransactions);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getNextTransactions(
+      String email, int startIndex,
+      {int limit = 10}) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+          await _cloudStore.collection("log").doc(email).get();
+      List<dynamic> transactionHistory =
+          documentSnapshot.data()?['transactionHistory'] ?? [];
+      List<dynamic> nextTransactions =
+          transactionHistory.length > (startIndex + limit)
+              ? transactionHistory.sublist(startIndex, limit)
+              : transactionHistory.sublist(startIndex);
+      return List<Map<String, dynamic>>.from(nextTransactions);
+    } catch (error) {
+      rethrow;
+    }
   }
 }
