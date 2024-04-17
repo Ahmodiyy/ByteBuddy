@@ -14,7 +14,7 @@ class TransactionController
   @override
   FutureOr<List<Map<String, dynamic>>> build() async {
     state = const AsyncLoading();
-    return await ref.read(transactionRepoProvider).getTransactions(ref
+    return await ref.read(transactionRepoProvider).fetchTransactionHistory(ref
         .read(authControllerLoginProvider.notifier)
         .getCurrentUser()!
         .email!);
