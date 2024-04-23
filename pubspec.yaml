@@ -58,6 +58,7 @@ dependencies:
   url_launcher: ^6.2.4
   envied: ^0.5.3
   shimmer: ^3.0.0
+  mockito: ^5.4.4
 
 
 dev_dependencies:
