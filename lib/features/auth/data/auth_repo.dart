@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authRepoProvider = Provider<AuthRepo>((ref) {
-  return AuthRepo();
+  return AuthRepo(FirebaseAuth.instance);
 });
 
 class AuthRepo {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth _firebaseAuth;
+
+  AuthRepo(this._firebaseAuth);
 
   Future<User?> signUp(
       {required String email, required String password}) async {
