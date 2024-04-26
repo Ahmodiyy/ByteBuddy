@@ -34,6 +34,7 @@ class _SettingsState extends ConsumerState<Settings> {
                   onPressed: () async {
                     await logout(ref, context, () {
                       context.go('/');
+
                     });
                   },
                   child: const AutoSizeText('Log out'))

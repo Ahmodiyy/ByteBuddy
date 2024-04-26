@@ -101,4 +101,57 @@ void main() {
       });
     },
   );
+
+  group(
+    "testing for unsuccessful authentication",
+    () {
+      test(
+        "signUp throws exception on FirebaseAuthError",
+        () async {
+          // Arrange
+          when(mockFirebaseAuth.createUserWithEmailAndPassword(
+                  email: email, password: password))
+              .thenThrow(FirebaseAuthException(code: 'weak-password'));
+
+          // Act & Assert
+          expect(() => authRepo.signUp(email: email, password: password),
+              throwsA(isA<FirebaseAuthException>()));
+          verify(mockFirebaseAuth.createUserWithEmailAndPassword(
+                  email: email, password: password))
+              .called(1);
+        },
+      );
+      test(
+        "signIn throws exception on FirebaseAuthException",
+        () async {
+          // Arrange
+          when(mockFirebaseAuth.signInWithEmailAndPassword(
+                  email: email, password: password))
+              .thenThrow(FirebaseAuthException(code: 'user-not-found'));
+
+          // Act & Assert
+          expect(() => authRepo.signIn(email: email, password: password),
+              throwsA(isA<FirebaseAuthException>()));
+          verify(mockFirebaseAuth.signInWithEmailAndPassword(
+                  email: email, password: password))
+              .called(1);
+        },
+      );
+
+      test(
+        "sendPasswordResetEmail throws exception on FirebaseAuthException",
+        () async {
+          // Arrange
+          when(mockFirebaseAuth.sendPasswordResetEmail(email: email))
+              .thenThrow(FirebaseAuthException(code: 'invalid-email'));
+
+          // Act & Assert
+          expect(() => authRepo.sendPasswordResetEmail(email),
+              throwsA(isA<FirebaseAuthException>()));
+          verify(mockFirebaseAuth.sendPasswordResetEmail(email: email))
+              .called(1);
+        },
+      );
+    },
+  );
 }
