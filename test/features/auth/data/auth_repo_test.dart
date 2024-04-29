@@ -11,6 +11,7 @@ import 'auth_repo_test.mocks.dart';
 @GenerateMocks([FirebaseAuth])
 @GenerateMocks([User])
 @GenerateMocks([UserCredential])
+@GenerateMocks([UserCredential])
 void main() {
   late AuthRepo authRepo;
   late FirebaseAuth mockFirebaseAuth;
@@ -18,6 +19,8 @@ void main() {
   late User mockUser;
   late String email;
   late String password;
+  late String invalidEmail;
+  late String weakPassword;
 
   setUp(
     () {
@@ -26,6 +29,8 @@ void main() {
       mockUser = MockUser();
       email = "test@example.com";
       password = "password123";
+      invalidEmail = "test.com";
+      weakPassword = "pass";
       authRepo = AuthRepo(mockFirebaseAuth);
     },
   );
@@ -105,53 +110,64 @@ void main() {
   group(
     "testing for unsuccessful authentication",
     () {
-      test(
-        "signUp throws exception on FirebaseAuthError",
-        () async {
-          // Arrange
-          when(mockFirebaseAuth.createUserWithEmailAndPassword(
-                  email: email, password: password))
-              .thenThrow(FirebaseAuthException(code: 'weak-password'));
+      test("signUp throws exception on FirebaseAuthError", () async {
+        // Arrange
+        when(mockFirebaseAuth.createUserWithEmailAndPassword(
+                email: email, password: weakPassword))
+            .thenThrow(FirebaseAuthException(code: 'weak-password'));
 
-          // Act & Assert
-          expect(() => authRepo.signUp(email: email, password: password),
-              throwsA(isA<FirebaseAuthException>()));
-          verify(mockFirebaseAuth.createUserWithEmailAndPassword(
-                  email: email, password: password))
-              .called(1);
-        },
-      );
-      test(
-        "signIn throws exception on FirebaseAuthException",
-        () async {
-          // Arrange
-          when(mockFirebaseAuth.signInWithEmailAndPassword(
-                  email: email, password: password))
-              .thenThrow(FirebaseAuthException(code: 'user-not-found'));
+        // Act & Assert
+        expect(authRepo.signUp(email: email, password: weakPassword),
+            throwsA(isA<FirebaseAuthException>()));
+        verify(mockFirebaseAuth.createUserWithEmailAndPassword(
+                email: email, password: weakPassword))
+            .called(1);
+      });
+      test("signIn throws exception on FirebaseAuthException", () async {
+        // Arrange
+        when(mockFirebaseAuth.signInWithEmailAndPassword(
+                email: email, password: password))
+            .thenThrow(FirebaseAuthException(code: 'user-not-found'));
 
-          // Act & Assert
-          expect(() => authRepo.signIn(email: email, password: password),
-              throwsA(isA<FirebaseAuthException>()));
-          verify(mockFirebaseAuth.signInWithEmailAndPassword(
-                  email: email, password: password))
-              .called(1);
-        },
-      );
+        // Act & Assert
+        expect(authRepo.signIn(email: email, password: password),
+            throwsA(isA<FirebaseAuthException>()));
+        verify(mockFirebaseAuth.signInWithEmailAndPassword(
+                email: email, password: password))
+            .called(1);
+      });
+      test("sendPasswordResetEmail throws exception on FirebaseAuthException",
+          () async {
+        // Arrange
+        when(mockFirebaseAuth.sendPasswordResetEmail(email: invalidEmail))
+            .thenThrow(FirebaseAuthException(code: 'invalid-email'));
 
-      test(
-        "sendPasswordResetEmail throws exception on FirebaseAuthException",
-        () async {
-          // Arrange
-          when(mockFirebaseAuth.sendPasswordResetEmail(email: email))
-              .thenThrow(FirebaseAuthException(code: 'invalid-email'));
+        // Act & Assert
+        expect(authRepo.sendPasswordResetEmail(invalidEmail),
+            throwsA(isA<FirebaseAuthException>()));
+        verify(mockFirebaseAuth.sendPasswordResetEmail(email: invalidEmail))
+            .called(1);
+      });
+      test("signOut throws exception on FirebaseAuthException", () async {
+        // Arrange
+        when(mockFirebaseAuth.signOut())
+            .thenThrow(FirebaseAuthException(code: 'some-error-code'));
 
-          // Act & Assert
-          expect(() => authRepo.sendPasswordResetEmail(email),
-              throwsA(isA<FirebaseAuthException>()));
-          verify(mockFirebaseAuth.sendPasswordResetEmail(email: email))
-              .called(1);
-        },
-      );
+        // Act & Assert
+        expect(authRepo.signOut(), throwsA(isA<FirebaseAuthException>()));
+        verify(mockFirebaseAuth.signOut()).called(1);
+      });
+      test("getCurrentUser returns null if no user is logged in", () {
+        // Arrange
+        when(mockFirebaseAuth.currentUser).thenReturn(null);
+
+        // Act
+        final user = authRepo.getCurrentUser();
+
+        // Assert
+        expect(user, isNull);
+        verify(mockFirebaseAuth.currentUser).called(1);
+      });
     },
   );
 }
