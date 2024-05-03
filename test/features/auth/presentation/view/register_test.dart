@@ -26,5 +26,28 @@ void main() {
       expect(find.text('Already have an account Sign in', findRichText: true),
           findsOneWidget);
     });
+
+    testWidgets('Validation error shows when passwords do not match',
+        (WidgetTester tester) async {
+      // Arrange
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: ProviderScope(child: Register()),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.enterText(
+          find.byType(TextFormField).at(0), 'validemail@example.com');
+
+      await tester.enterText(find.byType(TextFormField).at(1), 'password');
+
+      await tester.enterText(
+          find.byType(TextFormField).at(2), 'differentpassword');
+
+      await tester.tap(find.text('Sign up'));
+      await tester.pumpAndSettle();
+      // Assert
+      expect(find.text('Password does not match'), findsOneWidget);
+    });
   });
 }
