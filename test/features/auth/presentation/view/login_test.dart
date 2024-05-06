@@ -18,6 +18,7 @@ void main() {
       expect(find.text('Welcome \nback!'), findsOneWidget);
       expect(find.text('Email Address'), findsOneWidget);
       expect(find.text('Password'), findsOneWidget);
+      expect(find.text('Forgot Password?', findRichText: true), findsOneWidget);
       expect(find.text('Sign in'), findsOneWidget);
       expect(find.text('Don\'t have an account Sign up', findRichText: true),
           findsOneWidget);
