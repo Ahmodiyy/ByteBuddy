@@ -8,9 +8,7 @@ import 'package:bytebuddy/features/onboarding/presentation/view/onboarding.dart'
 void main() {
   testWidgets('Onboarding displays correctly', (WidgetTester tester) async {
     // Arrange
-
-    debugPrint('size  ${tester.view.physicalSize}');
-
+    await tester.binding.setSurfaceSize(const Size(500, 800));
     await tester.pumpWidget(
       const MaterialApp(
         home: ProviderScope(child: OnboardingScreen()),
@@ -21,7 +19,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Assert
-    expect(find.text('Register'), findsOneWidget);
+    expect(find.text('Get started'), findsOneWidget);
     expect(find.text('Login'), findsOneWidget);
   });
 
