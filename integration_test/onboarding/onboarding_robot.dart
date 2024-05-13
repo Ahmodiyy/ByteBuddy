@@ -28,12 +28,15 @@ class OnboardingRobot {
     expect(find.text('Login'), findsOneWidget);
   }
 
-  Future<void> clickLogin() async {
-    //Act
-    //Assert
-  }
   Future<void> clickGetStarted() async {
     //Act
-    //Assert
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Get started'));
+  }
+
+  Future<void> clickLogin() async {
+    //Act
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Login'));
   }
 }

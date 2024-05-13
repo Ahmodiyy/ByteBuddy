@@ -5,7 +5,7 @@ class LoginRobot {
 
   LoginRobot(this.tester);
 
-  void enterEmail() {}
-  void enterPassword() {}
-  void clickSignIn() {}
+  Future<void> enterEmail() async {}
+  Future<void> enterPassword() async {}
+  Future<void> clickSignIn() async {}
 }

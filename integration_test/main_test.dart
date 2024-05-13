@@ -14,21 +14,24 @@ Future<void> main() async {
   testWidgets("whole app", (WidgetTester tester) async {
     // Arrange
     await tester.binding.setSurfaceSize(const Size(500, 800));
-    await tester.pumpWidget(MyApp(FirebaseAuth.instance.currentUser));
+    User? user = FirebaseAuth.instance.currentUser;
+    await tester.pumpWidget(MyApp(user));
 
-    OnboardingRobot onboardingRobot = OnboardingRobot(tester);
-    onboardingRobot.swipe();
-    onboardingRobot.clickGetStarted();
+    if (user == null) {
+      OnboardingRobot onboardingRobot = OnboardingRobot(tester);
+      await onboardingRobot.swipe();
+      await onboardingRobot.clickGetStarted();
 
-    RegisterRobot registerRobot = RegisterRobot(tester);
-    registerRobot.enterEmail();
-    registerRobot.enterPassword();
-    registerRobot.enterConfirmPassword();
-    registerRobot.clickSignUp();
+      RegisterRobot registerRobot = RegisterRobot(tester);
+      await registerRobot.enterEmail();
+      await registerRobot.enterPassword();
+      await registerRobot.enterConfirmPassword();
+      await registerRobot.clickSignUp();
+    }
 
     LoginRobot loginRobot = LoginRobot(tester);
-    loginRobot.enterEmail();
-    loginRobot.enterPassword();
-    loginRobot.clickSignIn();
+    await loginRobot.enterEmail();
+    await loginRobot.enterPassword();
+    await loginRobot.clickSignIn();
   });
 }
