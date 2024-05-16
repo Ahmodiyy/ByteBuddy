@@ -13,9 +13,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 Future<void> main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   testWidgets("app test", (WidgetTester tester) async {
-    // Arrange
-    await tester.binding.setSurfaceSize(const Size(500, 800));
-
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
