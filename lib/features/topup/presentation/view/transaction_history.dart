@@ -118,6 +118,7 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                             ),
                           ],
                         );
+
                       }, loading: () {
                         return const Column(
                           children: [
