@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 import '../../data/transaction_repo.dart';
+import '../widget/shimmer_widget.dart';
 
 class TransactionHistory extends ConsumerStatefulWidget {
   const TransactionHistory({super.key});
@@ -115,10 +116,10 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                       return const Column(
                         children: [
                           Gap(20),
-                          Center(
-                              child: CircularProgressIndicator(
-                            color: Pallete.primaryColor,
-                          )),
+                          ShimmerWidget.rectangular(
+                            width: double.infinity,
+                            height: 180,
+                          ),
                         ],
                       );
                     });
