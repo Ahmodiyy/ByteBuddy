@@ -56,12 +56,13 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
 
                       return state.when(data: (data) {
                         int indexLength = data.length - 1;
-                        final history = data[indexLength - index];
-                        debugPrint(
-                            'DATA LENGTH ${data.length}, index ${index}, indexLength - index ${indexLength - index}');
-                        if (index == data.length - 1) {
+                        if (index > indexLength) {
                           return null;
                         }
+                        final history = data[indexLength - index];
+                        debugPrint(
+                            'DATA LENGTH ${data.length}, index ${index}, indexLength - index ${indexLength}');
+
                         if (history["type"] == 'Deposit') {
                           debugPrint('This is deposit');
                           return HistoryWidget(
@@ -71,6 +72,7 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                             amount: history['amount'],
                           );
                         } else {
+                          debugPrint('This is data');
                           return HistoryWidget(
                             type: 'Data',
                             date: history['date'],

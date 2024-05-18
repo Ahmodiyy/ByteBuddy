@@ -162,10 +162,8 @@ class DepositWidget extends ConsumerWidget {
                           child: AutoSizeText(
                             "Transaction History",
                             maxLines: 1,
-                            style: context.bodyMedium?.copyWith(
-                              color: Pallete.secondaryColor,
-                              height: 1,
-                            ),
+                            style: context.bodyMedium
+                                ?.copyWith(color: Pallete.secondaryColor),
                           ),
                         ),
                         const IconWidget(
