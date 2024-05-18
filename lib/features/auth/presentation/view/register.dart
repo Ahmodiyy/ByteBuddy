@@ -208,17 +208,21 @@ class _RegisterState extends ConsumerState<Register> {
                                 ),
                                 const Gap(20),
                                 ElevatedButton(
-                                  onPressed: () {
-                                    _message.clear();
-                                    if (_formKey.currentState!.validate()) {
-                                      ref
-                                          .read(authControllerRegisterProvider
-                                              .notifier)
-                                          .signUp(
-                                              email: _email.text,
-                                              password: _password.text);
-                                    }
-                                  },
+                                  onPressed: isLoading
+                                      ? null
+                                      : () {
+                                          _message.clear();
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            ref
+                                                .read(
+                                                    authControllerRegisterProvider
+                                                        .notifier)
+                                                .signUp(
+                                                    email: _email.text,
+                                                    password: _password.text);
+                                          }
+                                        },
                                   child: const Text(
                                     'Sign up',
                                   ),

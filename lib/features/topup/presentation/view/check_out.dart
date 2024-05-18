@@ -200,22 +200,25 @@ class CheckOut extends ConsumerWidget {
                         ),
                         const Gap(50),
                         ElevatedButton(
-                          onPressed: () {
-                            ref
-                                .read(subscriptionControllerProvider.notifier)
-                                .subscribe(
-                                  subscriptionType: 'data',
-                                  serviceID: serviceID,
-                                  planIndex: planIndex,
-                                  phone: number,
-                                  email: ref
-                                      .read(
-                                          authControllerLoginProvider.notifier)
-                                      .getCurrentUser()!
-                                      .email!,
-                                  price: price,
-                                );
-                          },
+                          onPressed: isLoading
+                              ? null
+                              : () {
+                                  ref
+                                      .read(subscriptionControllerProvider
+                                          .notifier)
+                                      .subscribe(
+                                        subscriptionType: 'data',
+                                        serviceID: serviceID,
+                                        planIndex: planIndex,
+                                        phone: number,
+                                        email: ref
+                                            .read(authControllerLoginProvider
+                                                .notifier)
+                                            .getCurrentUser()!
+                                            .email!,
+                                        price: price,
+                                      );
+                                },
                           child: isLoading
                               ? const CircularProgressIndicator(
                                   color: Colors.white,

@@ -131,17 +131,20 @@ class _RegisterState extends ConsumerState<ResetPassword> {
                               ),
                               const Gap(20),
                               ElevatedButton(
-                                onPressed: () {
-                                  _errorMessage.clear();
-                                  _successMessage.clear();
-                                  if (_formKey.currentState!.validate()) {
-                                    ref
-                                        .read(
-                                            authControllerResetPasswordProvider
-                                                .notifier)
-                                        .sendPasswordResetEmail(_email.text);
-                                  }
-                                },
+                                onPressed: isLoading
+                                    ? null
+                                    : () {
+                                        _errorMessage.clear();
+                                        _successMessage.clear();
+                                        if (_formKey.currentState!.validate()) {
+                                          ref
+                                              .read(
+                                                  authControllerResetPasswordProvider
+                                                      .notifier)
+                                              .sendPasswordResetEmail(
+                                                  _email.text);
+                                        }
+                                      },
                                 child: const Text(
                                   'Send',
                                 ),
