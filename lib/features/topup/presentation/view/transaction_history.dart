@@ -7,8 +7,6 @@ import 'package:bytebuddy/themes/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-
-import '../../data/transaction_repo.dart';
 import '../widget/shimmer_widget.dart';
 
 class TransactionHistory extends ConsumerStatefulWidget {
@@ -118,7 +116,6 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                             ),
                           ],
                         );
-
                       }, loading: () {
                         return const Column(
                           children: [
