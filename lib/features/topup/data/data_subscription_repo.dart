@@ -5,6 +5,8 @@ import 'package:bytebuddy/features/topup/model/data_service_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../api.dart';
+
 final dataSubscriptionRepoProvider = Provider<DataSubscriptionRepo>((ref) {
   return DataSubscriptionRepo();
 });
@@ -17,7 +19,8 @@ class DataSubscriptionRepo implements Subscription {
       String serviceID, int planIndex, String phone, String email) async {
     try {
       final response = await _dio.post(
-        Env.buyDataPlanEndpoint,
+        //Env.buyDataPlanEndpoint,
+        Api.buyDataEndpoint,
         data: {
           "serviceID": serviceID,
           "planIndex": planIndex,
