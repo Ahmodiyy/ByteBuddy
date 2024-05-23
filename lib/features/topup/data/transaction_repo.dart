@@ -71,11 +71,15 @@ class TransactionRepo {
       String email) async {
     List<Map<String, dynamic>> transactions = [];
     try {
-      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-          await _cloudStore.collection("log").doc(email).get();
-
-      List<dynamic> transactionList =
-          documentSnapshot.data()!['transactionHistory'];
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await _cloudStore
+          .collection("log")
+          .doc(email)
+          .collection("transactions")
+          .orderBy("date")
+          .limit(30)
+          .get();
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> transactionList =
+          querySnapshot.docs;
       transactions = List<Map<String, dynamic>>.from(transactionList);
     } catch (e) {
       rethrow;
