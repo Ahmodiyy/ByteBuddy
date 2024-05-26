@@ -34,7 +34,7 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
             body: Align(
               alignment: Alignment.topCenter,
               child: Container(
-                padding: const EdgeInsets.only(left: 20, bottom: 20),
+                padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
                 decoration: const BoxDecoration(
                   color: Pallete.secondaryColor,
                 ),

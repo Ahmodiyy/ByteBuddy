@@ -27,7 +27,6 @@ class HistoryWidget extends ConsumerWidget {
     final formattedPrice = UtilityFunctions.formatCurrency(amount);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12),
-      margin: const EdgeInsets.only(right: 30),
       child: Row(
         children: [
           CircleAvatar(
