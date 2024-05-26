@@ -57,12 +57,9 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                         if (index > indexLength) {
                           return null;
                         }
-                        final history = data[indexLength - index];
-                        debugPrint(
-                            'DATA LENGTH ${data.length}, index ${index}, indexLength - index ${indexLength}');
+                        final history = data[index];
 
                         if (history["type"] == 'Deposit') {
-                          debugPrint('This is deposit');
                           return HistoryWidget(
                             type: 'Deposit',
                             date: history['date'],
@@ -70,7 +67,6 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                             amount: history['amount'],
                           );
                         } else {
-                          debugPrint('This is data');
                           return HistoryWidget(
                             type: 'Data',
                             date: history['date'],

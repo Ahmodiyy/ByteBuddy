@@ -26,9 +26,9 @@ final balanceStreamProvider = StreamProvider.autoDispose<dynamic>((ref) async* {
 });
 
 final transactionHistoryStreamProvider =
-    StreamProvider.autoDispose<List<Map<String, dynamic>>>((ref) async* {
+    StreamProvider.autoDispose<List<QueryDocumentSnapshot>>((ref) async* {
   // Call the getBalance method to get the initial balance
-  List<Map<String, dynamic>> initialHistory = await TransactionRepo()
+  List<QueryDocumentSnapshot> initialHistory = await TransactionRepo()
       .fetchTransactionHistory(ref
           .read(authControllerLoginProvider.notifier)
           .getCurrentUser()!
@@ -40,9 +40,7 @@ final transactionHistoryStreamProvider =
       ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!);
   await for (var snapshot in snapshots) {
     Map<String, dynamic>? data = snapshot.data();
-    List<Map<String, dynamic>> transactions = [];
-    List<dynamic> transactionList = data?['transactionHistory'] ?? [];
-    transactions = List<Map<String, dynamic>>.from(transactionList);
+    List<QueryDocumentSnapshot> transactions = data?['transactions'] ?? [];
     yield transactions;
   }
 });
@@ -67,25 +65,26 @@ class TransactionRepo {
     return balance;
   }
 
-  Future<List<Map<String, dynamic>>> fetchTransactionHistory(
+  Future<List<QueryDocumentSnapshot>> fetchTransactionHistory(
       String email) async {
-    List<Map<String, dynamic>> transactions = [];
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await _cloudStore
           .collection("log")
           .doc(email)
           .collection("transactions")
-          .orderBy("date")
-          .limit(30)
+          .orderBy("date", descending: true)
+          .limit(10)
           .get();
-      List<QueryDocumentSnapshot<Map<String, dynamic>>> transactionList =
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> transactionsDocument =
           querySnapshot.docs;
-      transactions = List<Map<String, dynamic>>.from(transactionList);
+      debugPrint('docs lent ${transactionsDocument.length}');
+      for (var element in transactionsDocument) {
+        debugPrint('trans type ${element.data()["type"]}');
+      }
+      return transactionsDocument;
     } catch (e) {
       rethrow;
     }
-
-    return transactions;
   }
 
   Future<List<Map<String, dynamic>>> getTransactions(String email,
