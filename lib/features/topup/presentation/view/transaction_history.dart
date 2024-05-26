@@ -33,18 +33,19 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                 backgroundColor: Pallete.secondaryColor),
             body: Align(
               alignment: Alignment.topCenter,
-              child: Container(
-                padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
-                decoration: const BoxDecoration(
-                  color: Pallete.secondaryColor,
-                ),
-                alignment: Alignment.topCenter,
-                width: constraints.isMobile ? double.infinity : 500.0,
-                child: Scrollbar(
-                  thumbVisibility: true,
-                  trackVisibility: true,
-                  radius: const Radius.circular(50),
-                  thickness: 5,
+              child: Scrollbar(
+                thumbVisibility: true,
+                trackVisibility: true,
+                radius: const Radius.circular(50),
+                thickness: 5,
+                child: Container(
+                  padding:
+                      const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                  decoration: const BoxDecoration(
+                    color: Pallete.secondaryColor,
+                  ),
+                  alignment: Alignment.topCenter,
+                  width: constraints.isMobile ? double.infinity : 500.0,
                   child: ListView.builder(
                     primary: true,
                     itemBuilder: (BuildContext context, int index) {
