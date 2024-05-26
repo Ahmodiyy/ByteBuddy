@@ -12,8 +12,6 @@ final balanceStreamProvider = StreamProvider.autoDispose<dynamic>((ref) async* {
   // Call the getBalance method to get the initial balance
   var initialBalance = await TransactionRepo().getBalance(
       ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!);
-  debugPrint(
-      'THE CURRENT AUTH USER IS ${ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!}');
   yield initialBalance;
   // Listen to the document snapshots and emit the 'balance' field
   final snapshots = TransactionRepo().getDocumentStream(
@@ -22,26 +20,6 @@ final balanceStreamProvider = StreamProvider.autoDispose<dynamic>((ref) async* {
     Map<String, dynamic>? data = snapshot.data();
     dynamic balance = data?['balance'] ?? 0.0;
     yield balance;
-  }
-});
-
-final transactionHistoryStreamProvider =
-    StreamProvider.autoDispose<List<QueryDocumentSnapshot>>((ref) async* {
-  // Call the getBalance method to get the initial balance
-  List<QueryDocumentSnapshot> initialHistory = await TransactionRepo()
-      .fetchTransactionHistory(ref
-          .read(authControllerLoginProvider.notifier)
-          .getCurrentUser()!
-          .email!);
-
-  yield initialHistory;
-  // Listen to the document snapshots and emit the 'balance' field
-  final snapshots = TransactionRepo().getDocumentStream(
-      ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!);
-  await for (var snapshot in snapshots) {
-    Map<String, dynamic>? data = snapshot.data();
-    List<QueryDocumentSnapshot> transactions = data?['transactions'] ?? [];
-    yield transactions;
   }
 });
 
