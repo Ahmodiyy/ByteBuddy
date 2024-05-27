@@ -55,28 +55,32 @@ class TransactionRepo {
           .get();
       List<QueryDocumentSnapshot<Map<String, dynamic>>> transactionsDocument =
           querySnapshot.docs;
-      debugPrint('docs lent ${transactionsDocument.length}');
-      for (var element in transactionsDocument) {
-        debugPrint('trans type ${element.data()["type"]}');
-      }
       return transactionsDocument;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<List<Map<String, dynamic>>> getTransactions(String email,
-      {int limit = 10}) async {
+  Future<List<QueryDocumentSnapshot>> fetchNextTransactionHistory(
+      String email, DocumentSnapshot documentSnapshot) async {
     try {
-      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-          await _cloudStore.collection("log").doc(email).get();
-      List<dynamic> transactionHistory =
-          documentSnapshot.data()?['transactionHistory'] ?? [];
-      List<dynamic> limitedTransactions = transactionHistory.length > limit
-          ? transactionHistory.sublist(0, limit)
-          : transactionHistory;
-      return List<Map<String, dynamic>>.from(limitedTransactions);
-    } catch (error) {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await _cloudStore
+          .collection("log")
+          .doc(email)
+          .collection("transactions")
+          .orderBy("date", descending: true)
+          .startAfterDocument(documentSnapshot)
+          .limit(10)
+          .get();
+
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> transactionsDocument =
+          querySnapshot.docs;
+      debugPrint('docs lent ${transactionsDocument.length}');
+      for (var element in transactionsDocument) {
+        debugPrint('trans type ${element.data()["type"]}');
+      }
+      return transactionsDocument;
+    } catch (e) {
       rethrow;
     }
   }

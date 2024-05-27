@@ -20,16 +20,18 @@ class TransactionController
         .getCurrentUser()!
         .email!);
   }
-/**
-  Future<void> getNextTransactions() async {
+
+  Future<void> fetchNextTransactionHistory(
+      DocumentSnapshot documentSnapshot) async {
     state = await AsyncValue.guard(() async {
-      return await ref.read(transactionRepoProvider).getNextTransactions(
-          ref
-              .read(authControllerLoginProvider.notifier)
-              .getCurrentUser()!
-              .email!,
-          state.value!.length - 1);
+      return await ref
+          .read(transactionRepoProvider)
+          .fetchNextTransactionHistory(
+              ref
+                  .read(authControllerLoginProvider.notifier)
+                  .getCurrentUser()!
+                  .email!,
+              documentSnapshot);
     });
   }
-    **/
 }
