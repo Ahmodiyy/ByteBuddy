@@ -59,7 +59,7 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                 thickness: 5,
                 child: Container(
                   padding:
-                      const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                      const EdgeInsets.only(bottom: 40, left: 20, right: 20),
                   decoration: const BoxDecoration(
                     color: Pallete.secondaryColor,
                   ),
@@ -89,7 +89,13 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                             );
                           }
                         } else {
-                          return const CircularProgressIndicator();
+                          return const Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Center(
+                                child: CircularProgressIndicator(
+                              color: Pallete.primaryColor,
+                            )),
+                          );
                         }
                       },
                     );
