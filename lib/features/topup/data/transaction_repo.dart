@@ -62,14 +62,14 @@ class TransactionRepo {
   }
 
   Future<List<QueryDocumentSnapshot>> fetchNextTransactionHistory(
-      String email, DocumentSnapshot documentSnapshot) async {
+      String email, DocumentSnapshot? documentSnapshot) async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await _cloudStore
           .collection("log")
           .doc(email)
           .collection("transactions")
           .orderBy("date", descending: true)
-          .startAfterDocument(documentSnapshot)
+          .startAfterDocument(documentSnapshot!)
           .limit(10)
           .get();
 
@@ -81,24 +81,6 @@ class TransactionRepo {
       }
       return transactionsDocument;
     } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<List<Map<String, dynamic>>> getNextTransactions(
-      String email, int startIndex,
-      {int limit = 10}) async {
-    try {
-      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-          await _cloudStore.collection("log").doc(email).get();
-      List<dynamic> transactionHistory =
-          documentSnapshot.data()?['transactionHistory'] ?? [];
-      List<dynamic> nextTransactions =
-          transactionHistory.length > (startIndex + limit)
-              ? transactionHistory.sublist(startIndex, limit)
-              : transactionHistory.sublist(startIndex);
-      return List<Map<String, dynamic>>.from(nextTransactions);
-    } catch (error) {
       rethrow;
     }
   }
