@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bytebuddy/features/auth/presentation/controller/auth_controller.dart';
 import 'package:bytebuddy/features/topup/data/transaction_repo.dart';
-import 'package:bytebuddy/features/topup/presentation/view/transaction_history.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,28 +12,62 @@ final transactionControllerProvider = AsyncNotifierProvider.autoDispose<
 
 class TransactionController
     extends AutoDisposeAsyncNotifier<List<QueryDocumentSnapshot>> {
-  DocumentSnapshot? documentSnapshot;
+  DocumentSnapshot? lastDocumentSnapshot;
 
   @override
   FutureOr<List<QueryDocumentSnapshot>> build() async {
     state = const AsyncLoading();
-    return await ref.read(transactionRepoProvider).fetchTransactionHistory(ref
-        .read(authControllerLoginProvider.notifier)
-        .getCurrentUser()!
-        .email!);
+    try {
+      final email = ref
+          .read(authControllerLoginProvider.notifier)
+          .getCurrentUser()
+          ?.email;
+
+      if (email == null) {
+        throw Exception('User email is null');
+      }
+
+      final transactions = await ref
+          .read(transactionRepoProvider)
+          .fetchTransactionHistory(email);
+
+      if (transactions.isNotEmpty) {
+        lastDocumentSnapshot = transactions.last;
+      }
+
+      return transactions;
+    } catch (e, stackTrace) {
+      state = AsyncError(e, stackTrace);
+      return [];
+    }
   }
 
-  Future<void> fetchNextTransactionHistory(
-      DocumentSnapshot? documentSnapshot) async {
+  Future<List> fetchNextTransactionHistory() async {
+    List nextTransactions = [];
     state = await AsyncValue.guard(() async {
-      return await ref
+      final email = ref
+          .read(authControllerLoginProvider.notifier)
+          .getCurrentUser()
+          ?.email;
+
+      if (email == null) {
+        throw Exception('User email is null');
+      }
+
+      nextTransactions = await ref
           .read(transactionRepoProvider)
-          .fetchNextTransactionHistory(
-              ref
-                  .read(authControllerLoginProvider.notifier)
-                  .getCurrentUser()!
-                  .email!,
-              documentSnapshot);
+          .fetchNextTransactionHistory(email, lastDocumentSnapshot);
+
+      if (nextTransactions.isNotEmpty) {
+        lastDocumentSnapshot = nextTransactions.last;
+      }
+
+      return [
+        ...state.value ?? [],
+        ...nextTransactions,
+      ];
     });
+
+    return nextTransactions;
   }
 }

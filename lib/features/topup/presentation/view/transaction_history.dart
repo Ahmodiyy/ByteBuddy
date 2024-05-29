@@ -24,18 +24,21 @@ class TransactionHistory extends ConsumerStatefulWidget {
 class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
   late ScrollController _scrollController;
   DocumentSnapshot? documentSnapshot;
+  bool hasMoreTransactions = true;
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
 
-    _scrollController.addListener(() {
-      _scrollController.position.addListener(() async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _scrollController.addListener(() async {
         if (_scrollController.offset ==
-            _scrollController.position.maxScrollExtent) {
-          await ref
+                _scrollController.position.maxScrollExtent &&
+            hasMoreTransactions) {
+          List nextTransactions = await ref
               .read(transactionControllerProvider.notifier)
-              .fetchNextTransactionHistory(documentSnapshot);
+              .fetchNextTransactionHistory();
+          hasMoreTransactions = nextTransactions.length >= 10;
         }
       });
     });
@@ -53,6 +56,7 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
             body: Align(
               alignment: Alignment.topCenter,
               child: Scrollbar(
+                controller: _scrollController,
                 thumbVisibility: true,
                 trackVisibility: true,
                 radius: const Radius.circular(50),
@@ -70,7 +74,6 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                       controller: _scrollController,
                       itemCount: data.length + 1,
                       itemBuilder: (context, index) {
-                        documentSnapshot = data.last;
                         if (index < data.length) {
                           final history = data[index];
                           if (history["type"] == 'Deposit') {
