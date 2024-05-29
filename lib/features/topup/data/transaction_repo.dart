@@ -25,7 +25,7 @@ final balanceStreamProvider = StreamProvider.autoDispose<dynamic>((ref) async* {
 
 class TransactionRepo {
   final FirebaseFirestore _cloudStore = FirebaseFirestore.instance;
-  int a = 0;
+
   Stream<DocumentSnapshot<Map<String, dynamic>>> getDocumentStream(
       String email) {
     var collectionReference = _cloudStore.collection('log');
@@ -63,8 +63,6 @@ class TransactionRepo {
 
   Future<List<QueryDocumentSnapshot>> fetchNextTransactionHistory(
       String email, DocumentSnapshot? documentSnapshot) async {
-    a++;
-    print('aaaaaaa $a');
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await _cloudStore
           .collection("log")
@@ -77,10 +75,7 @@ class TransactionRepo {
 
       List<QueryDocumentSnapshot<Map<String, dynamic>>> transactionsDocument =
           querySnapshot.docs;
-      debugPrint('next transaction length ${transactionsDocument.length}');
-      transactionsDocument.forEach((element) {
-        print(element["date"]);
-      });
+
       return transactionsDocument;
     } catch (e) {
       rethrow;

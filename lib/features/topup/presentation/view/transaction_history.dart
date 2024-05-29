@@ -30,17 +30,15 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
     super.initState();
     _scrollController = ScrollController();
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _scrollController.addListener(() async {
-        if (_scrollController.offset ==
-                _scrollController.position.maxScrollExtent &&
-            hasMoreTransactions) {
-          List nextTransactions = await ref
-              .read(transactionControllerProvider.notifier)
-              .fetchNextTransactionHistory();
-          hasMoreTransactions = nextTransactions.length >= 10;
-        }
-      });
+    _scrollController.addListener(() async {
+      if (_scrollController.offset ==
+              _scrollController.position.maxScrollExtent &&
+          hasMoreTransactions) {
+        List nextTransactions = await ref
+            .read(transactionControllerProvider.notifier)
+            .fetchNextTransactionHistory();
+        hasMoreTransactions = nextTransactions.length >= 10;
+      }
     });
   }
 
@@ -55,67 +53,72 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                 backgroundColor: Pallete.secondaryColor),
             body: Align(
               alignment: Alignment.topCenter,
-              child: Scrollbar(
-                controller: _scrollController,
-                thumbVisibility: true,
-                trackVisibility: true,
-                radius: const Radius.circular(50),
-                thickness: 5,
-                child: Container(
-                  padding:
-                      const EdgeInsets.only(bottom: 20, left: 20, right: 20),
-                  decoration: const BoxDecoration(
-                    color: Pallete.secondaryColor,
-                  ),
-                  alignment: Alignment.topCenter,
-                  width: constraints.isMobile ? double.infinity : 500.0,
-                  child: state.when(data: (data) {
-                    return ListView.builder(
-                      controller: _scrollController,
-                      itemCount: data.length + 1,
-                      itemBuilder: (context, index) {
-                        if (index < data.length) {
-                          final history = data[index];
-                          if (history["type"] == 'Deposit') {
-                            return HistoryWidget(
-                              type: 'Deposit',
-                              date: history['date'],
-                              status: history['status'],
-                              amount: history['amount'],
-                            );
+              child: Container(
+                padding: const EdgeInsets.only(bottom: 20),
+                decoration: const BoxDecoration(
+                  color: Pallete.secondaryColor,
+                ),
+                alignment: Alignment.topCenter,
+                width: constraints.isMobile ? double.infinity : 500.0,
+                child: state.when(data: (data) {
+                  return Scrollbar(
+                    controller: _scrollController,
+                    thumbVisibility: true,
+                    trackVisibility: true,
+                    radius: const Radius.circular(50),
+                    thickness: 5,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 20, left: 20),
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        itemCount: data.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index < data.length) {
+                            final history = data[index];
+                            if (history["type"] == 'Deposit') {
+                              return HistoryWidget(
+                                type: 'Deposit',
+                                date: history['date'],
+                                status: history['status'],
+                                amount: history['amount'],
+                              );
+                            } else {
+                              return HistoryWidget(
+                                type: 'Data',
+                                date: history['date'],
+                                status: history['status'],
+                                amount: history['amount'],
+                              );
+                            }
                           } else {
-                            return HistoryWidget(
-                              type: 'Data',
-                              date: history['date'],
-                              status: history['status'],
-                              amount: history['amount'],
-                            );
+                            return hasMoreTransactions
+                                ? const Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: CircularProgressIndicator(
+                                        color: Pallete.primaryColor,
+                                      ),
+                                    ),
+                                  )
+                                : Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: AutoSizeText(
+                                        "No more data",
+                                        style: context.bodySmall?.copyWith(
+                                            color: Pallete.primaryColor),
+                                      ),
+                                    ),
+                                  );
                           }
-                        } else {
-                          return hasMoreTransactions
-                              ? const Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(10.0),
-                                    child: CircularProgressIndicator(
-                                      color: Pallete.primaryColor,
-                                    ),
-                                  ),
-                                )
-                              : Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: AutoSizeText(
-                                      "No more data",
-                                      style: context.bodySmall?.copyWith(
-                                          color: Pallete.primaryColor),
-                                    ),
-                                  ),
-                                );
-                        }
-                      },
-                    );
-                  }, error: (error, stackTrace) {
-                    return Column(
+                        },
+                      ),
+                    ),
+                  );
+                }, error: (error, stackTrace) {
+                  return Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
                       children: [
                         const Gap(15),
                         Center(
@@ -150,19 +153,26 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                           ),
                         ),
                       ],
-                    );
-                  }, loading: () {
-                    return const Column(
+                    ),
+                  );
+                }, loading: () {
+                  return Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
                       children: [
-                        Gap(20),
-                        ShimmerWidget.rectangular(
-                          width: double.infinity,
-                          height: 50,
-                        ),
+                        const Gap(20),
+                        for (int index = 1; index < 5; index++)
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            child: ShimmerWidget.rectangular(
+                              width: double.infinity,
+                              height: 50,
+                            ),
+                          ),
                       ],
-                    );
-                  }),
-                ),
+                    ),
+                  );
+                }),
               ),
             )),
       ),
