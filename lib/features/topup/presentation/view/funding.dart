@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bytebuddy/common/appBar_widget.dart';
 import 'package:bytebuddy/common/icon_widget.dart';
 import 'package:bytebuddy/constants/constant.dart';
-import 'package:bytebuddy/constants/paystack_constant.dart';
 import 'package:bytebuddy/env/Env.dart';
 import 'package:bytebuddy/features/auth/presentation/controller/auth_controller.dart';
 import 'package:bytebuddy/themes/pallete.dart';
@@ -12,8 +11,6 @@ import 'package:flutter_paystack_plus/flutter_paystack_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:uuid/uuid.dart';
 
 class Funding extends ConsumerStatefulWidget {
