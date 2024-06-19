@@ -9,7 +9,6 @@ import 'auth_repo_test.mocks.dart';
 @GenerateMocks([FirebaseAuth])
 @GenerateMocks([User])
 @GenerateMocks([UserCredential])
-@GenerateMocks([UserCredential])
 void main() {
   late AuthRepo authRepo;
   late FirebaseAuth mockFirebaseAuth;

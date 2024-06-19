@@ -1,11 +1,10 @@
-import 'package:bytebuddy/constants/endpoint_constant.dart';
 import 'package:bytebuddy/env/Env.dart';
 import 'package:bytebuddy/features/topup/data/subscription.dart';
 import 'package:bytebuddy/features/topup/model/data_service_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../api.dart';
+import '../../../constants/api.dart';
 
 final dataSubscriptionRepoProvider = Provider<DataSubscriptionRepo>((ref) {
   return DataSubscriptionRepo();
