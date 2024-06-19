@@ -1,16 +1,9 @@
 import 'package:bytebuddy/constants/constant.dart';
 import 'package:bytebuddy/themes/pallete.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
-
-import 'app_startup_error_widget.dart';
 import 'features/topup/presentation/widget/shimmer_widget.dart';
-import 'firebase_options.dart';
-import 'main.dart';
 
 class FirebaseInitialization extends ConsumerStatefulWidget {
   const FirebaseInitialization({super.key});
