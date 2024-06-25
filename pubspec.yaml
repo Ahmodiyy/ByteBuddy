@@ -50,7 +50,7 @@ dependencies:
   firebase_core: ^2.24.1
   firebase_auth: ^4.15.1
   cloud_firestore: ^4.13.4
-  flutter_svg: ^2.0.9
+  flutter_svg: ^2.0.10+1
   uuid: ^3.0.4
   dio: ^5.4.0
   connectivity_plus: ^4.0.1
