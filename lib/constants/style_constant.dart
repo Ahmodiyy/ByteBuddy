@@ -6,6 +6,7 @@ class StyleConstant {
     fillColor: Pallete.secondaryColor,
     filled: true,
     hintText: 'Enter',
+    contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
     errorBorder: OutlineInputBorder(
       borderSide: BorderSide(color: Pallete.errorColor, width: 1.0),
       borderRadius: BorderRadius.all(Radius.circular(

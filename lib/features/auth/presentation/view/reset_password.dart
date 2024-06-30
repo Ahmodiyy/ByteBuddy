@@ -86,6 +86,7 @@ class _RegisterState extends ConsumerState<ResetPassword> {
                               TextFormField(
                                 controller: _email,
                                 keyboardType: TextInputType.emailAddress,
+                                style: context.bodySmall?.copyWith(color: Pallete.textColor),
                                 decoration: StyleConstant.input.copyWith(
                                   hintText: 'Email Address',
                                   prefixIcon: const IconWidget(

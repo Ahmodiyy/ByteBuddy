@@ -68,6 +68,7 @@ class _FundingState extends ConsumerState<Funding> {
                           TextFormField(
                             controller: _amount,
                             keyboardType: TextInputType.number,
+                            style: context.bodySmall?.copyWith(color: Pallete.textColor),
                             decoration: StyleConstant.input.copyWith(
                               fillColor: Pallete.blueGreyColor,
                               hintText: '100.00 - 2,450.00',

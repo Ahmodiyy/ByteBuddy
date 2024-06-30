@@ -18,8 +18,7 @@ class DataSubscriptionRepo implements Subscription {
       String serviceID, int planIndex, String phone, String email) async {
     try {
       final response = await _dio.post(
-        //Env.buyDataPlanEndpoint,
-        Api.buyDataEndpoint,
+        Env.buyDataPlanEndpoint,
         data: {
           "serviceID": serviceID,
           "planIndex": planIndex,

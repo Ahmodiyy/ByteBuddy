@@ -94,6 +94,7 @@ class _RegisterState extends ConsumerState<Register> {
                                 TextFormField(
                                   controller: _email,
                                   keyboardType: TextInputType.emailAddress,
+                                  style: context.bodySmall?.copyWith(color: Pallete.textColor),
                                   decoration: StyleConstant.input.copyWith(
                                     hintText: 'Email Address',
                                     prefixIcon: const IconWidget(
@@ -109,6 +110,7 @@ class _RegisterState extends ConsumerState<Register> {
                                   controller: _password,
                                   obscureText: togglePassword,
                                   keyboardType: TextInputType.text,
+                                  style: context.bodySmall?.copyWith(color: Pallete.textColor),
                                   decoration: StyleConstant.input.copyWith(
                                     hintText: 'Password',
                                     prefixIcon: const IconWidget(
@@ -134,6 +136,7 @@ class _RegisterState extends ConsumerState<Register> {
                                 TextFormField(
                                   controller: _confirmPassword,
                                   obscureText: toggleConfirmPassword,
+                                  style: context.bodySmall?.copyWith(color: Pallete.textColor),
                                   keyboardType: TextInputType.text,
                                   decoration: StyleConstant.input.copyWith(
                                     hintText: 'Confirm password',
