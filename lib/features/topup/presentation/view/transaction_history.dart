@@ -73,6 +73,20 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                         controller: _scrollController,
                         itemCount: data.length + 1,
                         itemBuilder: (context, index) {
+
+                          if(data.isEmpty){
+                            return Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: AutoSizeText(
+                                  "No data",
+                                  style: context.bodySmall?.copyWith(
+                                      color: Pallete.primaryColor),
+                                ),
+                              ),
+                            );
+                          }
+
                           if (index < data.length) {
                             final history = data[index];
                             if (history["type"] == 'Deposit') {
