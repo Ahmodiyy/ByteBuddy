@@ -105,7 +105,7 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                               );
                             }
                           } else {
-                            return hasMoreTransactions
+                            return hasMoreTransactions && data.length == 10
                                 ? const Center(
                                     child: Padding(
                                       padding: EdgeInsets.all(10.0),
