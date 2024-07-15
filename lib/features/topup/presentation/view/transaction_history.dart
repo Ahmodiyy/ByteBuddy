@@ -88,22 +88,10 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                           }
 
                           if (index < data.length) {
-                            final history = data[index];
-                            if (history["type"] == 'Deposit') {
+                            final historyDocument = data[index];
                               return HistoryWidget(
-                                type: 'Deposit',
-                                date: history['date'],
-                                status: history['status'],
-                                amount: history['amount'],
+                               historyDocument
                               );
-                            } else {
-                              return HistoryWidget(
-                                type: 'Data',
-                                date: history['date'],
-                                status: history['status'],
-                                amount: history['amount'],
-                              );
-                            }
                           } else {
                             return hasMoreTransactions && data.length == 10
                                 ? const Center(

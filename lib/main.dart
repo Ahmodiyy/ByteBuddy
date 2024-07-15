@@ -5,9 +5,11 @@ import 'package:bytebuddy/features/dashboard.dart';
 import 'package:bytebuddy/features/topup/presentation/view/check_out.dart';
 import 'package:bytebuddy/features/topup/presentation/view/funding.dart';
 import 'package:bytebuddy/features/topup/presentation/view/data.dart';
+import 'package:bytebuddy/features/topup/presentation/view/transaction_details.dart';
 import 'package:bytebuddy/features/topup/presentation/view/transaction_history.dart';
 import 'package:bytebuddy/features/topup/presentation/view/transaction_status.dart';
 import 'package:bytebuddy/themes/pallete.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bytebuddy/features/onboarding/presentation/view/onboarding.dart';
 
 import 'app_startup_error_widget.dart';
-import 'firebase_initialization.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -43,10 +44,6 @@ GoRouter _router(User? user) {
     initialLocation: user != null ? '/auth' : '/',
     routes: [
       GoRoute(
-        path: '/initialization',
-        builder: (context, state) => const FirebaseInitialization(),
-      ),
-      GoRoute(
         path: '/',
         builder: (context, state) => const OnboardingScreen(),
       ),
@@ -70,6 +67,15 @@ GoRouter _router(User? user) {
             GoRoute(
               path: 'transaction_history',
               builder: (context, state) => const TransactionHistory(),
+              routes : [
+                GoRoute(
+                    path: 'details',
+                    builder: (context, state) {
+                      final historyDocument = state.extra as QueryDocumentSnapshot;
+                      return TransactionDetails(historyDocument);
+                    },
+                    ),
+              ]
             ),
             GoRoute(
               path: 'funding',
