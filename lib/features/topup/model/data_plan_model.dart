@@ -10,13 +10,11 @@ class DataPlanModel {
   });
 
   factory DataPlanModel.fromJson(Map<String, dynamic> json) {
-    double? price = double.tryParse(json['price']);
-    double priceWithVAT = price! + 0.055 * price;
 
     return DataPlanModel(
       displayName: json['displayName'],
       value: json['value'],
-      price: priceWithVAT.round().toString(),
+      price: json['price']
     );
   }
 }
