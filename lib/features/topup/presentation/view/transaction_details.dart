@@ -36,7 +36,7 @@ class TransactionDetails extends ConsumerWidget {
               ),
               child: Column(
                 children: [
-              AutoSizeText(type, style: context.bodySmall?.copyWith(color: Pallete.textColor,),),
+              AutoSizeText(type, style: context.bodySmall?.copyWith(color: Pallete.textColor, fontSize: 16, letterSpacing: 2,),),
                const Gap(10),
               AutoSizeText(formattedPrice, style: context.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
                   const Gap(10),
@@ -58,7 +58,7 @@ class TransactionDetails extends ConsumerWidget {
              alignment: Alignment.topLeft,
              child:
            AutoSizeText('Transaction details',
-             style: context.bodySmall?.copyWith(color: Pallete.textColor),
+             style: context.bodySmall?.copyWith(color: Pallete.textColor, fontWeight: FontWeight.bold,),
 
            ),
            ),
@@ -88,7 +88,29 @@ class TransactionDetails extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      TableRow(
+
+                      type == 'Deposit'? TableRow(
+                        children: [
+                          TableCell(
+                            child: AutoSizeText(
+                              'Reference',
+                              style: context.bodySmall?.copyWith(
+                                  color: Pallete.secondaryTextColor),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding:
+                              const EdgeInsets.only(bottom: 20),
+                              child: AutoSizeText(
+                                queryDocumentSnapshot['reference'].toString(),
+                                style: context.bodySmall?.copyWith(color: Pallete.textColor),
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ):TableRow(
                         children: [
                           TableCell(
                             child: AutoSizeText(
