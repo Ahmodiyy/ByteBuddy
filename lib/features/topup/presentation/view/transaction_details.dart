@@ -22,146 +22,155 @@ class TransactionDetails extends ConsumerWidget {
      final formattedPrice =
      UtilityFunctions.formatCurrency(int.tryParse(amount) as num);
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBarWidget.appbar(context, "Transaction details") ,
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Pallete.secondaryColor,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Column(
-                children: [
-              AutoSizeText(type, style: context.bodySmall?.copyWith(color: Pallete.textColor, fontSize: 16, letterSpacing: 2,),),
-               const Gap(10),
-              AutoSizeText(formattedPrice, style: context.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
-                  const Gap(10),
-                  status == 'successful'? AutoSizeText('successful', style: context.bodySmall?.copyWith(color: Pallete.primaryColor),):AutoSizeText('failed', style: context.bodySmall?.copyWith(color: Pallete.errorColor),)
-              ],
-              ),
-            ),
-            const Gap(10),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Pallete.secondaryColor,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Column(
-                children: [
-           Align(
-             alignment: Alignment.topLeft,
-             child:
-           AutoSizeText('Transaction details',
-             style: context.bodySmall?.copyWith(color: Pallete.textColor, fontWeight: FontWeight.bold,),
+      child: LayoutBuilder(
+        builder: (context, constraints) => Scaffold(
+          appBar: AppBarWidget.appbar(context, "Transaction details") ,
+          body: Align(
+            alignment: Alignment.topCenter,
+            child: Container(
 
-           ),
-           ),
-                  const Gap(20),
-                  Table(
-                    border: null,
-                    children: [
-                      TableRow(
-                        children: [
-                          TableCell(
-                            child: AutoSizeText(
-                              'Transaction id',
-                              style: context.bodySmall?.copyWith(
-                                  color: Pallete.secondaryTextColor),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.only(bottom: 20),
-                              child: AutoSizeText(
-                                queryDocumentSnapshot['id'].toString(),
-                                style: context.bodySmall?.copyWith(color: Pallete.textColor),
-                                textAlign: TextAlign.right,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      type == 'Deposit'? TableRow(
-                        children: [
-                          TableCell(
-                            child: AutoSizeText(
-                              'Reference',
-                              style: context.bodySmall?.copyWith(
-                                  color: Pallete.secondaryTextColor),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.only(bottom: 20),
-                              child: AutoSizeText(
-                                queryDocumentSnapshot['reference'].toString(),
-                                style: context.bodySmall?.copyWith(color: Pallete.textColor),
-                                textAlign: TextAlign.right,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ):TableRow(
-                        children: [
-                          TableCell(
-                            child: AutoSizeText(
-                              'Phone number',
-                              style: context.bodySmall?.copyWith(
-                                  color: Pallete.secondaryTextColor),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.only(bottom: 20),
-                              child: AutoSizeText(
-                                queryDocumentSnapshot['phone'].toString(),
-                                style: context.bodySmall?.copyWith(color: Pallete.textColor),
-                                textAlign: TextAlign.right,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      TableRow(
-                        children: [
-                          TableCell(
-                            child: AutoSizeText(
-                              'Date/Time',
-                              style: context.bodySmall?.copyWith(
-                                  color: Pallete.secondaryTextColor),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.only(bottom: 20),
-                              child: AutoSizeText(
-                                queryDocumentSnapshot['date'].toString(),
-                                style: context.bodySmall?.copyWith(color: Pallete.textColor),
-                                textAlign: TextAlign.right,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                    ],
+              width:  constraints.isMobile ? double.infinity : 500.0,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(children: [
+                  Container(
+                    width: double.infinity ,
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Pallete.secondaryColor,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Column(
+                      children: [
+                        AutoSizeText(type, style: context.bodySmall?.copyWith(color: Pallete.textColor, fontSize: 16, letterSpacing: 2,),),
+                        const Gap(10),
+                        AutoSizeText(formattedPrice, style: context.bodyMedium?.copyWith(fontWeight: FontWeight.bold),),
+                        const Gap(10),
+                        status == 'successful'? AutoSizeText('successful', style: context.bodySmall?.copyWith(color: Pallete.primaryColor),):AutoSizeText('failed', style: context.bodySmall?.copyWith(color: Pallete.errorColor),)
+                      ],
+                    ),
                   ),
-                ],
+                  const Gap(10),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Pallete.secondaryColor,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child:
+                          AutoSizeText('Transaction details',
+                            style: context.bodySmall?.copyWith(color: Pallete.textColor, fontWeight: FontWeight.bold,),
+
+                          ),
+                        ),
+                        const Gap(20),
+                        Table(
+                          border: null,
+                          children: [
+                            TableRow(
+                              children: [
+                                TableCell(
+                                  child: AutoSizeText(
+                                    'Transaction id',
+                                    style: context.bodySmall?.copyWith(
+                                        color: Pallete.secondaryTextColor),
+                                  ),
+                                ),
+                                TableCell(
+                                  child: Padding(
+                                    padding:
+                                    const EdgeInsets.only(bottom: 20),
+                                    child: AutoSizeText(
+                                      queryDocumentSnapshot['id'].toString(),
+                                      style: context.bodySmall?.copyWith(color: Pallete.textColor),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            type == 'Deposit'? TableRow(
+                              children: [
+                                TableCell(
+                                  child: AutoSizeText(
+                                    'Reference',
+                                    style: context.bodySmall?.copyWith(
+                                        color: Pallete.secondaryTextColor),
+                                  ),
+                                ),
+                                TableCell(
+                                  child: Padding(
+                                    padding:
+                                    const EdgeInsets.only(bottom: 20),
+                                    child: AutoSizeText(
+                                      queryDocumentSnapshot['reference'].toString(),
+                                      style: context.bodySmall?.copyWith(color: Pallete.textColor),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ):TableRow(
+                              children: [
+                                TableCell(
+                                  child: AutoSizeText(
+                                    'Phone number',
+                                    style: context.bodySmall?.copyWith(
+                                        color: Pallete.secondaryTextColor),
+                                  ),
+                                ),
+                                TableCell(
+                                  child: Padding(
+                                    padding:
+                                    const EdgeInsets.only(bottom: 20),
+                                    child: AutoSizeText(
+                                      queryDocumentSnapshot['phone'].toString(),
+                                      style: context.bodySmall?.copyWith(color: Pallete.textColor),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            TableRow(
+                              children: [
+                                TableCell(
+                                  child: AutoSizeText(
+                                    'Date/Time',
+                                    style: context.bodySmall?.copyWith(
+                                        color: Pallete.secondaryTextColor),
+                                  ),
+                                ),
+                                TableCell(
+                                  child: Padding(
+                                    padding:
+                                    const EdgeInsets.only(bottom: 20),
+                                    child: AutoSizeText(
+                                      queryDocumentSnapshot['date'].toString(),
+                                      style: context.bodySmall?.copyWith(color: Pallete.textColor),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],),
               ),
             ),
-          ],),
-        ),),
+          ),),
+      ),
     );
   }
 }
