@@ -20,7 +20,7 @@ class HistoryWidget extends ConsumerWidget {
     bool transactionStatus = queryDocumentSnapshot['status'].toString() == 'successful';
     final formattedPrice = UtilityFunctions.formatCurrency(queryDocumentSnapshot['amount']);
     return InkWell(
-      onTap: () => context.go('/transaction_history/details', extra: queryDocumentSnapshot),
+      onTap: () => context.go('/dashboard/transaction_history/details', extra: queryDocumentSnapshot),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: Row(

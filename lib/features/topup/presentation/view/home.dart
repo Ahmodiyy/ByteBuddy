@@ -196,10 +196,6 @@ class DepositWidget extends ConsumerWidget {
                     );
                   },
                   error: (error, stackTrace) {
-                    debugPrint(
-                        'WHY SHOWING PERMISSION ERROR : ${error.toString()}');
-                    debugPrint(
-                        'WHY SHOWING PERMISSION STACKTRACE : ${stackTrace.toString()}');
                     return Flexible(
                       child: Container(
                         alignment: Alignment.center,
