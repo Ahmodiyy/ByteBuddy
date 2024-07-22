@@ -61,60 +61,47 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                 alignment: Alignment.topCenter,
                 width: constraints.isMobile ? double.infinity : 500.0,
                 child: state.when(data: (data) {
-                  return Scrollbar(
+                  return ListView.builder(
+                  
                     controller: _scrollController,
-                    thumbVisibility: true,
-                    trackVisibility: true,
-                    radius: const Radius.circular(50),
-                    thickness: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 20, left: 20),
-                      child: ListView.builder(
-                        controller: _scrollController,
-                        itemCount: data.length + 1,
-                        itemBuilder: (context, index) {
-                          if(data.isEmpty){
-                            return Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: AutoSizeText(
-                                  "No data",
-                                  style: context.bodySmall?.copyWith(
-                                      color: Pallete.primaryColor),
+                    itemCount: data.length + 1,
+                    itemBuilder: (context, index) {
+                      if(data.isEmpty){
+                        return Center(
+                          child: AutoSizeText(
+                            "No data",
+                            style: context.bodySmall?.copyWith(
+                                color: Pallete.primaryColor),
+                          ),
+                        );
+                      }
+                      if (index < data.length) {
+                        final historyDocument = data[index];
+                          return HistoryWidget(
+                           historyDocument
+                          );
+                      } else {
+                        return hasMoreTransactions && data.length == 10
+                            ? const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: CircularProgressIndicator(
+                                    color: Pallete.primaryColor,
+                                  ),
                                 ),
-                              ),
-                            );
-                          }
-
-                          if (index < data.length) {
-                            final historyDocument = data[index];
-                              return HistoryWidget(
-                               historyDocument
+                              )
+                            : Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: AutoSizeText(
+                                    "No more data",
+                                    style: context.bodySmall?.copyWith(
+                                        color: Pallete.primaryColor),
+                                  ),
+                                ),
                               );
-                          } else {
-                            return hasMoreTransactions && data.length == 10
-                                ? const Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(10.0),
-                                      child: CircularProgressIndicator(
-                                        color: Pallete.primaryColor,
-                                      ),
-                                    ),
-                                  )
-                                : Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: AutoSizeText(
-                                        "No more data",
-                                        style: context.bodySmall?.copyWith(
-                                            color: Pallete.primaryColor),
-                                      ),
-                                    ),
-                                  );
-                          }
-                        },
-                      ),
-                    ),
+                      }
+                    },
                   );
                 }, error: (error, stackTrace) {
                   return Padding(

@@ -22,7 +22,7 @@ class HistoryWidget extends ConsumerWidget {
     return InkWell(
       onTap: () => context.go('/dashboard/transaction_history/details', extra: queryDocumentSnapshot),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
         child: Row(
           children: [
             CircleAvatar(
