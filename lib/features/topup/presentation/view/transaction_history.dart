@@ -73,7 +73,6 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                         controller: _scrollController,
                         itemCount: data.length + 1,
                         itemBuilder: (context, index) {
-
                           if(data.isEmpty){
                             return Center(
                               child: Padding(
@@ -163,14 +162,20 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                     child: Column(
                       children: [
                         const Gap(20),
-                        for (int index = 1; index < 5; index++)
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            child: ShimmerWidget.rectangular(
-                              width: double.infinity,
-                              height: 50,
-                            ),
+                        Expanded(
+                          child: ListView(
+                            children: [
+                              for (int index = 1; index < 10; index++)
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: ShimmerWidget.rectangular(
+                                    width: double.infinity,
+                                    height: 50,
+                                  ),
+                                ),
+                            ],
                           ),
+                        ),
                       ],
                     ),
                   );
