@@ -399,7 +399,7 @@ class TopUpSvgAndText {
 class BarChartSample8 extends StatefulWidget {
   BarChartSample8({super.key});
 
-  final Color barBackgroundColor = Pallete.contrastTextColor;
+  final Color barBackgroundColor = Pallete.textColor;
   final Color barColor = Pallete.primaryColor;
 
   @override
@@ -410,18 +410,14 @@ class BarChartSample1State extends State<BarChartSample8> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(Icons.graphic_eq),
-              const SizedBox(
-                width: 32,
-              ),
+              const Gap(20),
               Text(
                 'Sales forecasting chart',
                 style: TextStyle(
@@ -432,11 +428,9 @@ class BarChartSample1State extends State<BarChartSample8> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 2,
-          ),
+          const Gap(20),
           SizedBox(
-            height: 200,
+            height: 250,
             child: BarChart(
               randomData(),
             ),
@@ -467,9 +461,9 @@ class BarChartSample1State extends State<BarChartSample8> {
 
   Widget getTitles(double value, TitleMeta meta) {
     const style = TextStyle(
-      color: Colors.white,
+      color: Pallete.secondaryColor,
       fontWeight: FontWeight.bold,
-      fontSize: 14,
+      fontSize: 15,
     );
     List<String> days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
@@ -480,7 +474,7 @@ class BarChartSample1State extends State<BarChartSample8> {
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      space: 16,
+      space: 3,
       child: text,
     );
   }
