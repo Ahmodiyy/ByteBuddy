@@ -62,7 +62,6 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                 width: constraints.isMobile ? double.infinity : 500.0,
                 child: state.when(data: (data) {
                   return ListView.builder(
-                  
                     controller: _scrollController,
                     itemCount: data.length + 1,
                     itemBuilder: (context, index) {
