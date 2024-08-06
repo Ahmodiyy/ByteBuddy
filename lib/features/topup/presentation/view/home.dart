@@ -409,33 +409,36 @@ class BarChartSample8 extends StatefulWidget {
 class BarChartSample1State extends State<BarChartSample8> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.graphic_eq),
-              const Gap(20),
-              Text(
-                'Sales forecasting chart',
-                style: TextStyle(
-                  color: widget.barColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+    return Container(
+      color: Pallete.secondaryColor,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.graphic_eq),
+                const Gap(20),
+                Text(
+                  'Sales forecasting chart',
+                  style: TextStyle(
+                    color: widget.barColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const Gap(20),
-          SizedBox(
-            height: 250,
-            child: BarChart(
-              randomData(),
+              ],
             ),
-          ),
-        ],
+            const Gap(20),
+            SizedBox(
+              height: 250,
+              child: BarChart(
+                randomData(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -483,7 +486,7 @@ class BarChartSample1State extends State<BarChartSample8> {
     return BarChartData(
       maxY: 300.0,
       minY: 0.0,
-      backgroundColor: Pallete.contrastTextColor,
+      backgroundColor: Pallete.secondaryColor,
       barTouchData: BarTouchData(
         enabled: false,
       ),
