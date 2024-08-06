@@ -482,6 +482,8 @@ class BarChartSample1State extends State<BarChartSample8> {
   BarChartData randomData() {
     return BarChartData(
       maxY: 300.0,
+      minY: 0.0,
+      backgroundColor: Pallete.contrastTextColor,
       barTouchData: BarTouchData(
         enabled: false,
       ),
