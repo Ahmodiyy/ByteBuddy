@@ -410,7 +410,11 @@ class BarChartSample1State extends State<BarChartSample8> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Pallete.secondaryColor,
+      decoration: BoxDecoration(
+        color: Pallete.secondaryColor,
+        borderRadius:
+        BorderRadius.circular(15.0), // Adjust the corner radius as needed
+      ),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -443,52 +447,13 @@ class BarChartSample1State extends State<BarChartSample8> {
     );
   }
 
-  BarChartGroupData makeGroupData(
-      int x,
-      double y,
-      ) {
-    return BarChartGroupData(
-      x: x,
-      barRods: [
-        BarChartRodData(
-          toY: y,
-          color: x >= 4 ? Colors.transparent : widget.barColor,
-          borderRadius: BorderRadius.zero,
-          borderDashArray: x >= 4 ? [4, 4] : null,
-          width: 22,
-          borderSide: BorderSide(color: widget.barColor, width: 2.0),
-        ),
-      ],
-    );
-  }
-
-  Widget getTitles(double value, TitleMeta meta) {
-    const style = TextStyle(
-      color: Pallete.secondaryColor,
-      fontWeight: FontWeight.bold,
-      fontSize: 15,
-    );
-    List<String> days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-
-    Widget text = Text(
-      days[value.toInt()],
-      style: style,
-    );
-
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 3,
-      child: text,
-    );
-  }
-
   BarChartData randomData() {
     return BarChartData(
       maxY: 300.0,
       minY: 0.0,
       backgroundColor: Pallete.secondaryColor,
       barTouchData: BarTouchData(
-        enabled: false,
+        enabled: true,
       ),
       titlesData: FlTitlesData(
         show: true,
@@ -526,7 +491,47 @@ class BarChartSample1State extends State<BarChartSample8> {
           Random().nextInt(290).toDouble() + 10,
         ),
       ),
-      gridData: const FlGridData(show: false),
+      gridData: const FlGridData(show: true),
     );
   }
+  BarChartGroupData makeGroupData(
+      int x,
+      double y,
+      ) {
+    return BarChartGroupData(
+      x: x,
+      barRods: [
+        BarChartRodData(
+          toY: y,
+          color: x >= 4 ? Colors.transparent : widget.barColor,
+          borderRadius: BorderRadius.zero,
+          borderDashArray: x >= 4 ? [4, 4] : null,
+          width: 22,
+          borderSide: BorderSide(color: widget.barColor, width: 2.0),
+        ),
+      ],
+    );
+  }
+
+  Widget getTitles(double value, TitleMeta meta) {
+    const style = TextStyle(
+      color: Pallete.secondaryTextColor,
+      fontWeight: FontWeight.bold,
+      fontSize: 15,
+    );
+    List<String> days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+    Widget text = Text(
+      days[value.toInt()],
+      style: style,
+    );
+
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      space: 3,
+      child: text,
+    );
+  }
+
+
 }
