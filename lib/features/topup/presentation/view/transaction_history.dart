@@ -102,7 +102,8 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                       }
                     },
                   );
-                }, error: (error, stackTrace) {
+                },
+                    error: (error, stackTrace) {
                   return Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(

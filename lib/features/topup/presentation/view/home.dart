@@ -14,6 +14,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
+import '../controller/transaction_controller.dart';
+import '../widget/shimmer_widget.dart';
+
 final togglePasswordProvider = StateProvider<bool>((ref) {
   return true;
 });
@@ -68,6 +71,7 @@ class _HomeState extends ConsumerState<Home> {
                       const Gap(20),
                       GridItemWidget(),
                       const Gap(20),
+                      TransactionBarChart(),
                     ]);
                   }
                   return Column(
@@ -80,8 +84,8 @@ class _HomeState extends ConsumerState<Home> {
                           const Gap(20),
                         ],
                       ),
-                      const Gap(40),
-                      BarChartSample8(),
+                      const Gap(20),
+                      TransactionBarChart(),
                     ],
                   );
                 },
@@ -393,64 +397,139 @@ class TopUpSvgAndText {
   TopUpSvgAndText(this.svgUrl, this.text);
 }
 
-
-
-
-class BarChartSample8 extends StatefulWidget {
-  BarChartSample8({super.key});
-
-  final Color barBackgroundColor = Pallete.textColor;
-  final Color barColor = Pallete.primaryColor;
+class TransactionBarChart extends ConsumerStatefulWidget {
+  const TransactionBarChart({super.key});
 
   @override
-  State<StatefulWidget> createState() => BarChartSample1State();
+  ConsumerState createState() => _TransactionBarChartState();
 }
 
-class BarChartSample1State extends State<BarChartSample8> {
+class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
+  double chartHeight = 250.0;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Pallete.secondaryColor,
-        borderRadius:
-        BorderRadius.circular(15.0), // Adjust the corner radius as needed
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
+    final state = ref.watch(transactionControllerProvider);
+    return state.when(data: (data) {
+      return Container(
+        decoration: BoxDecoration(
+          color: Pallete.secondaryColor,
+          borderRadius:
+          BorderRadius.circular(15.0), // Adjust the corner radius as needed
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Row(children: [
+                      Icon(Icons.graphic_eq),
+                      Gap(20),
+                      Text(
+                        'Last 10 transaction chart',
+                        style: TextStyle(
+                          color: Pallete.primaryColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),],),
+                  ),
+                  Row(children: [
+                    Container(
+                      width: 7,
+                      height: 7,
+                      decoration: BoxDecoration(
+                        color: Pallete.primaryColor,
+                        //borderRadius: BorderRadius.circular(15.0),
+                          border: Border.all(color: Pallete.primaryColor),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    const Gap(10),
+                    AutoSizeText('Deposit',style: context.bodySmall,),
+                    const Gap(20),
+                    Container(
+                      width: 7,
+                      height: 7,
+                      decoration: BoxDecoration(
+                        color: Pallete.secondaryColor,
+                        //borderRadius: BorderRadius.circular(15.0),
+                          border: Border.all(color: Pallete.primaryColor),
+                          shape: BoxShape.circle
+                      ),
+                    ),
+                    const Gap(10),
+                    AutoSizeText('Expenses',style: context.bodySmall,),
+                  ],),
+                ],
+              ),
+              const Gap(20),
+              SizedBox(
+                height: chartHeight,
+                child: BarChart(
+                  randomData(),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }, error: (error, stackTrace) {
+      return Container(
+        width: double.infinity,
+        height: chartHeight,
         child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.graphic_eq),
-                const Gap(20),
-                Text(
-                  'Sales forecasting chart',
-                  style: TextStyle(
-                    color: widget.barColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+          children: [
+
+            const Gap(15),
+            Center(
+              child: AutoSizeText(
+                // "No history data or internet connection",
+                error.toString(),
+                textAlign: TextAlign.center,
+                style: context.bodyMedium
+                    ?.copyWith(color: Pallete.textColor),
+              ),
+            ),
+            const Gap(30),
+            ElevatedButton(
+              style: const ButtonStyle(
+                shape: MaterialStatePropertyAll(
+                  RoundedRectangleBorder(
+                    side: BorderSide(color: Pallete.primaryColor),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
                   ),
                 ),
-              ],
-            ),
-            const Gap(20),
-            SizedBox(
-              height: 250,
-              child: BarChart(
-                randomData(),
+                backgroundColor: MaterialStatePropertyAll(
+                    Pallete.secondaryColor),
+                foregroundColor:
+                MaterialStatePropertyAll(Pallete.primaryColor),
+              ),
+              onPressed: () =>
+                  ref.invalidate(transactionControllerProvider),
+              child: const AutoSizeText(
+                'Retry',
               ),
             ),
           ],
         ),
-      ),
-    );
+      );
+    }, loading: () {
+      return ShimmerWidget.rectangular(
+        width: double.infinity,
+        height: chartHeight,
+      );
+    },);
+
   }
 
   BarChartData randomData() {
     return BarChartData(
-      maxY:5.0,
-      minY: 0.0,
       backgroundColor: Pallete.secondaryColor,
       barTouchData: BarTouchData(
         enabled: true,
@@ -466,9 +545,8 @@ class BarChartSample1State extends State<BarChartSample8> {
         ),
         leftTitles: AxisTitles(
           sideTitles: SideTitles(
-            reservedSize: 30,
+            reservedSize: 100,
             showTitles: true,
-
           ),
         ),
         topTitles: const AxisTitles(
@@ -486,10 +564,10 @@ class BarChartSample1State extends State<BarChartSample8> {
         show: false,
       ),
       barGroups: List.generate(
-        7,
+        10,
             (i) => makeGroupData(
           i,
-          Random().nextInt(4).toDouble() ,
+          Random().nextInt(100).toDouble(),
         ),
       ),
       gridData: const FlGridData(show: false),
@@ -504,11 +582,10 @@ class BarChartSample1State extends State<BarChartSample8> {
       barRods: [
         BarChartRodData(
           toY: y,
-          color: x >= 4 ? Colors.transparent : widget.barColor,
+          color: x >= 4 ? Pallete.secondaryColor : Pallete.primaryColor,
           borderRadius: BorderRadius.zero,
-          borderDashArray: x >= 4 ? [4, 4] : null,
           width: 22,
-          borderSide: BorderSide(color: widget.barColor, width: 2.0),
+          borderSide: const BorderSide(color: Pallete.primaryColor, width: 2.0),
         ),
       ],
     );
@@ -520,7 +597,7 @@ class BarChartSample1State extends State<BarChartSample8> {
       fontWeight: FontWeight.bold,
       fontSize: 15,
     );
-    List<String> days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+    List<String> days = ['1', '2', '3', '4', '5', '6', '7','8','9','10'];
 
     Widget text = Text(
       days[value.toInt()],
@@ -533,6 +610,4 @@ class BarChartSample1State extends State<BarChartSample8> {
       child: text,
     );
   }
-
-
 }
