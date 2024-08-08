@@ -449,7 +449,7 @@ class BarChartSample1State extends State<BarChartSample8> {
 
   BarChartData randomData() {
     return BarChartData(
-      maxY: 300.0,
+      maxY:5.0,
       minY: 0.0,
       backgroundColor: Pallete.secondaryColor,
       barTouchData: BarTouchData(
@@ -464,10 +464,11 @@ class BarChartSample1State extends State<BarChartSample8> {
             reservedSize: 38,
           ),
         ),
-        leftTitles: const AxisTitles(
+        leftTitles: AxisTitles(
           sideTitles: SideTitles(
             reservedSize: 30,
             showTitles: true,
+
           ),
         ),
         topTitles: const AxisTitles(
@@ -488,10 +489,10 @@ class BarChartSample1State extends State<BarChartSample8> {
         7,
             (i) => makeGroupData(
           i,
-          Random().nextInt(290).toDouble() + 10,
+          Random().nextInt(4).toDouble() ,
         ),
       ),
-      gridData: const FlGridData(show: true),
+      gridData: const FlGridData(show: false),
     );
   }
   BarChartGroupData makeGroupData(
