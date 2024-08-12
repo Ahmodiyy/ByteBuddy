@@ -405,7 +405,7 @@ class TransactionBarChart extends ConsumerStatefulWidget {
 }
 
 class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
-  double chartHeight = 250.0;
+  double chartHeight = 200.0;
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(transactionControllerProvider);
@@ -413,8 +413,7 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
       return Container(
         decoration: BoxDecoration(
           color: Pallete.secondaryColor,
-          borderRadius:
-          BorderRadius.circular(15.0), // Adjust the corner radius as needed
+          borderRadius: BorderRadius.circular(15.0), // Adjust the corner radius as needed
         ),
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -426,7 +425,7 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
                   const Padding(
                     padding: EdgeInsets.all(20.0),
                     child: Row(children: [
-                      Icon(Icons.graphic_eq),
+
                       Gap(20),
                       Text(
                         'Last 10 transaction chart',
@@ -470,7 +469,49 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
               SizedBox(
                 height: chartHeight,
                 child: BarChart(
-                  randomData(),
+                    BarChartData(
+                      backgroundColor: Pallete.secondaryColor,
+                      barTouchData: BarTouchData(
+                        enabled: true,
+                      ),
+                      titlesData: FlTitlesData(
+                        show: true,
+                        bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            getTitlesWidget: getTitles,
+                            reservedSize: 20,
+                          ),
+                        ),
+                        leftTitles: const AxisTitles(
+                          sideTitles: SideTitles(
+                            reservedSize: 100,
+                            showTitles: true,
+                          ),
+                        ),
+                        topTitles: const AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: false,
+                          ),
+                        ),
+                        rightTitles: const AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: false,
+                          ),
+                        ),
+                      ),
+                      borderData: FlBorderData(
+                        show: false,
+                      ),
+                      barGroups: List.generate(
+                        10,
+                            (i) => makeGroupData(
+                            i,
+                            data[i]['amount'],
+                        ),
+                      ),
+                      gridData: const FlGridData(show: false),
+                    ),
                 ),
               ),
             ],
@@ -528,51 +569,8 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
 
   }
 
-  BarChartData randomData() {
-    return BarChartData(
-      backgroundColor: Pallete.secondaryColor,
-      barTouchData: BarTouchData(
-        enabled: true,
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: getTitles,
-            reservedSize: 38,
-          ),
-        ),
-        leftTitles: AxisTitles(
-          sideTitles: SideTitles(
-            reservedSize: 100,
-            showTitles: true,
-          ),
-        ),
-        topTitles: const AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
-        ),
-        rightTitles: const AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false,
-          ),
-        ),
-      ),
-      borderData: FlBorderData(
-        show: false,
-      ),
-      barGroups: List.generate(
-        10,
-            (i) => makeGroupData(
-          i,
-          Random().nextInt(100).toDouble(),
-        ),
-      ),
-      gridData: const FlGridData(show: false),
-    );
-  }
+
+
   BarChartGroupData makeGroupData(
       int x,
       double y,
