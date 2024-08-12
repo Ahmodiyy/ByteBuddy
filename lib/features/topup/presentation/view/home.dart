@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bytebuddy/common/icon_widget.dart';
 import 'package:bytebuddy/constants/constant.dart';
 import 'package:bytebuddy/features/topup/data/transaction_repo.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:bytebuddy/themes/pallete.dart';
 import 'package:bytebuddy/util/functions.dart';
@@ -507,7 +508,7 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
                         10,
                             (i) => makeGroupData(
                             i,
-                            data[i]['amount'],
+                            data[i],
                         ),
                       ),
                       gridData: const FlGridData(show: false),
@@ -573,14 +574,14 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
 
   BarChartGroupData makeGroupData(
       int x,
-      double y,
+      QueryDocumentSnapshot document,
       ) {
     return BarChartGroupData(
       x: x,
       barRods: [
         BarChartRodData(
-          toY: y,
-          color: x >= 4 ? Pallete.secondaryColor : Pallete.primaryColor,
+          toY: document['amount'],
+          color: document['type'].toString().toLowerCase() != 'deposit' ? Pallete.secondaryColor : Pallete.primaryColor,
           borderRadius: BorderRadius.zero,
           width: 22,
           borderSide: const BorderSide(color: Pallete.primaryColor, width: 2.0),
