@@ -421,22 +421,26 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
           child: Column(
             children: <Widget>[
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Row(children: [
-
-                      Gap(20),
-                      Text(
+                  const Spacer(flex: 1,),
+                  const Expanded(
+                    flex : 2,
+                      child:
+                  Row(children: [
+                    Gap(20),
+                    Expanded(
+                      child: AutoSizeText(
                         'Last 10 transaction chart',
                         style: TextStyle(
                           color: Pallete.primaryColor,
-                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
-                      ),],),
-                  ),
+                        maxLines: 1,
+                        maxFontSize: 16,
+                      ),
+                    ),],),),
+                  const Spacer(flex: 3,),
+                  Expanded(flex:3,child:
                   Row(children: [
                     Container(
                       width: 7,
@@ -444,26 +448,27 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
                       decoration: BoxDecoration(
                         color: Pallete.primaryColor,
                         //borderRadius: BorderRadius.circular(15.0),
-                          border: Border.all(color: Pallete.primaryColor),
+                        border: Border.all(color: Pallete.primaryColor),
                         shape: BoxShape.circle,
                       ),
                     ),
                     const Gap(10),
-                    AutoSizeText('Deposit',style: context.bodySmall,),
+                    Expanded(child: AutoSizeText('Deposit',style: context.bodySmall,maxLines: 1,)),
                     const Gap(20),
                     Container(
                       width: 7,
                       height: 7,
                       decoration: BoxDecoration(
-                        color: Pallete.secondaryColor,
-                        //borderRadius: BorderRadius.circular(15.0),
+                          color: Pallete.secondaryColor,
+                          //borderRadius: BorderRadius.circular(15.0),
                           border: Border.all(color: Pallete.primaryColor),
                           shape: BoxShape.circle
                       ),
                     ),
                     const Gap(10),
-                    AutoSizeText('Expenses',style: context.bodySmall,),
-                  ],),
+                    Expanded(child: AutoSizeText('Expenses',style: context.bodySmall,maxLines: 1,)),
+                  ],),),
+                  const Spacer(flex: 1,),
                 ],
               ),
               const Gap(20),
