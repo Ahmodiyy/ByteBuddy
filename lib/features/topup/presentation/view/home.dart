@@ -420,56 +420,58 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: <Widget>[
-              Row(
-                children: [
-                  const Spacer(flex: 1,),
-                  const Expanded(
-                    flex : 2,
-                      child:
-                  Row(children: [
-                    Gap(20),
-                    Expanded(
-                      child: AutoSizeText(
-                        'Last 10 transaction chart',
-                        style: TextStyle(
-                          color: Pallete.primaryColor,
-                          fontWeight: FontWeight.bold,
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                      Gap(20),
+                      Flexible(
+                        child: AutoSizeText(
+                          'Last 10 transaction chart',
+                          style: TextStyle(
+                            color: Pallete.primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 1,
+                          maxFontSize: 16,
                         ),
-                        maxLines: 1,
-                        maxFontSize: 16,
-                      ),
-                    ),],),),
-                  const Spacer(flex: 3,),
-                  Expanded(flex:3,child:
-                  Row(children: [
-                    Container(
-                      width: 7,
-                      height: 7,
-                      decoration: BoxDecoration(
-                        color: Pallete.primaryColor,
-                        //borderRadius: BorderRadius.circular(15.0),
-                        border: Border.all(color: Pallete.primaryColor),
-                        shape: BoxShape.circle,
-                      ),
+                      ),],
                     ),
-                    const Gap(10),
-                    Expanded(child: AutoSizeText('Deposit',style: context.bodySmall,maxLines: 1,)),
-                    const Gap(20),
-                    Container(
-                      width: 7,
-                      height: 7,
-                      decoration: BoxDecoration(
-                          color: Pallete.secondaryColor,
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                      Container(
+                        width: 7,
+                        height: 7,
+                        decoration: BoxDecoration(
+                          color: Pallete.primaryColor,
                           //borderRadius: BorderRadius.circular(15.0),
                           border: Border.all(color: Pallete.primaryColor),
-                          shape: BoxShape.circle
+                          shape: BoxShape.circle,
+                        ),
                       ),
-                    ),
-                    const Gap(10),
-                    Expanded(child: AutoSizeText('Expenses',style: context.bodySmall,maxLines: 1,)),
-                  ],),),
-                  const Spacer(flex: 1,),
-                ],
+                      const Gap(10),
+                      Flexible(child: AutoSizeText('Deposit',style: context.bodySmall,maxLines: 1,)),
+                      const Gap(20),
+                      Container(
+                        width: 7,
+                        height: 7,
+                        decoration: BoxDecoration(
+                            color: Pallete.secondaryColor,
+                            //borderRadius: BorderRadius.circular(15.0),
+                            border: Border.all(color: Pallete.primaryColor),
+                            shape: BoxShape.circle
+                        ),
+                      ),
+                      const Gap(10),
+                      Flexible(child: AutoSizeText('Expenses',style: context.bodySmall,maxLines: 1,)),
+                    ],),
+                  ],
+                ),
               ),
               const Gap(20),
               SizedBox(
