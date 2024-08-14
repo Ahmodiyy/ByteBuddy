@@ -86,7 +86,7 @@ class _HomeState extends ConsumerState<Home> {
                         ],
                       ),
                       const Gap(20),
-                      TransactionBarChart(),
+                      const TransactionBarChart(),
                     ],
                   );
                 },
