@@ -23,6 +23,8 @@ final balanceStreamProvider = StreamProvider.autoDispose<dynamic>((ref) async* {
   }
 });
 
+
+
 class TransactionRepo {
   final FirebaseFirestore _cloudStore = FirebaseFirestore.instance;
 
@@ -34,7 +36,7 @@ class TransactionRepo {
   }
 
   Future<dynamic> getBalance(String email) async {
-    var collectionReference = FirebaseFirestore.instance.collection('log');
+    var collectionReference = _cloudStore.collection('log');
     var documentReference = collectionReference.doc(email);
 
     var snapshot = await documentReference.get();
@@ -43,22 +45,16 @@ class TransactionRepo {
     return balance;
   }
 
-  Future<List<QueryDocumentSnapshot>> fetchTransactionHistory(
-      String email) async {
-    try {
-      QuerySnapshot<Map<String, dynamic>> querySnapshot = await _cloudStore
-          .collection("log")
-          .doc(email)
-          .collection("transactions")
-          .orderBy("date", descending: true)
-          .limit(10)
-          .get();
-      List<QueryDocumentSnapshot<Map<String, dynamic>>> transactionsDocument =
-          querySnapshot.docs;
-      return transactionsDocument;
-    } catch (e) {
-      rethrow;
-    }
+  Stream<List<QueryDocumentSnapshot>> fetchTransactionHistoryStream(String email) {
+   // await for (var snapshot in getDocumentStream(email)
+    return _cloudStore
+        .collection("log")
+        .doc(email)
+        .collection("transactions")
+        .orderBy("date", descending: true)
+        .limit(10)
+        .snapshots()
+        .map((querySnapshot) => querySnapshot.docs);
   }
 
   Future<List<QueryDocumentSnapshot>> fetchNextTransactionHistory(
@@ -81,4 +77,5 @@ class TransactionRepo {
       rethrow;
     }
   }
+
 }
