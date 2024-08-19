@@ -23,56 +23,64 @@ final balanceStreamProvider = StreamProvider.autoDispose<dynamic>((ref) async* {
   }
 });
 
+final transactionStreamProvider = StreamProvider.autoDispose<dynamic>((ref) async* {
+  final snapshots = TransactionRepo().getTransactionStream(
+      ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!);
+  await for (var snapshot in snapshots) {
+    yield snapshot.docs ?? [];
+  }
+});
+
+//
+// final nextTransactionStreamProvider = StreamProvider.family(DocumentSnapshot? documentSnapshot).autoDispose<dynamic>((ref) async* {
+//   final snapshots = TransactionRepo().getNextTransactionStream(
+//       ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!);
+//   await for (var snapshot in snapshots) {
+//     yield snapshot.docs ?? [];
+//   }
+// });
+
 
 
 class TransactionRepo {
   final FirebaseFirestore _cloudStore = FirebaseFirestore.instance;
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>> getDocumentStream(
-      String email) {
+  Future<dynamic> getBalance(String email) async {
+    var collectionReference = _cloudStore.collection('log');
+    var documentReference = collectionReference.doc(email);
+
+    var documentRef = await documentReference.get();
+    Map<String, dynamic>? data = documentRef.data();
+    dynamic balance = data?['balance'] ?? 0.0;
+    return balance;
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getDocumentStream(String email) {
     var collectionReference = _cloudStore.collection('log');
     var documentReference = collectionReference.doc(email);
     return documentReference.snapshots();
   }
 
-  Future<dynamic> getBalance(String email) async {
-    var collectionReference = _cloudStore.collection('log');
-    var documentReference = collectionReference.doc(email);
-
-    var snapshot = await documentReference.get();
-    Map<String, dynamic>? data = snapshot.data();
-    dynamic balance = data?['balance'] ?? 0.0;
-    return balance;
-  }
-
-  Stream<List<QueryDocumentSnapshot>> fetchTransactionHistoryStream(String email) {
-   // await for (var snapshot in getDocumentStream(email)
+  Stream<QuerySnapshot<Map<String, dynamic>>> getTransactionStream(String email) {
     return _cloudStore
         .collection("log")
         .doc(email)
         .collection("transactions")
         .orderBy("date", descending: true)
         .limit(10)
-        .snapshots()
-        .map((querySnapshot) => querySnapshot.docs);
+        .snapshots();
   }
 
-  Future<List<QueryDocumentSnapshot>> fetchNextTransactionHistory(
-      String email, DocumentSnapshot? documentSnapshot) async {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getNextTransactionStream(
+      String email, DocumentSnapshot? documentSnapshot)  {
     try {
-      QuerySnapshot<Map<String, dynamic>> querySnapshot = await _cloudStore
+      return _cloudStore
           .collection("log")
           .doc(email)
           .collection("transactions")
           .orderBy("date", descending: true)
           .startAfterDocument(documentSnapshot!)
-          .limit(10)
-          .get();
-
-      List<QueryDocumentSnapshot<Map<String, dynamic>>> transactionsDocument =
-          querySnapshot.docs;
-
-      return transactionsDocument;
+          .limit(10).snapshots();
     } catch (e) {
       rethrow;
     }
