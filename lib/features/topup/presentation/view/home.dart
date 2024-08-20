@@ -560,7 +560,7 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
                 MaterialStatePropertyAll(Pallete.primaryColor),
               ),
               onPressed: () =>
-                  ref.invalidate(transactionControllerProvider),
+                  ref.invalidate(transactionStreamProvider),
               child: const AutoSizeText(
                 'Retry',
               ),

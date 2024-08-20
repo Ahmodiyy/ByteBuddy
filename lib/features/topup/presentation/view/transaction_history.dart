@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import '../../data/transaction_repo.dart';
 import '../widget/shimmer_widget.dart';
 
 final lastDocumentProvider = StateProvider<DocumentSnapshot?>((ref) {
@@ -34,17 +35,17 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
       if (_scrollController.offset ==
               _scrollController.position.maxScrollExtent &&
           hasMoreTransactions) {
-        List nextTransactions = await ref
-            .read(transactionControllerProvider.notifier)
-            .fetchNextTransactionHistory();
-        hasMoreTransactions = nextTransactions.length >= 10;
+        // List nextTransactions = await ref
+        //     .read(transactionCo.notifier)
+        //     .fetchNextTransactionHistory();
+        // hasMoreTransactions = nextTransactions.length >= 10;
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(transactionControllerProvider);
+    final state = ref.watch(transactionStreamProvider);
     return LayoutBuilder(
       builder: (context, constraints) => SafeArea(
         child: Scaffold(
@@ -135,7 +136,7 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                                 MaterialStatePropertyAll(Pallete.primaryColor),
                           ),
                           onPressed: () =>
-                              ref.invalidate(transactionControllerProvider),
+                              ref.invalidate(transactionStreamProvider),
                           child: const AutoSizeText(
                             'Retry',
                           ),

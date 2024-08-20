@@ -31,14 +31,14 @@ final transactionStreamProvider = StreamProvider.autoDispose<dynamic>((ref) asyn
   }
 });
 
-//
-// final nextTransactionStreamProvider = StreamProvider.family(DocumentSnapshot? documentSnapshot).autoDispose<dynamic>((ref) async* {
-//   final snapshots = TransactionRepo().getNextTransactionStream(
-//       ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!);
-//   await for (var snapshot in snapshots) {
-//     yield snapshot.docs ?? [];
-//   }
-// });
+
+final nextTransactionStreamProvider = StreamProvider.autoDispose.family<List<QueryDocumentSnapshot<Map<String, dynamic>>>, DocumentSnapshot>((ref, documentSnapshot) async* {
+  final snapshots = TransactionRepo().getNextTransactionStream(
+      ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!, documentSnapshot);
+  await for (var snapshot in snapshots) {
+    yield snapshot.docs ?? [];
+  }
+});
 
 
 
