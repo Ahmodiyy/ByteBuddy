@@ -31,7 +31,6 @@ final transactionStreamProvider = StreamProvider.autoDispose<dynamic>((ref) asyn
   }
 });
 
-
 final nextTransactionStreamProvider = StreamProvider.autoDispose.family<List<QueryDocumentSnapshot<Map<String, dynamic>>>, DocumentSnapshot>((ref, documentSnapshot) async* {
   final snapshots = TransactionRepo().getNextTransactionStream(
       ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!, documentSnapshot);
@@ -40,6 +39,44 @@ final nextTransactionStreamProvider = StreamProvider.autoDispose.family<List<Que
   }
 });
 
+final lastDocumentProvider = StateProvider<DocumentSnapshot?>((ref) {
+  return null;
+});
+
+final transactionListProvider = StateProvider<List<QueryDocumentSnapshot<Map<String, dynamic>>>>((ref) => []);
+
+Future<void> loadTransactions(WidgetRef ref, {DocumentSnapshot? startAfter}) async {
+  try {
+    final email = ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!;
+    Stream<QuerySnapshot<Map<String, dynamic>>> snapshots;
+
+    if (startAfter == null) {
+      // Load initial transactions
+      snapshots = TransactionRepo().getTransactionStream(email);
+    } else {
+      // Load next set of transactions
+      snapshots = TransactionRepo().getNextTransactionStream(email, startAfter);
+    }
+
+    // Fetch the first snapshot and update the state
+    final snapshot = await snapshots.first;
+    final newTransactions = snapshot.docs ?? [];
+
+    if (newTransactions.isNotEmpty) {
+      // Update the last document
+      ref.read(lastDocumentProvider.notifier).state = newTransactions.last;
+
+      // Append new data to the existing transaction list
+      ref.read(transactionListProvider.notifier).state = [
+        ...ref.read(transactionListProvider),
+        ...newTransactions,
+      ];
+    }
+  } catch (e) {
+    // Handle errors, possibly with logging or UI feedback
+    print('Error loading transactions: $e');
+  }
+}
 
 
 class TransactionRepo {

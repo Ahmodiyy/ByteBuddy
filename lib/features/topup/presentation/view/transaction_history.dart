@@ -11,9 +11,7 @@ import 'package:gap/gap.dart';
 import '../../data/transaction_repo.dart';
 import '../widget/shimmer_widget.dart';
 
-final lastDocumentProvider = StateProvider<DocumentSnapshot?>((ref) {
-  return null;
-});
+
 
 class TransactionHistory extends ConsumerStatefulWidget {
   const TransactionHistory({super.key});
