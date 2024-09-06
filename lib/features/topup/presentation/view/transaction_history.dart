@@ -27,12 +27,14 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
   @override
   void initState() {
     super.initState();
+    loadTransactions(ref);
     _scrollController = ScrollController();
 
     _scrollController.addListener(() async {
       if (_scrollController.offset ==
               _scrollController.position.maxScrollExtent &&
           hasMoreTransactions) {
+        loadTransactions(ref,startAfter: ref.read(lastDocumentProvider.notifier).state);
         // List nextTransactions = await ref
         //     .read(transactionCo.notifier)
         //     .fetchNextTransactionHistory();
@@ -43,7 +45,8 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(transactionStreamProvider);
+    final state = ref.watch(transactionControllerProvider);
+
     return LayoutBuilder(
       builder: (context, constraints) => SafeArea(
         child: Scaffold(
