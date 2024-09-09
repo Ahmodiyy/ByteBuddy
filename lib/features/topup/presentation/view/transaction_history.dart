@@ -28,8 +28,8 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
   @override
   void initState() {
     super.initState();
+    ref.refresh(transactionControllerProvider);
     _scrollController = ScrollController();
-
     _scrollController.addListener(() async {
       if (_scrollController.offset ==
               _scrollController.position.maxScrollExtent &&
