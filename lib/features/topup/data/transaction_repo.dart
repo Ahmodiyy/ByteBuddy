@@ -31,7 +31,11 @@ final transactionStreamProvider = StreamProvider.autoDispose<dynamic>((ref) asyn
   }
 });
 
-final nextTransactionStreamProvider = StreamProvider.autoDispose.family<List<QueryDocumentSnapshot<Map<String, dynamic>>>, DocumentSnapshot>((ref, documentSnapshot) async* {
+
+
+
+final nextTransactionStreamProvider = StreamProvider.autoDispose.family<List<QueryDocumentSnapshot<Map<String, dynamic>>>,
+    DocumentSnapshot>((ref, documentSnapshot) async* {
   final snapshots = TransactionRepo().getNextTransactionStream(
       ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!, documentSnapshot);
   await for (var snapshot in snapshots) {
@@ -43,9 +47,8 @@ final lastDocumentProvider = StateProvider<DocumentSnapshot?>((ref) {
   return null;
 });
 
-final transactionListProvider = StateProvider<List<QueryDocumentSnapshot<Map<String, dynamic>>>>((ref) => []);
-
-Future<void> loadTransactions(WidgetRef ref, {DocumentSnapshot? startAfter}) async {
+final transactionProvider = FutureProvider.autoDispose.family<List<QueryDocumentSnapshot<Map<String, dynamic>>>,
+    DocumentSnapshot>((ref, lastDocument) async {
   try {
     final email = ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!;
     Stream<QuerySnapshot<Map<String, dynamic>>> snapshots;
@@ -76,8 +79,8 @@ Future<void> loadTransactions(WidgetRef ref, {DocumentSnapshot? startAfter}) asy
     // Handle errors, possibly with logging or UI feedback
     print('Error loading transactions: $e');
   }
-}
-
+  return ;
+});
 
 class TransactionRepo {
   final FirebaseFirestore _cloudStore = FirebaseFirestore.instance;
