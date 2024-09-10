@@ -1,0 +1,30 @@
+[1mdiff --git a/lib/features/topup/data/transaction_repo.dart b/lib/features/topup/data/transaction_repo.dart[m
+[1mindex b5773da..ab699b2 100644[m
+[1m--- a/lib/features/topup/data/transaction_repo.dart[m
+[1m+++ b/lib/features/topup/data/transaction_repo.dart[m
+[36m@@ -23,12 +23,11 @@[m [mfinal balanceStreamProvider = StreamProvider.autoDispose<dynamic>((ref) async* {[m
+   }[m
+ });[m
+ [m
+[31m-final  lastTenTransactionHistoryProvider= StreamProvider.autoDispose<List<QueryDocumentSnapshot<Map<String, dynamic>>>>((ref) {[m
+[31m-  final snapshot = fetchLastTenTransactionStream( ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!);[m
+[32m+[m[32mfinal  lastTenTransactionHistoryProvider= StreamProvider.autoDispose<List<QueryDocumentSnapshot<Map<String, dynamic>>>>((ref) async* {[m
+[32m+[m[32m  final snapshots = TransactionRepo().fetchLastTenTransactionStream([m
+[32m+[m[32m      ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!);[m
+   await for (var snapshot in snapshots) {[m
+[31m-    Map<String, dynamic>? data = snapshot.data();[m
+[31m-    dynamic balance = data?['balance'] ?? 0.0;[m
+[31m-    yield balance;[m
+[32m+[m[32m    yield snapshot.docs;[m
+   }[m
+ [m
+ });[m
+[36m@@ -93,7 +92,7 @@[m [mclass TransactionRepo {[m
+     }[m
+   }[m
+ [m
+[31m-  Stream fetchLastTenTransactionStream([m
+[32m+[m[32m  Stream<QuerySnapshot<Map<String, dynamic>>> fetchLastTenTransactionStream([m
+       String email) {[m
+     try {[m
+       return _cloudStore[m
