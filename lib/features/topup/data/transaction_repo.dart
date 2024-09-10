@@ -23,6 +23,17 @@ final balanceStreamProvider = StreamProvider.autoDispose<dynamic>((ref) async* {
   }
 });
 
+final  lastTenTransactionHistoryProvider= StreamProvider.autoDispose<List<QueryDocumentSnapshot<Map<String, dynamic>>>>((ref) {
+  final snapshot = fetchLastTenTransactionStream( ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!);
+  await for (var snapshot in snapshots) {
+    Map<String, dynamic>? data = snapshot.data();
+    dynamic balance = data?['balance'] ?? 0.0;
+    yield balance;
+  }
+
+});
+
+
 class TransactionRepo {
   final FirebaseFirestore _cloudStore = FirebaseFirestore.instance;
 
@@ -81,4 +92,20 @@ class TransactionRepo {
       rethrow;
     }
   }
+
+  Stream fetchLastTenTransactionStream(
+      String email) {
+    try {
+      return _cloudStore
+          .collection("log")
+          .doc(email)
+          .collection("transactions")
+          .orderBy("date", descending: true)
+          .limit(10)
+          .snapshots();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }

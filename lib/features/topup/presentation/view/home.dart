@@ -409,7 +409,7 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
   double chartHeight = 200.0;
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(transactionControllerProvider);
+    final state = ref.watch(lastTenTransactionHistoryProvider);
     return state.when(data: (data) {
       return Container(
         decoration: BoxDecoration(
