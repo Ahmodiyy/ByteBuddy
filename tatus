@@ -1,30 +1,179 @@
-[1mdiff --git a/lib/features/topup/data/transaction_repo.dart b/lib/features/topup/data/transaction_repo.dart[m
-[1mindex b5773da..ab699b2 100644[m
-[1m--- a/lib/features/topup/data/transaction_repo.dart[m
-[1m+++ b/lib/features/topup/data/transaction_repo.dart[m
-[36m@@ -23,12 +23,11 @@[m [mfinal balanceStreamProvider = StreamProvider.autoDispose<dynamic>((ref) async* {[m
-   }[m
- });[m
- [m
-[31m-final  lastTenTransactionHistoryProvider= StreamProvider.autoDispose<List<QueryDocumentSnapshot<Map<String, dynamic>>>>((ref) {[m
-[31m-  final snapshot = fetchLastTenTransactionStream( ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!);[m
-[32m+[m[32mfinal  lastTenTransactionHistoryProvider= StreamProvider.autoDispose<List<QueryDocumentSnapshot<Map<String, dynamic>>>>((ref) async* {[m
-[32m+[m[32m  final snapshots = TransactionRepo().fetchLastTenTransactionStream([m
-[32m+[m[32m      ref.read(authControllerLoginProvider.notifier).getCurrentUser()!.email!);[m
-   await for (var snapshot in snapshots) {[m
-[31m-    Map<String, dynamic>? data = snapshot.data();[m
-[31m-    dynamic balance = data?['balance'] ?? 0.0;[m
-[31m-    yield balance;[m
-[32m+[m[32m    yield snapshot.docs;[m
-   }[m
- [m
- });[m
-[36m@@ -93,7 +92,7 @@[m [mclass TransactionRepo {[m
-     }[m
-   }[m
- [m
-[31m-  Stream fetchLastTenTransactionStream([m
-[32m+[m[32m  Stream<QuerySnapshot<Map<String, dynamic>>> fetchLastTenTransactionStream([m
-       String email) {[m
-     try {[m
-       return _cloudStore[m
+[1mdiff --git a/lib/features/topup/presentation/view/transaction_history.dart b/lib/features/topup/presentation/view/transaction_history.dart[m
+[1mindex df078e0..9efbee6 100644[m
+[1m--- a/lib/features/topup/presentation/view/transaction_history.dart[m
+[1m+++ b/lib/features/topup/presentation/view/transaction_history.dart[m
+[36m@@ -76,97 +76,97 @@[m [mclass _TransactionHistoryState extends ConsumerState<TransactionHistory> {[m
+                       }[m
+                       if (index < data.length) {[m
+                         final historyDocument = data[index];[m
+[31m-                          return HistoryWidget([m
+[31m-                           historyDocument[m
+[31m-                          );[m
+[32m+[m[32m                        return HistoryWidget([m
+[32m+[m[32m                            historyDocument[m
+[32m+[m[32m                        );[m
+                       } else {[m
+                         return hasMoreTransactions && data.length == 10[m
+                             ? const Center([m
+[31m-                                child: Padding([m
+[31m-                                  padding: EdgeInsets.all(10.0),[m
+[31m-                                  child: CircularProgressIndicator([m
+[31m-                                    color: Pallete.primaryColor,[m
+[31m-                                  ),[m
+[31m-                                ),[m
+[31m-                              )[m
+[32m+[m[32m                          child: Padding([m
+[32m+[m[32m                            padding: EdgeInsets.all(10.0),[m
+[32m+[m[32m                            child: CircularProgressIndicator([m
+[32m+[m[32m                              color: Pallete.primaryColor,[m
+[32m+[m[32m                            ),[m
+[32m+[m[32m                          ),[m
+[32m+[m[32m                        )[m
+                             : Center([m
+[31m-                                child: Padding([m
+[31m-                                  padding: const EdgeInsets.all(10.0),[m
+[31m-                                  child: AutoSizeText([m
+[31m-                                    "No more data",[m
+[31m-                                    style: context.bodySmall?.copyWith([m
+[31m-                                        color: Pallete.primaryColor),[m
+[31m-                                  ),[m
+[31m-                                ),[m
+[31m-                              );[m
+[32m+[m[32m                          child: Padding([m
+[32m+[m[32m                            padding: const EdgeInsets.all(10.0),[m
+[32m+[m[32m                            child: AutoSizeText([m
+[32m+[m[32m                              "No more data",[m
+[32m+[m[32m                              style: context.bodySmall?.copyWith([m
+[32m+[m[32m                                  color: Pallete.primaryColor),[m
+[32m+[m[32m                            ),[m
+[32m+[m[32m                          ),[m
+[32m+[m[32m                        );[m
+                       }[m
+                     },[m
+                   );[m
+                 },[m
+                     error: (error, stackTrace) {[m
+[31m-                  return Padding([m
+[31m-                    padding: const EdgeInsets.all(20.0),[m
+[31m-                    child: Column([m
+[31m-                      children: [[m
+[31m-                        const Gap(15),[m
+[31m-                        Center([m
+[31m-                          child: AutoSizeText([m
+[31m-                            // "No history data or internet connection",[m
+[31m-                            error.toString(),[m
+[31m-                            textAlign: TextAlign.center,[m
+[31m-                            style: context.bodyMedium[m
+[31m-                                ?.copyWith(color: Pallete.textColor),[m
+[31m-                          ),[m
+[31m-                        ),[m
+[31m-                        const Gap(30),[m
+[31m-                        ElevatedButton([m
+[31m-                          style: const ButtonStyle([m
+[31m-                            shape: MaterialStatePropertyAll([m
+[31m-                              RoundedRectangleBorder([m
+[31m-                                side: BorderSide(color: Pallete.primaryColor),[m
+[31m-                                borderRadius: BorderRadius.all([m
+[31m-                                  Radius.circular(10),[m
+[31m-                                ),[m
+[32m+[m[32m                      return Padding([m
+[32m+[m[32m                        padding: const EdgeInsets.all(20.0),[m
+[32m+[m[32m                        child: Column([m
+[32m+[m[32m                          children: [[m
+[32m+[m[32m                            const Gap(15),[m
+[32m+[m[32m                            Center([m
+[32m+[m[32m                              child: AutoSizeText([m
+[32m+[m[32m                                // "No history data or internet connection",[m
+[32m+[m[32m                                error.toString(),[m
+[32m+[m[32m                                textAlign: TextAlign.center,[m
+[32m+[m[32m                                style: context.bodyMedium[m
+[32m+[m[32m                                    ?.copyWith(color: Pallete.textColor),[m
+                               ),[m
+                             ),[m
+[31m-                            backgroundColor: MaterialStatePropertyAll([m
+[31m-                                Pallete.secondaryColor),[m
+[31m-                            foregroundColor:[m
+[31m-                                MaterialStatePropertyAll(Pallete.primaryColor),[m
+[31m-                          ),[m
+[31m-                          onPressed: () =>[m
+[31m-                              ref.invalidate(transactionControllerProvider),[m
+[31m-                          child: const AutoSizeText([m
+[31m-                            'Retry',[m
+[31m-                          ),[m
+[31m-                        ),[m
+[31m-                      ],[m
+[31m-                    ),[m
+[31m-                  );[m
+[31m-                }, loading: () {[m
+[31m-                  return Padding([m
+[31m-                    padding: const EdgeInsets.all(20.0),[m
+[31m-                    child: Column([m
+[31m-                      children: [[m
+[31m-                        const Gap(20),[m
+[31m-                        Expanded([m
+[31m-                          child: ListView([m
+[31m-                            children: [[m
+[31m-                              for (int index = 1; index < 10; index++)[m
+[31m-                                const Padding([m
+[31m-                                  padding: EdgeInsets.symmetric(vertical: 10),[m
+[31m-                                  child: ShimmerWidget.rectangular([m
+[31m-                                    width: double.infinity,[m
+[31m-                                    height: 50,[m
+[32m+[m[32m                            const Gap(30),[m
+[32m+[m[32m                            ElevatedButton([m
+[32m+[m[32m                              style: const ButtonStyle([m
+[32m+[m[32m                                shape: MaterialStatePropertyAll([m
+[32m+[m[32m                                  RoundedRectangleBorder([m
+[32m+[m[32m                                    side: BorderSide(color: Pallete.primaryColor),[m
+[32m+[m[32m                                    borderRadius: BorderRadius.all([m
+[32m+[m[32m                                      Radius.circular(10),[m
+[32m+[m[32m                                    ),[m
+                                   ),[m
+                                 ),[m
+[31m-                            ],[m
+[31m-                          ),[m
+[32m+[m[32m                                backgroundColor: MaterialStatePropertyAll([m
+[32m+[m[32m                                    Pallete.secondaryColor),[m
+[32m+[m[32m                                foregroundColor:[m
+[32m+[m[32m                                MaterialStatePropertyAll(Pallete.primaryColor),[m
+[32m+[m[32m                              ),[m
+[32m+[m[32m                              onPressed: () =>[m
+[32m+[m[32m                                  ref.invalidate(transactionControllerProvider),[m
+[32m+[m[32m                              child: const AutoSizeText([m
+[32m+[m[32m                                'Retry',[m
+[32m+[m[32m                              ),[m
+[32m+[m[32m                            ),[m
+[32m+[m[32m                          ],[m
+                         ),[m
+[31m-                      ],[m
+[31m-                    ),[m
+[31m-                  );[m
+[31m-                }),[m
+[32m+[m[32m                      );[m
+[32m+[m[32m                    }, loading: () {[m
+[32m+[m[32m                      return Padding([m
+[32m+[m[32m                        padding: const EdgeInsets.all(20.0),[m
+[32m+[m[32m                        child: Column([m
+[32m+[m[32m                          children: [[m
+[32m+[m[32m                            const Gap(20),[m
+[32m+[m[32m                            Expanded([m
+[32m+[m[32m                              child: ListView([m
+[32m+[m[32m                                children: [[m
+[32m+[m[32m                                  for (int index = 1; index < 10; index++)[m
+[32m+[m[32m                                    const Padding([m
+[32m+[m[32m                                      padding: EdgeInsets.symmetric(vertical: 10),[m
+[32m+[m[32m                                      child: ShimmerWidget.rectangular([m
+[32m+[m[32m                                        width: double.infinity,[m
+[32m+[m[32m                                        height: 50,[m
+[32m+[m[32m                                      ),[m
+[32m+[m[32m                                    ),[m
+[32m+[m[32m                                ],[m
+[32m+[m[32m                              ),[m
+[32m+[m[32m                            ),[m
+[32m+[m[32m                          ],[m
+[32m+[m[32m                        ),[m
+[32m+[m[32m                      );[m
+[32m+[m[32m                    }),[m
+               ),[m
+             )),[m
+       ),[m

@@ -76,97 +76,99 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                       }
                       if (index < data.length) {
                         final historyDocument = data[index];
-                          return HistoryWidget(
-                           historyDocument
-                          );
+                        return HistoryWidget(
+                            historyDocument
+                        );
                       } else {
-                        return hasMoreTransactions && data.length == 10
+                        debugPrint('has more transaction : $hasMoreTransactions');
+                        debugPrint('data length : ${data.length}');
+                        return hasMoreTransactions 
                             ? const Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: CircularProgressIndicator(
-                                    color: Pallete.primaryColor,
-                                  ),
-                                ),
-                              )
+                          child: Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: CircularProgressIndicator(
+                              color: Pallete.primaryColor,
+                            ),
+                          ),
+                        )
                             : Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: AutoSizeText(
-                                    "No more data",
-                                    style: context.bodySmall?.copyWith(
-                                        color: Pallete.primaryColor),
-                                  ),
-                                ),
-                              );
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: AutoSizeText(
+                              "No more data",
+                              style: context.bodySmall?.copyWith(
+                                  color: Pallete.primaryColor),
+                            ),
+                          ),
+                        );
                       }
                     },
                   );
                 },
                     error: (error, stackTrace) {
-                  return Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      children: [
-                        const Gap(15),
-                        Center(
-                          child: AutoSizeText(
-                            // "No history data or internet connection",
-                            error.toString(),
-                            textAlign: TextAlign.center,
-                            style: context.bodyMedium
-                                ?.copyWith(color: Pallete.textColor),
-                          ),
-                        ),
-                        const Gap(30),
-                        ElevatedButton(
-                          style: const ButtonStyle(
-                            shape: MaterialStatePropertyAll(
-                              RoundedRectangleBorder(
-                                side: BorderSide(color: Pallete.primaryColor),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
+                      return Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            const Gap(15),
+                            Center(
+                              child: AutoSizeText(
+                                // "No history data or internet connection",
+                                error.toString(),
+                                textAlign: TextAlign.center,
+                                style: context.bodyMedium
+                                    ?.copyWith(color: Pallete.textColor),
                               ),
                             ),
-                            backgroundColor: MaterialStatePropertyAll(
-                                Pallete.secondaryColor),
-                            foregroundColor:
-                                MaterialStatePropertyAll(Pallete.primaryColor),
-                          ),
-                          onPressed: () =>
-                              ref.invalidate(transactionControllerProvider),
-                          child: const AutoSizeText(
-                            'Retry',
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }, loading: () {
-                  return Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      children: [
-                        const Gap(20),
-                        Expanded(
-                          child: ListView(
-                            children: [
-                              for (int index = 1; index < 10; index++)
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 10),
-                                  child: ShimmerWidget.rectangular(
-                                    width: double.infinity,
-                                    height: 50,
+                            const Gap(30),
+                            ElevatedButton(
+                              style: const ButtonStyle(
+                                shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    side: BorderSide(color: Pallete.primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
                                   ),
                                 ),
-                            ],
-                          ),
+                                backgroundColor: MaterialStatePropertyAll(
+                                    Pallete.secondaryColor),
+                                foregroundColor:
+                                MaterialStatePropertyAll(Pallete.primaryColor),
+                              ),
+                              onPressed: () =>
+                                  ref.invalidate(transactionControllerProvider),
+                              child: const AutoSizeText(
+                                'Retry',
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                }),
+                      );
+                    }, loading: () {
+                      return Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            const Gap(20),
+                            Expanded(
+                              child: ListView(
+                                children: [
+                                  for (int index = 1; index < 10; index++)
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 10),
+                                      child: ShimmerWidget.rectangular(
+                                        width: double.infinity,
+                                        height: 50,
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
               ),
             )),
       ),
