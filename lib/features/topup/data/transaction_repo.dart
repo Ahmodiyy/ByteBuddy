@@ -32,45 +32,61 @@ final  lastTenTransactionHistoryProvider= StreamProvider.autoDispose<List<QueryD
 
 });
 
+
 class TransactionRepo {
   final FirebaseFirestore _cloudStore = FirebaseFirestore.instance;
 
-  Future<dynamic> getBalance(String email) async {
-    var collectionReference = _cloudStore.collection('log');
-    var documentReference = collectionReference.doc(email);
-
-    var documentRef = await documentReference.get();
-    Map<String, dynamic>? data = documentRef.data();
-    dynamic balance = data?['balance'] ?? 0.0;
-    return balance;
-  }
-
-  Stream<DocumentSnapshot<Map<String, dynamic>>> getDocumentStream(String email) {
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getDocumentStream(
+      String email) {
     var collectionReference = _cloudStore.collection('log');
     var documentReference = collectionReference.doc(email);
     return documentReference.snapshots();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getTransactionStream(String email) {
-    return _cloudStore
-        .collection("log")
-        .doc(email)
-        .collection("transactions")
-        .orderBy("date", descending: true)
-        .limit(10)
-        .snapshots();
+  Future<dynamic> getBalance(String email) async {
+    var collectionReference = FirebaseFirestore.instance.collection('log');
+    var documentReference = collectionReference.doc(email);
+
+    var snapshot = await documentReference.get();
+    Map<String, dynamic>? data = snapshot.data();
+    dynamic balance = data?['balance'] ?? 0.0;
+    return balance;
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getNextTransactionStream(
-      String email, DocumentSnapshot? documentSnapshot)  {
+  Future<List<QueryDocumentSnapshot>> fetchTransactionHistory(
+      String email) async {
     try {
-      return _cloudStore
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await _cloudStore
+          .collection("log")
+          .doc(email)
+          .collection("transactions")
+          .orderBy("date", descending: true)
+          .limit(10)
+          .get();
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> transactionsDocument =
+          querySnapshot.docs;
+      return transactionsDocument;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<QueryDocumentSnapshot>> fetchNextTransactionHistory(
+      String email, DocumentSnapshot? documentSnapshot) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await _cloudStore
           .collection("log")
           .doc(email)
           .collection("transactions")
           .orderBy("date", descending: true)
           .startAfterDocument(documentSnapshot!)
-          .limit(10).snapshots();
+          .limit(10)
+          .get();
+
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> transactionsDocument =
+          querySnapshot.docs;
+
+      return transactionsDocument;
     } catch (e) {
       rethrow;
     }

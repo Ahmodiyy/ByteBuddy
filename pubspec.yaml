@@ -24,6 +24,7 @@ environment:
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
 # consider running `flutter pub upgrade --major-versions`. Alternatively,
+
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
@@ -59,8 +60,6 @@ dependencies:
   envied: ^0.5.3
   shimmer: ^3.0.0
   fl_chart: ^0.68.0
-
-
 
 dev_dependencies:
   flutter_test:
