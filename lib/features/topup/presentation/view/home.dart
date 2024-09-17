@@ -139,15 +139,15 @@ class DepositWidget extends ConsumerWidget {
                           ),
                           togglePassword
                               ? const IconWidget(
-                                  iconData: FontAwesomeIcons.eyeSlash,
-                                  color: Pallete.secondaryColor,
-                                  size: 15,
-                                )
+                            iconData: FontAwesomeIcons.eyeSlash,
+                            color: Pallete.secondaryColor,
+                            size: 15,
+                          )
                               : const IconWidget(
-                                  iconData: FontAwesomeIcons.eye,
-                                  color: Pallete.secondaryColor,
-                                  size: 15,
-                                ),
+                            iconData: FontAwesomeIcons.eye,
+                            color: Pallete.secondaryColor,
+                            size: 15,
+                          ),
                         ],
                       )),
                 ),
@@ -185,7 +185,7 @@ class DepositWidget extends ConsumerWidget {
                 balanceState.when(
                   data: (data) {
                     final formattedPrice =
-                        UtilityFunctions.formatCurrency(data);
+                    UtilityFunctions.formatCurrency(data);
                     return Flexible(
                       child: AutoSizeText(
                         togglePassword ? "****" : formattedPrice,
@@ -306,7 +306,7 @@ class GridItemWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Pallete.secondaryColor,
         borderRadius:
-            BorderRadius.circular(15.0), // Adjust the corner radius as needed
+        BorderRadius.circular(15.0), // Adjust the corner radius as needed
       ),
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -329,47 +329,47 @@ class GridItemWidget extends StatelessWidget {
                     flex: 3,
                     child: index == 0
                         ? CircleAvatar(
-                            backgroundColor: Pallete.backgroundColor,
-                            child: SvgPicture.asset(svgs[index].svgUrl,
-                                width: 25, height: 25),
-                          )
+                      backgroundColor: Pallete.backgroundColor,
+                      child: SvgPicture.asset(svgs[index].svgUrl,
+                          width: 25, height: 25),
+                    )
                         : Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Pallete.backgroundColor,
-                                child: SvgPicture.asset(svgs[index].svgUrl,
-                                    width: 25, height: 25),
+                      clipBehavior: Clip.none,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Pallete.backgroundColor,
+                          child: SvgPicture.asset(svgs[index].svgUrl,
+                              width: 25, height: 25),
+                        ),
+                        Positioned(
+                            top: 0,
+                            right: -25,
+                            child: Container(
+                              width: 35,
+                              height: 17.5,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0.5, horizontal: 1),
+                              decoration: const BoxDecoration(
+                                color: Pallete.secondaryErrorColor,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(50),
+                                  topRight: Radius.circular(50),
+                                  bottomRight: Radius.circular(50),
+                                ),
                               ),
-                              Positioned(
-                                  top: 0,
-                                  right: -25,
-                                  child: Container(
-                                    width: 35,
-                                    height: 17.5,
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 0.5, horizontal: 1),
-                                    decoration: const BoxDecoration(
-                                      color: Pallete.secondaryErrorColor,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(50),
-                                        topRight: Radius.circular(50),
-                                        bottomRight: Radius.circular(50),
-                                      ),
-                                    ),
-                                    child: const Center(
-                                      child: AutoSizeText(
-                                        'soon',
-                                        maxLines: 1,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 0.001,
-                                            color: Pallete.contrastTextColor),
-                                      ),
-                                    ),
-                                  ))
-                            ],
-                          ),
+                              child: const Center(
+                                child: AutoSizeText(
+                                  'soon',
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 0.001,
+                                      color: Pallete.contrastTextColor),
+                                ),
+                              ),
+                            ))
+                      ],
+                    ),
                   ),
                   Expanded(
                     child: Center(
@@ -428,48 +428,48 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
                     const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                      Gap(20),
-                      Flexible(
-                        child: AutoSizeText(
-                          'Last 10 transaction chart',
-                          style: TextStyle(
-                            color: Pallete.primaryColor,
-                            fontWeight: FontWeight.bold,
+                        Gap(20),
+                        Flexible(
+                          child: AutoSizeText(
+                            'Last 10 transaction chart',
+                            style: TextStyle(
+                              color: Pallete.primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 1,
+                            maxFontSize: 16,
                           ),
-                          maxLines: 1,
-                          maxFontSize: 16,
-                        ),
-                      ),],
+                        ),],
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                      Container(
-                        width: 7,
-                        height: 7,
-                        decoration: BoxDecoration(
-                          color: Pallete.primaryColor,
-                          //borderRadius: BorderRadius.circular(15.0),
-                          border: Border.all(color: Pallete.primaryColor),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      const Gap(10),
-                      Flexible(child: AutoSizeText('Deposit',style: context.bodySmall,maxLines: 1,)),
-                      const Gap(20),
-                      Container(
-                        width: 7,
-                        height: 7,
-                        decoration: BoxDecoration(
-                            color: Pallete.secondaryColor,
+                        Container(
+                          width: 7,
+                          height: 7,
+                          decoration: BoxDecoration(
+                            color: Pallete.primaryColor,
                             //borderRadius: BorderRadius.circular(15.0),
                             border: Border.all(color: Pallete.primaryColor),
-                            shape: BoxShape.circle
+                            shape: BoxShape.circle,
+                          ),
                         ),
-                      ),
-                      const Gap(10),
-                      Flexible(child: AutoSizeText('Expenses',style: context.bodySmall,maxLines: 1,)),
-                    ],),
+                        const Gap(10),
+                        Flexible(child: AutoSizeText('Deposit',style: context.bodySmall,maxLines: 1,)),
+                        const Gap(20),
+                        Container(
+                          width: 7,
+                          height: 7,
+                          decoration: BoxDecoration(
+                              color: Pallete.secondaryColor,
+                              //borderRadius: BorderRadius.circular(15.0),
+                              border: Border.all(color: Pallete.primaryColor),
+                              shape: BoxShape.circle
+                          ),
+                        ),
+                        const Gap(10),
+                        Flexible(child: AutoSizeText('Expenses',style: context.bodySmall,maxLines: 1,)),
+                      ],),
                   ],
                 ),
               ),
@@ -477,49 +477,49 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
               SizedBox(
                 height: chartHeight,
                 child: BarChart(
-                    BarChartData(
-                      backgroundColor: Pallete.secondaryColor,
-                      barTouchData: BarTouchData(
-                        enabled: true,
-                      ),
-                      titlesData: FlTitlesData(
-                        show: true,
-                        bottomTitles: AxisTitles(
-                          sideTitles: SideTitles(
-                            showTitles: true,
-                            getTitlesWidget: getTitles,
-                            reservedSize: 20,
-                          ),
-                        ),
-                        leftTitles: const AxisTitles(
-                          sideTitles: SideTitles(
-                            reservedSize: 100,
-                            showTitles: true,
-                          ),
-                        ),
-                        topTitles: const AxisTitles(
-                          sideTitles: SideTitles(
-                            showTitles: false,
-                          ),
-                        ),
-                        rightTitles: const AxisTitles(
-                          sideTitles: SideTitles(
-                            showTitles: false,
-                          ),
-                        ),
-                      ),
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      barGroups: List.generate(
-                        10,
-                            (i) => makeGroupData(
-                            i,
-                            data[i],
-                        ),
-                      ),
-                      gridData: const FlGridData(show: false),
+                  BarChartData(
+                    backgroundColor: Pallete.secondaryColor,
+                    barTouchData: BarTouchData(
+                      enabled: true,
                     ),
+                    titlesData: FlTitlesData(
+                      show: true,
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          getTitlesWidget: getTitles,
+                          reservedSize: 20,
+                        ),
+                      ),
+                      leftTitles: const AxisTitles(
+                        sideTitles: SideTitles(
+                          reservedSize: 100,
+                          showTitles: true,
+                        ),
+                      ),
+                      topTitles: const AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: false,
+                        ),
+                      ),
+                      rightTitles: const AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: false,
+                        ),
+                      ),
+                    ),
+                    borderData: FlBorderData(
+                      show: false,
+                    ),
+                    barGroups: List.generate(
+                      10,
+                          (i) => makeGroupData(
+                        i,
+                        data[i],
+                      ),
+                    ),
+                    gridData: const FlGridData(show: false),
+                  ),
                 ),
               ),
             ],
@@ -560,7 +560,7 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
                 MaterialStatePropertyAll(Pallete.primaryColor),
               ),
               onPressed: () =>
-                  ref.invalidate(transactionStreamProvider),
+                  ref.invalidate(transactionControllerProvider),
               child: const AutoSizeText(
                 'Retry',
               ),
