@@ -1,74 +1,73 @@
-
 import 'dart:async';
+
 import 'package:bytebuddy/features/auth/presentation/controller/auth_controller.dart';
 import 'package:bytebuddy/features/topup/data/transaction_repo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final transactionControllerProvider = StreamNotifierProvider.autoDispose<
+final transactionControllerProvider = AsyncNotifierProvider.autoDispose<
     TransactionController, List<QueryDocumentSnapshot>>(() {
   return TransactionController();
 });
 
-
 class TransactionController
-    extends AutoDisposeStreamNotifier<List<QueryDocumentSnapshot>> {
+    extends AutoDisposeAsyncNotifier<List<QueryDocumentSnapshot>> {
   DocumentSnapshot? lastDocumentSnapshot;
 
   @override
-  Stream<List<QueryDocumentSnapshot>> build() async* {
-    final email = ref
-        .read(authControllerLoginProvider.notifier)
-        .getCurrentUser()
-        ?.email;
+  FutureOr<List<QueryDocumentSnapshot>> build() async {
+    state = const AsyncLoading();
+    try {
+      final email = ref
+          .read(authControllerLoginProvider.notifier)
+          .getCurrentUser()
+          ?.email;
 
-    if (email == null) {
-      throw Exception('User email is null');
-    }
-
-    List<QueryDocumentSnapshot> allTransactions = [];
-
-    // Listen for the initial batch of transactions
-    await for (var transactions in ref.read(transactionRepoProvider).getTransactionStream(email)) {
-
-      if (transactions.docs.isNotEmpty) {
-        lastDocumentSnapshot = transactions.docs.last;
-        print("-------------another data --------------");
+      if (email == null) {
+        throw Exception('User email is null');
       }
 
-      allTransactions = [...allTransactions, ...transactions.docs];
-      yield allTransactions;
+      final transactions = await ref
+          .read(transactionRepoProvider)
+          .fetchTransactionHistory(email);
 
+      if (transactions.isNotEmpty) {
+        lastDocumentSnapshot = transactions.last;
+      }
+
+      return transactions;
+    } catch (e, stackTrace) {
+      state = AsyncError(e, stackTrace);
+      return [];
     }
   }
 
-  Future<AsyncData<List>> fetchNextTransactionHistory() async {
+  Future<List> fetchNextTransactionHistory() async {
+    List nextTransactions = [];
+    state = await AsyncValue.guard(() async {
+      final email = ref
+          .read(authControllerLoginProvider.notifier)
+          .getCurrentUser()
+          ?.email;
 
-    List data = [];
-    final email = ref
-        .read(authControllerLoginProvider.notifier)
-        .getCurrentUser()
-        ?.email;
-
-    if (email == null) {
-      throw Exception('User email is null');
-    }
-
-    await for (var nextTransactions in ref.read(transactionRepoProvider).getNextTransactionStream(email,lastDocumentSnapshot)) {
-
-      if (nextTransactions.docs.isNotEmpty) {
-        lastDocumentSnapshot = nextTransactions.docs.last;
-
-        // Update the state with the new transactions
-        state = AsyncValue.data([
-          ...state.value ?? [],
-          ...nextTransactions.docs,
-        ]);
-        data = nextTransactions.docs;
-
+      if (email == null) {
+        throw Exception('User email is null');
       }
 
-    }
-    return AsyncData(data);
+      nextTransactions = await ref
+          .read(transactionRepoProvider)
+          .fetchNextTransactionHistory(email, lastDocumentSnapshot);
+
+      if (nextTransactions.isNotEmpty) {
+        lastDocumentSnapshot = nextTransactions.last;
+      }
+
+      return [
+        ...state.value ?? [],
+        ...nextTransactions,
+      ];
+    });
+
+    return nextTransactions;
   }
 }
