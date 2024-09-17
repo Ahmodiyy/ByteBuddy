@@ -8,10 +8,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import '../../data/transaction_repo.dart';
 import '../widget/shimmer_widget.dart';
 
-
+final lastDocumentProvider = StateProvider<DocumentSnapshot?>((ref) {
+  return null;
+});
 
 class TransactionHistory extends ConsumerStatefulWidget {
   const TransactionHistory({super.key});
@@ -31,20 +32,19 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
     _scrollController = ScrollController();
     _scrollController.addListener(() async {
       if (_scrollController.offset ==
-              _scrollController.position.maxScrollExtent &&
+          _scrollController.position.maxScrollExtent &&
           hasMoreTransactions) {
-        // List nextTransactions = await ref
-        //     .read(transactionCo.notifier)
-        //     .fetchNextTransactionHistory();
-        // hasMoreTransactions = nextTransactions.length >= 10;
+        List nextTransactions = await ref
+            .read(transactionControllerProvider.notifier)
+            .fetchNextTransactionHistory();
+        hasMoreTransactions = nextTransactions.length >= 10;
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(transactionStreamProvider);
-
+    final state = ref.watch(transactionControllerProvider);
     return LayoutBuilder(
       builder: (context, constraints) => SafeArea(
         child: Scaffold(
@@ -120,7 +120,6 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                                     ?.copyWith(color: Pallete.textColor),
                               ),
                             ),
-
                             const Gap(30),
                             ElevatedButton(
                               style: const ButtonStyle(
@@ -130,7 +129,6 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(10),
                                     ),
-
                                   ),
                                 ),
                                 backgroundColor: MaterialStatePropertyAll(
