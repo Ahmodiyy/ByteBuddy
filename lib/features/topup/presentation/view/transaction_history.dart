@@ -102,6 +102,7 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                           ),
                         );
                       }
+
                     },
                   );
                 },

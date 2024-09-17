@@ -476,7 +476,9 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
               const Gap(20),
               SizedBox(
                 height: chartHeight,
-                child: BarChart(
+                child: data.length == 10? Container(child: AutoSizeText("No enough data",
+                  style: context.bodySmall?.copyWith(
+                color: Pallete.primaryColor),),) : BarChart(
                   BarChartData(
                     backgroundColor: Pallete.secondaryColor,
                     barTouchData: BarTouchData(
