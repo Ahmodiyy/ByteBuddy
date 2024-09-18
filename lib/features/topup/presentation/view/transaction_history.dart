@@ -14,6 +14,11 @@ final lastDocumentProvider = StateProvider<DocumentSnapshot?>((ref) {
   return null;
 });
 
+final isLoadingProvider = StateProvider<bool>((ref) {
+  return false;
+});
+
+
 class TransactionHistory extends ConsumerStatefulWidget {
   const TransactionHistory({super.key});
 
@@ -24,20 +29,20 @@ class TransactionHistory extends ConsumerStatefulWidget {
 class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
   late ScrollController _scrollController;
   DocumentSnapshot? documentSnapshot;
-  bool hasMoreTransactions = false;
+
   @override
   void initState() {
     super.initState();
     ref.refresh(transactionControllerProvider);
     _scrollController = ScrollController();
     _scrollController.addListener(() async {
-      if (_scrollController.offset ==
-          _scrollController.position.maxScrollExtent &&
-          hasMoreTransactions) {
+      if (_scrollController.offset == _scrollController.position.maxScrollExtent) {
+        ref.read(isLoadingProvider.notifier).update((state) => true,);
         List nextTransactions = await ref
             .read(transactionControllerProvider.notifier)
             .fetchNextTransactionHistory();
-        hasMoreTransactions = nextTransactions.length >= 10;
+        ref.read(isLoadingProvider.notifier).update((state) => false,);
+
       }
     });
   }
@@ -45,6 +50,7 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(transactionControllerProvider);
+    final isLoading = ref.watch(isLoadingProvider);
     return LayoutBuilder(
       builder: (context, constraints) => SafeArea(
         child: Scaffold(
@@ -80,9 +86,8 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                             historyDocument
                         );
                       } else {
-                        debugPrint('has more transaction : $hasMoreTransactions');
                         debugPrint('data length : ${data.length}');
-                        return hasMoreTransactions
+                        return isLoading
                             ? const Center(
                           child: Padding(
                             padding: EdgeInsets.all(10.0),
