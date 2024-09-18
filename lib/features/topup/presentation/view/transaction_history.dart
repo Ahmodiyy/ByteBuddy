@@ -24,7 +24,7 @@ class TransactionHistory extends ConsumerStatefulWidget {
 class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
   late ScrollController _scrollController;
   DocumentSnapshot? documentSnapshot;
-  bool hasMoreTransactions = true;
+  bool hasMoreTransactions = false;
   @override
   void initState() {
     super.initState();
