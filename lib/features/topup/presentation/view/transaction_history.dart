@@ -10,10 +10,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import '../widget/shimmer_widget.dart';
 
-final lastDocumentProvider = StateProvider<DocumentSnapshot?>((ref) {
-  return null;
-});
-
 final isLoadingProvider = StateProvider<bool>((ref) {
   return false;
 });
@@ -41,6 +37,7 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
         List nextTransactions = await ref
             .read(transactionControllerProvider.notifier)
             .fetchNextTransactionHistory();
+        debugPrint('---------batch---------  :  ${nextTransactions.length}');
         ref.read(isLoadingProvider.notifier).update((state) => false,);
 
       }
