@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bytebuddy/common/appBar_widget.dart';
 import 'package:bytebuddy/constants/constant.dart';
@@ -31,22 +33,27 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
   void initState() {
     super.initState();
     ref.refresh(transactionControllerProvider);
+    Timer? _debounce;
     _scrollController = ScrollController();
     _scrollController.addListener(() async {
-      if (_scrollController.offset == _scrollController.position.maxScrollExtent && isBatchTransactionTen) {
-        ref.read(isLoadingProvider.notifier).update((state) => true,);
-        List nextTransactions = await ref
-            .read(transactionControllerProvider.notifier)
-            .fetchNextTransactionHistory();
-        debugPrint('---------batch---------  :  ${nextTransactions.length}');
-        if(!(nextTransactions.length >= 10)){
-          isBatchTransactionTen = false;
-        }
+      if (_debounce?.isActive ?? false) _debounce!.cancel();
+      _debounce = Timer(const Duration(milliseconds: 300), () async {
         debugPrint('---------batch bool---------  :  ${isBatchTransactionTen}');
-        ref.read(isLoadingProvider.notifier).update((state) => false,);
+        if (_scrollController.offset == _scrollController.position.maxScrollExtent && isBatchTransactionTen == true) {
+          ref.read(isLoadingProvider.notifier).update((state) => true);
+          List nextTransactions = await ref
+              .read(transactionControllerProvider.notifier)
+              .fetchNextTransactionHistory();
+          debugPrint('---------batch---------  :  ${nextTransactions.length}');
+          if (!(nextTransactions.length >= 10)) {
+            isBatchTransactionTen = false;
+          }
 
-      }
+          ref.read(isLoadingProvider.notifier).update((state) => false);
+        }
+      });
     });
+
   }
 
   @override
