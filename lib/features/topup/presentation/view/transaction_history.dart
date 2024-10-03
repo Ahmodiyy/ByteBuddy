@@ -39,7 +39,8 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
       if (_debounce?.isActive ?? false) _debounce!.cancel();
       _debounce = Timer(const Duration(milliseconds: 300), () async {
         debugPrint('---------batch bool---------  :  ${isBatchTransactionTen}');
-        if (_scrollController.offset == _scrollController.position.maxScrollExtent && isBatchTransactionTen == true) {
+        if(!isBatchTransactionTen) return;
+        if (_scrollController.offset == _scrollController.position.maxScrollExtent) {
           ref.read(isLoadingProvider.notifier).update((state) => true);
           List nextTransactions = await ref
               .read(transactionControllerProvider.notifier)
