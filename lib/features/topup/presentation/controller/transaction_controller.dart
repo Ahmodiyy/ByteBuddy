@@ -62,6 +62,7 @@ class TransactionController
         lastDocumentSnapshot = nextTransactions.last;
       }
 
+
       return [
         ...state.value ?? [],
         ...nextTransactions,

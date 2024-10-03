@@ -26,18 +26,23 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
   late ScrollController _scrollController;
   DocumentSnapshot? documentSnapshot;
 
+  bool isBatchTransactionTen = true;
   @override
   void initState() {
     super.initState();
     ref.refresh(transactionControllerProvider);
     _scrollController = ScrollController();
     _scrollController.addListener(() async {
-      if (_scrollController.offset == _scrollController.position.maxScrollExtent) {
+      if (_scrollController.offset == _scrollController.position.maxScrollExtent && isBatchTransactionTen) {
         ref.read(isLoadingProvider.notifier).update((state) => true,);
         List nextTransactions = await ref
             .read(transactionControllerProvider.notifier)
             .fetchNextTransactionHistory();
         debugPrint('---------batch---------  :  ${nextTransactions.length}');
+        if(!(nextTransactions.length >= 10)){
+          isBatchTransactionTen = false;
+        }
+        debugPrint('---------batch bool---------  :  ${isBatchTransactionTen}');
         ref.read(isLoadingProvider.notifier).update((state) => false,);
 
       }
