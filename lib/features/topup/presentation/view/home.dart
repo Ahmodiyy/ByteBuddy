@@ -72,7 +72,7 @@ class _HomeState extends ConsumerState<Home> {
                       const Gap(20),
                       GridItemWidget(),
                       const Gap(20),
-                      TransactionBarChart(),
+                      const TransactionBarChart(),
                     ]);
                   }
                   return Column(
@@ -422,7 +422,50 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Row(
+                child: MediaQuery.sizeOf(context).width < 500?   Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    AutoSizeText(
+                      'Last 10 transaction chart',
+                      style: TextStyle(
+                        color: Pallete.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 1,
+                      maxFontSize: 16,
+                    ),
+                    Gap(5),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 7,
+                          height: 7,
+                          decoration: BoxDecoration(
+                            color: Pallete.primaryColor,
+                            //borderRadius: BorderRadius.circular(15.0),
+                            border: Border.all(color: Pallete.primaryColor),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        const Gap(10),
+                        Flexible(child: AutoSizeText('Deposit',style: context.bodySmall,maxLines: 1,)),
+                        const Gap(20),
+                        Container(
+                          width: 7,
+                          height: 7,
+                          decoration: BoxDecoration(
+                              color: Pallete.secondaryColor,
+                              //borderRadius: BorderRadius.circular(15.0),
+                              border: Border.all(color: Pallete.primaryColor),
+                              shape: BoxShape.circle
+                          ),
+                        ),
+                        const Gap(10),
+                        Flexible(child: AutoSizeText('Expenses',style: context.bodySmall,maxLines: 1,)),
+                      ],),
+                  ],
+                ):Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Row(
@@ -471,8 +514,7 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
                         Flexible(child: AutoSizeText('Expenses',style: context.bodySmall,maxLines: 1,)),
                       ],),
                   ],
-                ),
-              ),
+                )              ),
               const Gap(20),
               SizedBox(
                 height: chartHeight,
