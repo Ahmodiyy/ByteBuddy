@@ -518,7 +518,7 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
               const Gap(20),
               SizedBox(
                 height: chartHeight,
-                child: data.length == 10? Container(child: AutoSizeText("No enough data",
+                child: data.length == 10? Container(child: AutoSizeText("No enough data for chart",
                   style: context.bodySmall?.copyWith(
                 color: Pallete.primaryColor),),) : BarChart(
                   BarChartData(
