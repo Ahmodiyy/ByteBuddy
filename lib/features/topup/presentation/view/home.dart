@@ -536,10 +536,21 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
                           reservedSize: 20,
                         ),
                       ),
-                      leftTitles: const AxisTitles(
+                      leftTitles: AxisTitles(
                         sideTitles: SideTitles(
-                          reservedSize: 100,
+                          reservedSize: 50,
                           showTitles: true,
+                          getTitlesWidget: (value, meta) {
+                            final style = TextStyle(
+                              fontSize: MediaQuery.of(context).size.width * 0.03, // Responsive text size
+                              color: Colors.black,
+                            );
+                            return SideTitleWidget(
+                              axisSide: meta.axisSide,
+                              space: 8.0,
+                              child: Text(value.toString(), style: style),
+                            );
+                          },
                         ),
                       ),
                       topTitles: const AxisTitles(
@@ -643,10 +654,11 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
   }
 
   Widget getTitles(double value, TitleMeta meta) {
-    const style = TextStyle(
+    TextStyle style = TextStyle(
       color: Pallete.secondaryTextColor,
       fontWeight: FontWeight.bold,
-      fontSize: 15,
+      fontSize: MediaQuery.of(context).size.width * 0.04,
+
     );
     List<String> days = ['1', '2', '3', '4', '5', '6', '7','8','9','10'];
 
