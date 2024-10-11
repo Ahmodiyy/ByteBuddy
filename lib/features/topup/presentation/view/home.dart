@@ -518,9 +518,10 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
               const Gap(20),
               SizedBox(
                 height: chartHeight,
-                child: data.length == 10? Container(child: AutoSizeText("No enough data for chart",
+                child: data.length < 10? Container(child: AutoSizeText("No enough data for chart",
                   style: context.bodySmall?.copyWith(
-                color: Pallete.primaryColor),),) : BarChart(
+                color: Pallete.primaryColor),),)
+                    : BarChart(
                   BarChartData(
                     backgroundColor: Pallete.secondaryColor,
                     barTouchData: BarTouchData(
@@ -631,7 +632,7 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
       x: x,
       barRods: [
         BarChartRodData(
-          toY: document['amount'],
+          toY: double.parse(document['amount'].toString()),
           color: document['type'].toString().toLowerCase() != 'deposit' ? Pallete.secondaryColor : Pallete.primaryColor,
           borderRadius: BorderRadius.zero,
           width: 22,
