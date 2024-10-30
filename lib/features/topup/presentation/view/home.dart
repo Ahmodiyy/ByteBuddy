@@ -657,7 +657,7 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
     TextStyle style = TextStyle(
       color: Pallete.secondaryTextColor,
       fontWeight: FontWeight.bold,
-      fontSize: MediaQuery.of(context).size.width * 0.04,
+      fontSize: MediaQuery.of(context).size.width * 0.05,
 
     );
     List<String> days = ['1', '2', '3', '4', '5', '6', '7','8','9','10'];
