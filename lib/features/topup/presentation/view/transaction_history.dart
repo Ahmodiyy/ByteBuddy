@@ -13,7 +13,7 @@ import 'package:gap/gap.dart';
 import '../widget/shimmer_widget.dart';
 
 final isLoadingProvider = StateProvider<bool>((ref) {
-  return false;
+  return true;
 });
 
 
@@ -97,25 +97,28 @@ class _TransactionHistoryState extends ConsumerState<TransactionHistory> {
                         );
                       } else {
                         debugPrint('data length : ${data.length}');
-                        return isLoading
-                            ? const Center(
+                        if(isLoading){
+                          return const Center(
                           child: Padding(
                             padding: EdgeInsets.all(10.0),
                             child: CircularProgressIndicator(
                               color: Pallete.primaryColor,
                             ),
                           ),
-                        )
-                            : Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: AutoSizeText(
-                              "No more data",
-                              style: context.bodySmall?.copyWith(
-                                  color: Pallete.primaryColor),
-                            ),
-                          ),
                         );
+                        }
+                        if(isBatchTransactionTen == false){
+                          return Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: AutoSizeText(
+                                "No more data",
+                                style: context.bodySmall?.copyWith(
+                                    color: Pallete.primaryColor),
+                              ),
+                            ),
+                          );
+                        }
                       }
 
                     },
