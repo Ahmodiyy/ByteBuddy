@@ -542,12 +542,13 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
                           showTitles: true,
                           getTitlesWidget: (value, meta) {
                             final style = TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.03, // Responsive text size
+                             // fontSize: MediaQuery.of(context).size.width * 0.03,
+                              fontSize: 16,
                               color: Colors.black,
                             );
                             return SideTitleWidget(
                               axisSide: meta.axisSide,
-                              space: 8.0,
+                              space: 3.0,
                               child: Text(value.toString(), style: style),
                             );
                           },
@@ -655,10 +656,9 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
 
   Widget getTitles(double value, TitleMeta meta) {
     TextStyle style = TextStyle(
-      color: Pallete.secondaryTextColor,
-      fontWeight: FontWeight.bold,
-      fontSize: MediaQuery.of(context).size.width * 0.05,
-
+      color: Pallete.textColor,
+      //fontSize: MediaQuery.of(context).size.width * 0.04
+      fontSize: 16
     );
     List<String> days = ['1', '2', '3', '4', '5', '6', '7','8','9','10'];
 
