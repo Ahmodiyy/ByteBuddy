@@ -525,7 +525,13 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
                   BarChartData(
                     backgroundColor: Pallete.secondaryColor,
                     barTouchData: BarTouchData(
+                      touchTooltipData: BarTouchTooltipData(
+                        getTooltipColor: (group) {
+                          return Pallete.tealColor;
+                        },
+                      ),
                       enabled: true,
+
                     ),
                     titlesData: FlTitlesData(
                       show: true,
@@ -544,7 +550,7 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
                             final style = TextStyle(
                              // fontSize: MediaQuery.of(context).size.width * 0.03,
                               fontSize: 16,
-                              color: Colors.black,
+                              color: Pallete.secondaryTextColor,
                             );
                             return SideTitleWidget(
                               axisSide: meta.axisSide,
@@ -589,7 +595,6 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
         height: chartHeight,
         child: Column(
           children: [
-
             const Gap(15),
             Center(
               child: AutoSizeText(
@@ -617,7 +622,7 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
                 MaterialStatePropertyAll(Pallete.primaryColor),
               ),
               onPressed: () =>
-                  ref.invalidate(transactionControllerProvider),
+                  ref.invalidate(lastTenTransactionHistoryProvider),
               child: const AutoSizeText(
                 'Retry',
               ),
@@ -626,12 +631,22 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
         ),
       );
     }, loading: () {
-      return ShimmerWidget.rectangular(
+      return Container(
         width: double.infinity,
         height: chartHeight,
-      );
-    },);
+        child: const Center(
+          child: CircularProgressIndicator(
+          color: Pallete.primaryColor,
 
+
+                ),
+        ),
+      );
+      // return ShimmerWidget.rectangular(
+      //   width: double.infinity,
+      //   height: chartHeight,
+      // );
+    },);
   }
 
 
@@ -656,7 +671,7 @@ class _TransactionBarChartState extends ConsumerState<TransactionBarChart> {
 
   Widget getTitles(double value, TitleMeta meta) {
     TextStyle style = TextStyle(
-      color: Pallete.textColor,
+      color: Pallete.secondaryTextColor,
       //fontSize: MediaQuery.of(context).size.width * 0.04
       fontSize: 16
     );
