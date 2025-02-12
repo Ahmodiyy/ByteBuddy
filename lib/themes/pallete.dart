@@ -23,7 +23,8 @@ class Pallete {
 
   static const Color backgroundColor = tertiaryColor;
 
-  static const Color greyColor = Color(0xFFF0F0F0);
+  static const Color greyColor = Color(0xFFE0E0E0);
+  static const Color tealColor = Color(0xFFA0D6B4);
 
   //normal F8F8FB
 }
